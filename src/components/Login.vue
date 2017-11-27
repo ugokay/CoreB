@@ -1,9 +1,34 @@
 <template>
-  <div>
-    <input v-model="userName"/>
-    <input v-model="password"/>
-    <button @click="login">Login</button>
+  <div class="row">
+    <div class="col-md-4 col-sm-offset-4">
+      <img src="assets/logo_invert.png" alt="" style="margin: auto;      display: block;      padding: 50px;">
+      <div class="panel panel-primary" style="border-color: #24262c">
+        <div class="panel-heading" style="background:#24262c">
+          <h3 class="panel-title">Login</h3>
+        </div>
+        <div class="panel-body">
+          <form class="form-horizontal">
+            <div class="form-group col-md-10">
+              <label for="username">Username</label>
+              <input v-model="userName"  class="form-control" />
+            </div>
+            <div class="form-group col-md-10">
+              <label for="password">Password</label>
+              <input v-model="password"  class="form-control"  type="password"/>
+            </div>
+            <div class="col-md-10">
+              <button @click="login" style="background:#24262c" class="btn btn-primary">Login</button>
+            </div>
+                    </form>
+
+          </div>
+        </div>
+      </div>
   </div>
+
+
+
+  
 </template>
 <script>
   import {AUTH} from '@/helpers/auth-helper.js'
