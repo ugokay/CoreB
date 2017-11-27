@@ -1,1 +1,286 @@
 body {    overflow: hidden;    background: #f1f1f1;}
+
+
+/*****************************************
+ICOMOON SET */
+@font-face {
+    font-family: 'icomoon';
+    src:  url('assets/fonts/icomoon/icomoon.eot?dbkv5n');
+    src:  url('assets/fonts/icomoon/icomoon.eot?dbkv5n#iefix') format('embedded-opentype'),
+            url('assets/fonts/icomoon/icomoon.ttf?dbkv5n') format('truetype'),
+            url('assets/fonts/icomoon/icomoon.woff?dbkv5n') format('woff'),
+            url('assets/fonts/icomoon/icomoon.svg?dbkv5n#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-minus:before { content: "\e900"; }
+.icon-search:before { content: "\e901"; }
+.icon-settings:before { content: "\e902"; }
+.icon-hamburger:before { content: "\e903"; }
+.icon-tri-left:before { content: "\e904"; }
+.icon-arrow-right:before { content: "\e905"; }
+.icon-plus:before { content: "\e906"; }
+.icon-more:before { content: "\e907"; }
+.icon-query-hide:before { content: "\e908"; }
+.icon-query:before { content: "\e909"; }
+.icon-refresh:before { content: "\e90a"; }
+.icon-export:before { content: "\e90b"; }
+.icon-arrow-down:before { content: "\e90c"; }
+
+/*Scrollbar*/
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(111, 111, 111, 0.5);
+  outline: 1px solid slategrey;
+  border-radius: 6px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+*, *:after, *::before {
+    box-sizing: border-box;
+}
+
+body{
+    height: 100vsadasdh;
+    overflow: hidden;
+    background: #f1f1f1
+
+}
+
+a,
+a:hover,
+a:active,
+a:focus {
+    text-decoration: none;
+}
+
+ul, ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.flex{ display: flex; }
+.flex-left{ justify-content: flex-start; }
+.flex-center{ justify-content: center; }
+.flex-right{ justify-content: flex-end; }
+.flex-space-between{ justify-content: space-between; }
+.flex-top{ align-items: flex-start; }
+.flex-middle{ align-items: center; }
+.flex-bottom{ align-items: flex-end; }
+
+
+.align-right {text-align: right}
+.align-left {text-align: left}
+.nav-panel .lists-of-nodes{ color:#fff !important ;border-radius: 2px}
+.nav-panel .lists-of-nodes span {margin-left:10px}
+
+.dropdown-menu li:hover, .toolbox-element-value:hover {background:#000}
+
+.report-element-header .dropdown-menu,.reports-area .dropdown-menu {margin-left: -155px !important; }
+
+
+li.nav-item {
+    
+        margin: 0 !important;
+        padding: 0 !important;
+    
+        color: #5b64fc !important;}
+    
+    
+    .nav-tabs {border-bottom: 1px solid #ddd}
+        .nav-tabs > li > a:hover {background: #f5f5f5 !important;; box-shadow: inset 0 3px 0 0 #5b64fc}
+      /* dashboards specified */
+    
+      /* .dashboards {padding-left:0} */
+      .nav-item:hover,
+      .nav-item.active,
+      .fixed-top-bar ul.dashboards li.active,
+      .fixed-top-bar ul.dashboards li:hover {  background: #f5f5f5 !important;   box-shadow: inset 0 3px 0 0 #5b64fc !important;   color: #5b64fc !important;}
+      /* dashboards specified */
+    
+      .nav-link.active {box-shadow: inset 0 3px 0 0 #5b64fc; background: #f5f5f5;  color:#5b64fc}
+    
+      .reports-area {margin:55px 0 0; }
+    
+    
+      .fixed-top-bar {   background-color: #ffffff;    box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.12); height:40px}
+    
+      .fixed-top-bar ul {margin: 0; padding: 0}
+    
+      .nav-item,.fixed-top-bar span.button-holder, .fixed-top-bar ul li {list-style: none; float: left; padding: 11px 18px 13px 18px; cursor:pointer}
+      .fixed-top-bar span.button-holder, .fixed-top-bar ul li span {  font-size: 13px;    font-weight: 500;    text-align: left;  }
+      .reports-container {margin-top:28px; margin-left:15px}
+    
+    
+      /* will be fixed */
+    
+    
+      .top-related-actions {margin-right:20px !important}
+       .top-related-actions li {  font-size: 13px !important;    font-weight: 500 !important;    text-align: left !important;    color: #000000 ; font-weight: bold}
+    
+      .navlink.active, .top-related-actions li.active {border-top:3px solid #5b64fc !important; color:#5b64fc !important;}
+    
+      .btn-add-report-elem {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 90px;
+        height: 40px;
+        display: inline-block;
+        border-radius: 100px;
+        border:none;
+        background-color: #432fc2;
+        box-shadow: 2px 2px 10px 0 rgba(108, 6, 225, 0.4);
+        color:#fff
+      }
+    
+    
+      .nav-tabs > li > a { margin-right:0; line-height: auto;border:none; border-radius: 0 0 0 0  !important  ;font-size: 13px; color:#000}
+    
+    .dash-actions {
+        width: auto;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 0;
+        position: fixed;
+        right: 0;
+        top: 0;
+        display: inline-block;
+        z-index: 1000;
+    }
+    
+    .dash-actions li:hover {
+        background: #f5f5f5;
+        box-shadow: inset 0 3px 0  0 #5b64fc;
+        color: #5b64fc !important;
+    }
+    .dash-actions li {
+        list-style: none;
+        display: inline-block;
+        padding:11px 16px 13px 18px;
+        font-size: 13px !important;
+        font-weight: bold !important;
+        text-align: left !important;
+        font-size: 13px;
+        text-align: left;
+        color: #000000;
+        cursor: pointer;
+    }
+    
+    .dash-actions li i{
+        display: inline-block;
+        margin-right: 6px;
+    }
+    
+    .dashboards {
+        padding: 0;
+        margin: 0;
+    }
+    
+    .content{background:#f1f1f1;    padding-right: 0;   }
+    .nav-tabs {width: 100%;    position: fixed;    z-index: 999; background:#fff}
+    
+    
+    
+    .spinner {
+        margin: 100px auto 0;
+        width: 70px;
+        text-align: center;
+      }
+    
+      .spinner > div {
+        width: 18px;
+        height: 18px;
+        background-color: #5b64fc;
+    
+        border-radius: 100%;
+        display: inline-block;
+        -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+        animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+      }
+    
+      .spinner .bounce1 {
+        -webkit-animation-delay: -0.32s;
+        animation-delay: -0.32s;
+      }
+    
+      .spinner .bounce2 {
+        -webkit-animation-delay: -0.16s;
+        animation-delay: -0.16s;
+      }
+    
+      @-webkit-keyframes sk-bouncedelay {
+        0%, 80%, 100% { -webkit-transform: scale(0) }
+        40% { -webkit-transform: scale(1.0) }
+      }
+    
+      @keyframes sk-bouncedelay {
+        0%, 80%, 100% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        } 40% {
+          -webkit-transform: scale(1.0);
+          transform: scale(1.0);
+        }
+      }
+    
+    
+    
+      aside {height: 100vh}
+    
+      .dropdown-menu li:hover, .toolbox-element-value:hover{background: none !important}
+    
+    
+      .progress-holder{
+        height: 20px;
+        margin-bottom: 20px;
+        overflow: hidden;
+        background-color: #f5f5f5;
+        border-radius: 4px;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+    }
+    .progress-holder .percent{
+        background-image: repeating-linear-gradient( 45deg, #3a3c46, #3a3c46 10px, #24262c 10px, #24262c 20px );
+        height: 100%;
+        transition: all 0.4s cubic-bezier(0.8, 0, 0.5, 1);
+    }
+    
+
+    .navbar .nav-head .btn-menu { color:#fff}
+    
+    .report-element-content table {margin-left:0px !important}
+    
+    .report-element-body-outer > div > div > div { position:absolute !important; width:100% !important; height:83% !important}
+    
+    
+    /* .wg-grid-overlay .wg-preview-item.wg-preview-highlight { background-color: inherit !important } */
+    
+    .wg-widget-content { overflow:unset !important}
+    
+    
+    .dropdown-toggle .icon-more {    width: 40px;    height: 20px;    display: inline-block;    text-align: center; box-shadow:none !important}

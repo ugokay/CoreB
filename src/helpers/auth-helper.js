@@ -8,7 +8,7 @@ export const AUTH = {
     }
     this.token = token
   },
-  isLogged: false,
+  isLogged: true,
   login: function (userName, password) {
     return HTTP.get('bi/auth/login', {
       headers: {
