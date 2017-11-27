@@ -10,11 +10,15 @@
         </tr>
       </tbody>
     </table>
+    <report-element v-if="queryResult" :queryResult="queryResult"/>
   </div>
 </template>
 <script>
   import {HTTP} from '@/helpers/http-helper.js'
+  import ReportElement from '../components/ReportElement'
+
   export default{
+    components: {ReportElement},
     name: 'report-element-detail',
     data: function () {
       return {
