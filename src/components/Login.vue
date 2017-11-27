@@ -10,25 +10,20 @@
           <form class="form-horizontal">
             <div class="form-group col-md-10">
               <label for="username">Username</label>
-              <input v-model="userName"  class="form-control" />
+              <input name="username" v-model="userName"  class="form-control" />
             </div>
             <div class="form-group col-md-10">
               <label for="password">Password</label>
-              <input v-model="password"  class="form-control"  type="password"/>
+              <input name="password" v-model="password"  class="form-control"  type="password"/>
             </div>
             <div class="col-md-10">
-              <button @click="login" style="background:#24262c" class="btn btn-primary">Login</button>
+              <button @click.prevent="login" style="background:#24262c" class="btn btn-primary">Login</button>
             </div>
-                    </form>
-
-          </div>
+          </form>
         </div>
       </div>
+    </div>
   </div>
-
-
-
-  
 </template>
 <script>
   import {AUTH} from '@/helpers/auth-helper.js'
