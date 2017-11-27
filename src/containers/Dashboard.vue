@@ -39,7 +39,7 @@
 </template>
 <script>
   import Report from '@/components/Report'
-  import {HTTP} from '../helpers/http-helper.js'
+  import {HTTP} from '@/helpers/http-helper.js'
   export default{
     name: 'dashboard',
     components: {Report},

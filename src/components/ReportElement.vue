@@ -1,7 +1,15 @@
 <template>
-  <div>{{element.title}}</div>
+  <div>
+    <div>{{element.title}}</div>
+    <highcharts :options="options"></highcharts>
+  </div>
 </template>
 <script>
+  import Vue from 'vue'
+  import VueHighcharts from 'vue-highcharts'
+
+  Vue.use(VueHighcharts)
+
   export default{
     name: 'report-element',
     props: {
@@ -11,10 +19,7 @@
     },
     data: function () {
       return {
-        queryResult: {
-          schema: [],
-          data: []
-        }
+        chartOptions: {}
       }
     },
     created: function () {

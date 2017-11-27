@@ -13,7 +13,7 @@ export default new Router({
       component: Dashboard
     },
     {
-      path: '/report-element-detail',
+      path: '/report-element-detail/:id',
       name: 'ReportElementDetail',
       component: ReportElementDetail
     }
