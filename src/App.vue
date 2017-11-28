@@ -2,10 +2,10 @@
   <div id="app">
     <template v-if="isLogged">
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
           <navigation />
         </div>
-        <div class="col-md-9">
+        <div class="col-md-10">
           <router-view />
         </div>
       </div>

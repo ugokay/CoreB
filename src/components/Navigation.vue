@@ -1,5 +1,5 @@
 <template>
-  <aside class="navbar navbar-bundle col-xs-12 col-md-2 col-lg-2">
+  <aside class="navbar navbar-bundle col-xs-12">
     <div class="row">
       <div class="nav-head flex flex-space-between flex-middle">
         <a class="logo" href="/">
