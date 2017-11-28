@@ -1,6 +1,7 @@
 <template>
-  <aside class="navbar navbar-bundle col-xs-12">
     <div class="row">
+
+  <aside class="navbar navbar-bundle col-xs-12">
       <div class="nav-head flex flex-space-between flex-middle">
         <a class="logo" href="/">
           <img src="assets/logo.svg" alt="Corebi Logo">
@@ -21,8 +22,9 @@
             Admin </span>
         <button class="menu-toggler pull-right"><i class="icon-tri-left"></i> </button>
       </div>
-    </div>
   </aside>
+    </div>
+  
 </template>
 <script>
 export default{

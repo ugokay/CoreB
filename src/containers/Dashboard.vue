@@ -1,5 +1,5 @@
 <template>
-<span>
+<div class="row">
  <!-- <aside class="navbar navbar-bundle col-xs-12 col-md-2 col-lg-2">
     <div class="row">
         <div class="nav-head flex flex-space-between flex-middle">
@@ -44,9 +44,18 @@
       </ul>
     </div>
   </div>-->
+        <ul class="dash-actions col-xs-2 pull-right">
+        <li> Fullscreen</li>
+        <li> Edit Layout</li>
+        <li> Toggle Slide</li>
+        <li><i class="icon-refresh"></i><span>Refresh</span></li>
+        <li><i class="icon-export"></i><span>Export</span></li> 
+        <li @click="saveReport(idx)"><i class="icon-export"></i><span>Save</span></li>
+      </ul>
+
+
   <vue-tabs>
         <v-tab v-for="(report, idx) in reports" :key="report.id" :title="report.title">
-          <button @click="saveReport(idx)">Save</button>
           <grid-layout
             :layout="layoutList[idx]"
             :col-num="12"
@@ -67,7 +76,7 @@
           </grid-layout>
         </v-tab>
       </vue-tabs>
-</span>
+</div>
 
 </template>
 <script>
@@ -132,26 +141,5 @@
   }
 </script>
 <style>
-.navbar {    background-color: #3a3c46;    border-radius: 0 0 0 0;    position: relative;
-    min-height: 50px;margin-bottom: 20px;border: 1px solid transparent;}
 
-.navbar .nav-head { padding: 12px 15px}
-
-aside { height:100vh}
-.navbar .nav-head .logo{max-width: 70%;}
-.admin-settings .menu-toggler {     background: none;    border: 0}
-.admin-settings {    height: 50px;    padding: 16px 20px;    color: #fff; }
-.tab-headers { border-bottom:1px solid #ddd; height:40px; background:#fff; box-shadow : 1px 1px 2px 0 rgba(0, 0, 0, 0.12)}
-.editor-panel {     height: 100vh;    overflow-y: scroll;    overflow-x: hidden;    padding: 0;}
-
-.vue-tabs .nav-pills > li.active > a, .vue-tabs .nav-pills > li.active > a:hover, .vue-tabs .nav-pills > li.active > a:focus,
-.nav-pills li.tab a:hover,
-.nav-pills li.tab a.active_tab {  border-radius:0px;  box-shadow: inset 0 3px 0 0 #5b64fc;    background: #f5f5f5;    color: #5b64fc;}
-
-
-
-.vue-tabs .nav-pills > li + li { margin-left:0}
-
-.nav-pills li.tab a {     margin-right: 0;    line-height: inherit;    border: none;    border-radius: 0 0 0 0 !important;
-    font-size: 13px;    color: #000;    line-height: 1.42857143; position: relative;    display: block;    padding: 10px 15px;}
 </style>
