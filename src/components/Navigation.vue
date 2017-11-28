@@ -1,5 +1,5 @@
 <template>
-<ul>
+<ul style="display:none">
   <li><a href="#/">Home</a></li>
   <li><a href="#/report-element-detail/29">REP</a></li>
 </ul>
