@@ -1,8 +1,14 @@
 <template>
   <div id="app">
     <template v-if="isLogged">
-      <navigation />
-      <router-view />
+      <div class="row">
+        <div class="col-md-3">
+          <navigation />
+        </div>
+        <div class="col-md-9">
+          <router-view />
+        </div>
+      </div>
     </template>
     <template v-else>
       <login @success="onLoginSuccess" @error="onLoginError"/>

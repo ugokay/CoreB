@@ -27,7 +27,13 @@
             valueIdxs.push(i)
           }
         }
-        var chartData = CHART.chartify(this.queryResult, valueIdxs, 0)
+        var chartData = {}
+        if (this.queryResult.schema.fields.length === 3 &&
+          this.queryResult.schema.fields[1].type === 'VARCHAR') {
+          chartData = CHART.cubify(this.queryResult)
+        } else {
+          chartData = CHART.chartify(this.queryResult, valueIdxs, 0)
+        }
         var chartOptions = CHART.createChartOptions(chartData)
         return chartOptions
       }

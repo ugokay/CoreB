@@ -2,6 +2,42 @@
  * Created by gorkem on 27.11.2017.
  */
 export const CHART = {
+  cubify: function (queryResult, valueIdx = 2, xAxisIdx = 0, legendIdx = 1) {
+    var xAxisData = []
+    var legendData = []
+    queryResult.data.forEach((row) => {
+      if (!xAxisData.includes(row[xAxisIdx])) {
+        xAxisData.push(row[xAxisIdx].toString())
+      }
+      if (!legendData.includes(row[legendIdx])) {
+        legendData.push(row[legendIdx].toString())
+      }
+    })
+    var seriesDataList = []
+    for (var i = 0; i < legendData.length; i++) {
+      var seriesData = []
+      var legend = legendData[i]
+      for (var j = 0; j < xAxisData.length; j++) {
+        var xAxis = xAxisData[j]
+        var value = 0
+        for (var row in queryResult.data) {
+          var l = row[legendIdx].toString()
+          var x = row[xAxisIdx].toString()
+          if (l === legend && x === xAxis) {
+            value = row[valueIdx]
+            break
+          }
+        }
+        seriesData.push(value)
+      }
+      seriesDataList.push(seriesData)
+    }
+    const seriesList = []
+    for (let i = 0; i < seriesList.length; i++) {
+      seriesList.push({data: seriesList[i], name: legendData[i]})
+    }
+    return {seriesList, xAxisData, schema: queryResult.schema}
+  },
   chartify: function (queryResult, valueIdxs, xAxisIdx) {
     var xAxis = []
     var seriesList = []
@@ -19,8 +55,6 @@ export const CHART = {
     })
     console.log(seriesList)
     seriesList.forEach((series, i) => {
-      console.log(valueIdxs[i])
-      console.log(queryResult.schema.fields[valueIdxs[i]])
       seriesList.push({data: seriesList[i], name: queryResult.schema.fields[valueIdxs[i]].name})
     })
     return {seriesList, xAxis, schema: queryResult.schema}
