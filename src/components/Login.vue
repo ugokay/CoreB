@@ -39,7 +39,6 @@
       login: function () {
         AUTH.login(this.userName, this.password).then((res) => {
           this.$emit('success', res.data)
-          AUTH.isLogged = true
           AUTH.setToken(res.data.token)
         }).catch((error) => {
           this.$emit('error', error.response)

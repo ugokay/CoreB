@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <template v-if="isLogged">
+    <template v-if="isLogged()">
       <div class="row">
         <div class="col-md-2">
           <navigation />
@@ -20,21 +20,36 @@
   import Navigation from '@/components/Navigation'
   import Login from '@/components/Login'
   import {AUTH} from '@/helpers/auth-helper.js'
+  import {HTTP} from '@/helpers/http-helper.js'
   export default {
     name: 'app',
     components: { Navigation, Login },
     data: function () {
-      return {
-        isLogged: AUTH.isLogged
-      }
+      return {}
     },
     methods: {
+      isLogged: function () {
+        return AUTH.isLogged()
+      },
       onLoginSuccess: function (data) {
-        this.isLogged = true
       },
       onLoginError: function (data) {
-        console.log(data)
       }
+    },
+    created: function () {
+      var self = this
+      HTTP.interceptors.response.use(function (response) {
+        // Do something with response data
+        return response
+      }, function (error) {
+        // Do something with response error
+        if (error.response.status === 401) {
+          console.log('Unauthorized attept!')
+          AUTH.setToken('')
+          self.$router.push('login')
+        }
+        return Promise.reject(error)
+      })
     }
   }
 </script>

@@ -49,7 +49,7 @@
         <li> Edit Layout</li>
         <li> Toggle Slide</li>
         <li><i class="icon-refresh"></i><span>Refresh</span></li>
-        <li><i class="icon-export"></i><span>Export</span></li> 
+        <li><i class="icon-export"></i><span>Export</span></li>
         <li @click="saveReport(idx)"><i class="icon-export"></i><span>Save</span></li>
       </ul>
 
@@ -99,27 +99,31 @@
     },
     methods: {
       getReports: function () {
-        HTTP.get('bi/report/list').then((res) => {
-          this.reports = res.data
-          this.reports.forEach((report) => {
-            if (report.layout) {
-              this.layoutList.push(JSON.parse(report.layout))
-            } else {
-              var layout = []
-              report.elements.forEach((element) => {
-                layout.push({
-                  id: element.id,
-                  x: element.left,
-                  y: element.top,
-                  w: element.width,
-                  h: element.height,
-                  i: element.id.toString()
+        HTTP.get('bi/report/list')
+          .then((res) => {
+            this.reports = res.data
+            this.reports.forEach((report) => {
+              if (report.layout) {
+                this.layoutList.push(JSON.parse(report.layout))
+              } else {
+                var layout = []
+                report.elements.forEach((element) => {
+                  layout.push({
+                    id: element.id,
+                    x: element.left,
+                    y: element.top,
+                    w: element.width,
+                    h: element.height,
+                    i: element.id.toString()
+                  })
                 })
-              })
-              this.layoutList.push(layout)
-            }
+                this.layoutList.push(layout)
+              }
+            })
           })
-        })
+          .catch((error) => {
+            console.log(error)
+          })
       },
       saveReport: function (idx) {
         this.reports[idx].layout = JSON.stringify(this.layoutList[idx])
