@@ -4,12 +4,14 @@
       <div class="nav-tabs-wrapper">
         <ul class="nav nav-tabs pull-left ">
             <li>
-              <span class="button-holder title title_center">Back to Dashboard</span></a>
+              <span  class="button-holder title title_center">
+                <a href="../../">Back to Dashboard</a></span>
             </li>
           </ul>
 
-            <ul  class="top-related-actions pull-right" style="position:absolute; top:0; right:0">
-              <li> <i  class="icon-query"></i> Query</li>
+            <ul class="top-related-actions pull-right" style="position:absolute; top:0; right:0">
+              <li v-on:click="seenHtml = !seenHtml"> <i   class="icon-query"></i> HTML</li>
+              <li v-on:click="seenQuery = !seenQuery"> <i  class="icon-query"></i> Query</li>
               <li> <i  class="icon-refresh"></i> Refresh</li>
               <li> <i  class="icon-export"></i> Export</li>
               <li> <i  class="icon-export"></i> Save</li>
@@ -17,9 +19,28 @@
         </div>
       </div>
 
-    <table class="table" v-if="queryResult.schema">
+
+    <div v-if="seenHtml"> <!-- 24262c-->
+      <editor    height="400px" :content="content" > </editor>
+      <div style="background:#33353e; height:40px" class="col-xs-12">  
+        <span style="height:40px; width:30px; background:#24262c"> </span>
+        <span style="color:#fff; font-size:13px; margin-top:12px; display:block"> RUN <i class="icon-arrow-right" style="color:#ffffff"> </i>   </span>
+       </div>
+    </div>
+    <div v-if="seenQuery"  >
+      <editor  height="400px" :content="content" > </editor>
+    </div>
+
+
+
+
+    <report-element v-if="queryResult" :queryResult="queryResult"/>
+
+
+    <table class="table" v-if="queryResult.schema"  v-on:click="tableSeen = !tableSeen">
       <thead>
         <th v-for="field in queryResult.schema.fields">{{field.name}}</th>
+        <th style="    text-align: right;    position: relative;    padding-right: 20px;">  <i  class="icon-query-hide"> </i>  </th>
       </thead>
       <tbody>
         <tr v-for="row in queryResult.data">
@@ -27,21 +48,33 @@
         </tr>
       </tbody>
     </table>
-    <report-element v-if="queryResult" :queryResult="queryResult"/>
+
+
   </div>
 </template>
 <script>
   import {HTTP} from '@/helpers/http-helper.js'
   import ReportElement from '../components/ReportElement'
+  import editor from 'ace-vue2'
+  import 'brace/mode/javascript'
+  import 'brace/mode/sql'
+  import 'brace/theme/monokai'
+    // let code = this.$children[0].getValue();
 
   export default{
-    components: {ReportElement},
+    components: {ReportElement, editor},
     name: 'report-element-detail',
     data: function () {
       return {
+        seenHtml: false,
+        seenQuery : false,
+        tableSeen : false,
         queryResult: {}
       }
     },
+      methods: { editorInit:function () {
+        },
+      },
     created: function () {
       const dayInMillis = 1000 * 60 * 60 * 24
       const today = new Date()
@@ -73,6 +106,8 @@
   }
 </script>
 <style>
+
+thead th {    verical-align: bottom;    background: #d3d3d3 !important;    border-bottom: 2px solid #ddd; font-size:10px  ;  padding: 8px;}
 span.button-holder, .fixed-top-bar ul li span {
     font-size: 13px;
     font-weight: 500;
@@ -87,4 +122,6 @@ span.button-holder, .fixed-top-bar ul li span {
     float: left;
     padding: 11px 18px 13px 18px;
     cursor: pointer;}
+
+    .is-hidden { display:none}
 </style>

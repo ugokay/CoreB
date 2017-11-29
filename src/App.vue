@@ -5,7 +5,7 @@
         <div class="col-md-2">
           <navigation />
         </div>
-        <div class="col-md-10">
+        <div class="col-md-10 scrollable">
           <router-view />
         </div>
       </div>
@@ -63,4 +63,8 @@
   /* color: #2c3e50; */
   /* margin-top: 60px; */
 }
+
+.scrollable {    height: 100vh;
+    overflow-y: scroll;
+    overflow-x: hidden;}
 </style>
