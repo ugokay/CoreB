@@ -1,22 +1,25 @@
 <template>
   <div>
-    <highcharts v-if="queryResult.schema" :options="chartOptions"></highcharts>
+    <!--<highcharts v-if="queryResult.schema" :options="chartOptions"></highcharts>-->
+    <vue-highcharts v-if="queryResult.schema" :options="chartOptions"></vue-highcharts>
   </div>
 </template>
 <script>
-  import Vue from 'vue'
-  import VueHighcharts from 'vue-highcharts'
   import {CHART} from '@/helpers/chart-helper.js'
-
-  Vue.use(VueHighcharts)
+  import {HTTP} from '@/helpers/http-helper.js'
+  import {DUMMY_FILTER} from '@/helpers/helpers.js'
+  import VueHighcharts from 'vue2-highcharts'
 
   export default{
     name: 'report-element',
+    components: {VueHighcharts},
     props: {
-      queryResult: {}
+      element: {}
     },
     data: function () {
-      return {}
+      return {
+        queryResult: {}
+      }
     },
     computed: {
       chartOptions: function () {
@@ -39,8 +42,19 @@
       }
     },
     created: function () {
-      // Execute report element
+      HTTP.get('bi/analyze/execute/report-element/' + this.element.id, {
+        params: {
+          filterParamsJson: JSON.stringify(DUMMY_FILTER.get())
+        }
+      }).then((res) => {
+        this.queryResult = res.data
+      })
     }
   }
 </script>
-<style></style>
+<style>
+  .highcharts-root{
+    width: 100%;
+    height: 100%;
+  }
+</style>

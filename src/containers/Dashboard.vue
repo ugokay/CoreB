@@ -55,9 +55,9 @@
 
 
   <vue-tabs>
-        <v-tab v-for="(report, idx) in reports" :key="report.id" :title="report.title">
+        <v-tab v-for="(report, reportIdx) in reports" :key="report.id" :title="report.title">
           <grid-layout
-            :layout="layoutList[idx]"
+            :layout="layoutList[reportIdx]"
             :col-num="12"
             :row-height="30"
             :is-draggable="true"
@@ -65,13 +65,13 @@
             :margin="[10, 10]"
             :vertical-compact="false"
             :use-css-transforms="true">
-                <grid-item v-for="(item, idx) in layoutList[idx]" :key="item.i" style="border: 1px solid"
+                <grid-item v-for="(item, elementIdx) in layoutList[reportIdx]" :key="item.i" style="border: 1px solid"
                            :x="item.x"
                            :y="item.y"
                            :w="item.w"
                            :h="item.h"
                            :i="item.i">
-                    {{item.i}}
+                    <report-element :element="reports[reportIdx].elements[elementIdx]"/>
                 </grid-item>
           </grid-layout>
         </v-tab>
@@ -81,6 +81,7 @@
 </template>
 <script>
   import Report from '@/components/Report'
+  import ReportElement from '@/components/ReportElement'
   import {HTTP} from '@/helpers/http-helper.js'
   import VueGridLayout from 'vue-grid-layout'
   import {VueTabs, VTab} from 'vue-nav-tabs'
@@ -88,7 +89,7 @@
 
   export default{
     name: 'dashboard',
-    components: {Report, VueTabs, VTab, 'grid-layout': VueGridLayout.GridLayout, 'grid-item': VueGridLayout.GridItem},
+    components: {Report, ReportElement, VueTabs, VTab, 'grid-layout': VueGridLayout.GridLayout, 'grid-item': VueGridLayout.GridItem},
     data: function () {
       return {
         selectedReportIdx: 0,

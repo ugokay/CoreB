@@ -44,7 +44,6 @@ export const CHART = {
     for (var i = 0; i < valueIdxs.length; i++) {
       seriesList[i] = []
     }
-    console.log(queryResult.data)
     queryResult.data.forEach((row) => {
       if (!xAxis.includes(row[xAxisIdx])) {
         xAxis.push(row[xAxisIdx])
@@ -53,7 +52,6 @@ export const CHART = {
         })
       }
     })
-    console.log(seriesList)
     seriesList.forEach((series, i) => {
       seriesList.push({data: seriesList[i], name: queryResult.schema.fields[valueIdxs[i]].name})
     })

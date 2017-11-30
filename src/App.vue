@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <template v-if="isLogged()">
+    <template v-if="isLogged">
       <div class="row">
         <div class="col-md-2">
           <navigation />
@@ -25,18 +25,19 @@
     name: 'app',
     components: { Navigation, Login },
     data: function () {
-      return {}
+      return {
+        isLogged: false
+      }
     },
     methods: {
-      isLogged: function () {
-        return AUTH.isLogged()
-      },
       onLoginSuccess: function (data) {
+        this.isLogged = true
       },
       onLoginError: function (data) {
       }
     },
     created: function () {
+      this.isLogged = AUTH.isLogged()
       var self = this
       HTTP.interceptors.response.use(function (response) {
         // Do something with response data

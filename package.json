@@ -11,14 +11,15 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "ace-vue2": "^0.3.0",
     "axios": "^0.17.1",
     "highcharts": "^6.0.3",
     "vue": "^2.5.2",
     "vue-ace-editor": "^1.0.3",
     "vue-grid-layout": "^2.1.9",
-    "vue-highcharts": "0.0.10",
     "vue-nav-tabs": "^0.5.4",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue2-highcharts": "^1.1.5"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
