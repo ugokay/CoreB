@@ -53,7 +53,7 @@
         }
         var chartData = {}
         if (this.queryResult.schema.fields.length === 3 &&
-          this.queryResult.schema.fields[1].type === 'VARCHAR') {
+          this.queryResult.schema.fields[1].type.sqlTypeName === 'VARCHAR') {
           chartData = CHART.cubify(this.queryResult)
         } else {
           chartData = CHART.chartify(this.queryResult, valueIdxs, 0)

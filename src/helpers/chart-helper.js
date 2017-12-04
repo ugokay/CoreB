@@ -3,26 +3,27 @@
  */
 export const CHART = {
   cubify: function (queryResult, valueIdx = 2, xAxisIdx = 0, legendIdx = 1) {
-    var xAxisData = []
-    var legendData = []
+    let xAxisData = []
+    let legendData = []
     queryResult.data.forEach((row) => {
       if (!xAxisData.includes(row[xAxisIdx])) {
-        xAxisData.push(row[xAxisIdx].toString())
+        xAxisData.push(row[xAxisIdx])
       }
       if (!legendData.includes(row[legendIdx])) {
-        legendData.push(row[legendIdx].toString())
+        legendData.push(row[legendIdx])
       }
     })
-    var seriesDataList = []
-    for (var i = 0; i < legendData.length; i++) {
-      var seriesData = []
-      var legend = legendData[i]
-      for (var j = 0; j < xAxisData.length; j++) {
-        var xAxis = xAxisData[j]
-        var value = 0
-        for (var row in queryResult.data) {
-          var l = row[legendIdx].toString()
-          var x = row[xAxisIdx].toString()
+    let seriesDataList = []
+    for (let i = 0; i < legendData.length; i++) {
+      let seriesData = []
+      let legend = legendData[i]
+      for (let j = 0; j < xAxisData.length; j++) {
+        let xAxis = xAxisData[j]
+        let value = 0
+        for (let k = 0; k < queryResult.data.length; k++) {
+          let row = queryResult.data[k]
+          let l = row[legendIdx]
+          let x = row[xAxisIdx]
           if (l === legend && x === xAxis) {
             value = row[valueIdx]
             break
@@ -33,15 +34,15 @@ export const CHART = {
       seriesDataList.push(seriesData)
     }
     const seriesList = []
-    for (let i = 0; i < seriesList.length; i++) {
-      seriesList.push({data: seriesList[i], name: legendData[i]})
+    for (let i = 0; i < seriesDataList.length; i++) {
+      seriesList.push({data: seriesDataList[i], name: legendData[i]})
     }
     return {seriesList, xAxisData, schema: queryResult.schema}
   },
   chartify: function (queryResult, valueIdxs, xAxisIdx) {
-    var xAxis = []
-    var seriesList = []
-    for (var i = 0; i < valueIdxs.length; i++) {
+    let xAxis = []
+    let seriesList = []
+    for (let i = 0; i < valueIdxs.length; i++) {
       seriesList[i] = []
     }
     queryResult.data.forEach((row) => {
@@ -59,12 +60,12 @@ export const CHART = {
   },
   createChartOptions: function (chartData, reportElementType = 'line') {
     if (reportElementType === 'pie') {
-      var pieData = {
+      let pieData = {
         name: chartData.seriesList[0]['name'],
         data: []
       }
-      var idx = 0
-      for (var value in chartData.seriesList[0]['data']) {
+      let idx = 0
+      for (let value in chartData.seriesList[0]['data']) {
         pieData.data.push({
           y: value,
           name: chartData.xAxis[idx]
