@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--<highcharts v-if="queryResult.schema" :options="chartOptions"></highcharts>-->
-    <vue-highcharts v-if="queryResult.schema" :options="chartOptions"></vue-highcharts>
+    <vue-highcharts v-if="queryResult.schema" :options="chartOptions" ref="chart"></vue-highcharts>
   </div>
 </template>
 <script>
@@ -39,6 +39,11 @@
         }
         var chartOptions = CHART.createChartOptions(chartData)
         return chartOptions
+      }
+    },
+    methods: {
+      redrawChart: function() {
+        this.$refs.chart.getChart().reflow()
       }
     },
     created: function () {

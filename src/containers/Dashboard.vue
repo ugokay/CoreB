@@ -70,8 +70,10 @@
                            :y="item.y"
                            :w="item.w"
                            :h="item.h"
-                           :i="item.i">
-                    <report-element :element="reports[reportIdx].elements[elementIdx]"/>
+                           :i="item.i"
+                           @resized="resizeEnd(elementIdx)"
+                           @resize="resize(elementIdx)">
+                    <report-element :element="reports[reportIdx].elements[elementIdx]" ref="reportElement"/>
                 </grid-item>
           </grid-layout>
         </v-tab>
@@ -126,6 +128,14 @@
             console.log(error)
           })
       },
+      resize : function(idx){
+        this.$refs.reportElement[idx].redrawChart()
+      },
+      resizeEnd : function(idx){
+        setTimeout(() => {
+          this.$refs.reportElement[idx].redrawChart()
+        }, 0)
+      },
       saveReport: function (idx) {
         this.reports[idx].layout = JSON.stringify(this.layoutList[idx])
         HTTP.post('bi/report', this.reports[idx])
@@ -146,5 +156,8 @@
   }
 </script>
 <style>
-
+.highcharts {
+    position: absolute;
+    width: 100%;
+    height: 100%;}
 </style>
