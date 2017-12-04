@@ -55,8 +55,9 @@
 
 
       <vue-tabs @tab-change="tabChange">
-        <v-tab v-for="(report, reportIdx) in reports" :key="report.id" :title="report.title">
+        <v-tab v-for="(report, reportIdx) in reports" :key="report.id" :title="report.title" style="position: relative;"  :style="{zIndex:report.id}">
           <grid-layout
+            v-if="selectedReportIdx === reportIdx"
             :layout="layoutList[reportIdx]"
             :col-num="12"
             :row-height="30"
