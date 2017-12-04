@@ -14,6 +14,7 @@
     "ace-vue2": "^0.3.0",
     "axios": "^0.17.1",
     "highcharts": "^6.0.3",
+    "mustache": "^2.3.0",
     "vue": "^2.5.2",
     "vue-ace-editor": "^1.0.3",
     "vue-grid-layout": "^2.1.9",

@@ -1,7 +1,12 @@
 <template>
   <div>
     <!--<highcharts v-if="queryResult.schema" :options="chartOptions"></highcharts>-->
-    <vue-highcharts v-if="queryResult.schema" :options="chartOptions" ref="chart"></vue-highcharts>
+    <div v-if="queryResult.schema">
+      <div v-if="element.chartType === 6">
+        <div v-html="customHtml"></div>
+      </div>
+      <vue-highcharts v-else :options="chartOptions" ref="chart"></vue-highcharts>
+    </div>
   </div>
 </template>
 <script>
@@ -9,12 +14,13 @@
   import {HTTP} from '@/helpers/http-helper.js'
   import {DUMMY_FILTER} from '@/helpers/helpers.js'
   import VueHighcharts from 'vue2-highcharts'
+  import Mustache from 'mustache'
 
   export default{
     name: 'report-element',
     components: {VueHighcharts},
     props: {
-      element: {}
+      element: {type: Object, default: function () { return {} }}
     },
     data: function () {
       return {
@@ -22,6 +28,21 @@
       }
     },
     computed: {
+      customHtml: function () {
+        if (this.queryResult.schema) {
+          var data = {}
+          for (let i = 0; i < this.queryResult.data.length; i++) {
+            var rowData = {}
+            for (var j = 0; j < this.queryResult.data[i].length; j++) {
+              rowData['c' + j] = this.queryResult.data[i][j]
+            }
+            data['r' + i] = rowData
+          }
+          return Mustache.render(this.element.html, {data: data})
+        } else {
+          return 'NO DATA'
+        }
+      },
       chartOptions: function () {
         var valueIdxs = []
         for (var i = 0; i < this.queryResult.schema.fields.length; i++) {
@@ -42,8 +63,10 @@
       }
     },
     methods: {
-      redrawChart: function() {
-        this.$refs.chart.getChart().reflow()
+      redrawChart: function () {
+        if (this.element.chartType !== 6) {
+          this.$refs.chart.getChart().reflow()
+        }
       }
     },
     created: function () {

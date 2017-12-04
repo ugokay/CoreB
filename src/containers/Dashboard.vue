@@ -50,11 +50,11 @@
         <li> Toggle Slide</li>
         <li><i class="icon-refresh"></i><span>Refresh</span></li>
         <li><i class="icon-export"></i><span>Export</span></li>
-        <li @click="saveReport(idx)"><i class="icon-export"></i><span>Save</span></li>
+        <li @click="saveReport"><i class="icon-export"></i><span>Save</span></li>
       </ul>
 
 
-  <vue-tabs>
+      <vue-tabs @tab-change="tabChange">
         <v-tab v-for="(report, reportIdx) in reports" :key="report.id" :title="report.title">
           <grid-layout
             :layout="layoutList[reportIdx]"
@@ -73,7 +73,7 @@
                            :i="item.i"
                            @resized="resizeEnd(elementIdx)"
                            @resize="resize(elementIdx)">
-                    <report-element :element="reports[reportIdx].elements[elementIdx]" ref="reportElement"/>
+                    <report-element :element="getElement(report, item.id)" ref="reportElement"/>
                 </grid-item>
           </grid-layout>
         </v-tab>
@@ -101,6 +101,16 @@
       }
     },
     methods: {
+      tabChange: function (tabIdx) {
+        this.selectedReportIdx = tabIdx
+      },
+      getElement: function (report, id) {
+        for (var i = 0; i < report.elements.length; i++) {
+          if (report.elements[i].id === id) {
+            return report.elements[i]
+          }
+        }
+      },
       getReports: function () {
         HTTP.get('bi/report/list')
           .then((res) => {
@@ -110,7 +120,7 @@
                 this.layoutList.push(JSON.parse(report.layout))
               } else {
                 var layout = []
-                report.elements.forEach((element) => {
+                report.elements.sort((el1, el2) => el1.id > el2.id ? -1 : el1.id < el2.id ? 1 : 0).forEach((element) => {
                   layout.push({
                     id: element.id,
                     x: element.left,
@@ -128,17 +138,17 @@
             console.log(error)
           })
       },
-      resize : function(idx){
+      resize: function (idx) {
         this.$refs.reportElement[idx].redrawChart()
       },
-      resizeEnd : function(idx){
+      resizeEnd: function (idx) {
         setTimeout(() => {
           this.$refs.reportElement[idx].redrawChart()
         }, 0)
       },
-      saveReport: function (idx) {
-        this.reports[idx].layout = JSON.stringify(this.layoutList[idx])
-        HTTP.post('bi/report', this.reports[idx])
+      saveReport: function () {
+        this.reports[this.selectedReportIdx].layout = JSON.stringify(this.layoutList[this.selectedReportIdx])
+        HTTP.post('bi/report', this.reports[this.selectedReportIdx])
           .then((res) => {
             console.log(res)
           })

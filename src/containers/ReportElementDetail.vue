@@ -22,7 +22,7 @@
 
     <div v-if="seenHtml"> <!-- 24262c-->
       <editor    height="400px" :content="content" > </editor>
-      <div style="background:#33353e; height:40px" class="col-xs-12">  
+      <div style="background:#33353e; height:40px" class="col-xs-12">
         <span style="height:40px; width:30px; background:#24262c"> </span>
         <span style="color:#fff; font-size:13px; margin-top:12px; display:block"> RUN <i class="icon-arrow-right" style="color:#ffffff"> </i>   </span>
        </div>
@@ -67,14 +67,12 @@
     data: function () {
       return {
         seenHtml: false,
-        seenQuery : false,
-        tableSeen : false,
+        seenQuery: false,
+        tableSeen: false,
         queryResult: {}
       }
     },
-      methods: { editorInit:function () {
-        },
-      },
+    methods: {},
     created: function () {
       const dayInMillis = 1000 * 60 * 60 * 24
       const today = new Date()
