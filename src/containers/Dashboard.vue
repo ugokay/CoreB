@@ -46,7 +46,7 @@
   </div>-->
         <ul class="dash-actions col-xs-2 pull-right">
         <li> Fullscreen</li>
-        <li> Edit Layout</li>
+        <!--<li> Edit Layout</li>-->
         <li> Toggle Slide</li>
         <li><i class="icon-refresh"></i><span>Refresh</span></li>
         <li><i class="icon-export"></i><span>Export</span></li>
@@ -56,6 +56,32 @@
 
       <vue-tabs @tab-change="tabChange">
         <v-tab v-for="(report, reportIdx) in reports" :key="report.id" :title="report.title" style="position: relative;"  :style="{zIndex:report.id}">
+          <div class="tabChores" style="margin: 0 0 20px 19px;font-size: 20px;font-weight: bold;">
+            <input class="col-xs-4" style="border: none; background-color: #f1f1f1" type="input" v-model="report.title">
+          </div>
+          <div class="col-xs-6 form-group selected-report-options">
+            <div class="form-group  col-sm-3">
+              <label style="    font-size: 12px;margin-bottom: 0;"> LEYBIL </label>
+              <datepicker></datepicker>
+            </div>
+            <div class="form-group  col-sm-3">
+              <label style="    font-size: 12px;margin-bottom: 0;"> LEYBIL </label>
+              <datepicker></datepicker>
+
+            </div>
+            <div class="form-group  col-sm-3">
+              <label style="    font-size: 12px;margin-bottom: 0;"> LEYBIL </label>
+              <datepicker></datepicker>
+            </div>
+            <div class="form-group  col-sm-3">
+              <label style="    font-size: 12px;margin-bottom: 0;"> LEYBIL </label>
+              <datepicker></datepicker>
+            </div>
+          </div>
+          <br>
+          <br>
+          <br>
+          <br>
           <grid-layout
             v-if="selectedReportIdx === reportIdx"
             :layout="layoutList[reportIdx]"
@@ -89,10 +115,11 @@
   import VueGridLayout from 'vue-grid-layout'
   import {VueTabs, VTab} from 'vue-nav-tabs'
   import 'vue-nav-tabs/themes/vue-tabs.css'
+  import Datepicker from 'vuejs-datepicker'
 
   export default{
     name: 'dashboard',
-    components: {Report, ReportElement, VueTabs, VTab, 'grid-layout': VueGridLayout.GridLayout, 'grid-item': VueGridLayout.GridItem},
+    components: {Report, ReportElement, VueTabs, VTab, 'grid-layout': VueGridLayout.GridLayout, 'grid-item': VueGridLayout.GridItem, Datepicker},
     data: function () {
       return {
         selectedReportIdx: 0,
@@ -170,5 +197,10 @@
 .highcharts {
     position: absolute;
     width: 100%;
-    height: 100%;}
+    height: 85%;
+    top:15%;
+
+}
+  .vue-grid-layout > div { background:#fff;   box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.12);    border:none !important;}
+
 </style>

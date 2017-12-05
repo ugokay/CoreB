@@ -1,6 +1,31 @@
 <template>
   <div>
-    <!--<highcharts v-if="queryResult.schema" :options="chartOptions"></highcharts>-->
+    <div class="col-sm-12">
+      <div class="row">
+        <input type="input"  class="no-border col-xs-9" v-model="element.title"/>
+        <div  class="col-xs-3 btn-group btn-group-xs align-right no-padding">
+          <a  class="dropdown-toggle" @click="toggleDropDown" data-toggle="dropdown">
+            <i class="icon-more"></i>
+          </a>
+          <ul  class="dropdown-menu"  v-on:click="clickedDropDown = !clickedDropDown">
+            <li><a>Test Mustache</a></li>
+            <li><a>Save</a></li>
+            <li><a>Execute</a></li>
+            <li><a>Detail</a></li>
+            <li class="divider"></li>
+            <li><a>Table</a></li>
+            <li><a>Single Value</a></li>
+            <li><a>Line Chart</a></li>
+            <li><a>Bar Chart</a></li>
+            <li><a>Bar Chart (Horizontal)</a></li>
+            <li><a>Pie Chart</a></li>
+            <li><a>Custom Html</a></li>
+            <li class="divider"></li>
+            <li><a>Remove</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
     <div v-if="queryResult.schema">
       <div v-if="element.chartType === 6">
         <div v-html="customHtml"></div>
@@ -24,6 +49,7 @@
     },
     data: function () {
       return {
+        clickedDropDown: false,
         queryResult: {}
       }
     },
@@ -67,6 +93,9 @@
         if (this.element.chartType !== 6) {
           this.$refs.chart.getChart().reflow()
         }
+      },
+      toggleDropDown: function () {
+        clickedDropDown = true;
       }
     },
     created: function () {
@@ -85,4 +114,5 @@
     width: 100%;
     height: 100%;
   }
+  .no-border { border:none }
 </style>
