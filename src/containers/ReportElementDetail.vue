@@ -16,9 +16,7 @@
             <li> <i  class="icon-export"></i> Save</li>
           </ul>
         </div>
-      </div>
-
-
+    </div>
     <div v-if="seenHtml">
       <editor height="400px" :content="content" > </editor>
       <div style="background:#33353e; height:40px" class="col-xs-12">
@@ -99,7 +97,7 @@
 </script>
 <style>
 
-thead th {    verical-align: bottom;    background: #d3d3d3 !important;    border-bottom: 2px solid #ddd; font-size:10px  ;  padding: 8px;}
+thead th { verical-align: bottom; background: #d3d3d3 !important; border-bottom: 2px solid #ddd; font-size:10px; padding: 8px;}
 span.button-holder, .fixed-top-bar ul li span {
     font-size: 13px;
     font-weight: 500;
@@ -115,5 +113,5 @@ span.button-holder, .fixed-top-bar ul li span {
     padding: 11px 18px 13px 18px;
     cursor: pointer;
 }
-.is-hidden { display:none}
+.is-hidden { display:none }
 </style>

@@ -15,7 +15,7 @@
           <input class="col-xs-4" style="border: none; background-color: #f1f1f1" type="input" v-model="report.title">
         </div>
         <div class="col-xs-6 form-group selected-report-options">
-          <div v-for="filterDefinition in report.filterDefinitions" class="form-group  col-sm-3">
+          <div v-for="filterDefinition in report.filterDefinitions" class="form-group col-sm-3">
             <label style="font-size: 12px;margin-bottom: 0;"> {{filterDefinition.label}} </label>
             <datepicker v-model="report.filters[filterDefinition.name]"></datepicker>
           </div>
@@ -42,7 +42,7 @@
              :i="item.i"
              @resized="resizeEnd(elementIdx)"
              @resize="resize(elementIdx)">
-          <report-element :element="getElement(report, item.id)" ref="reportElement"/>
+            <report-element :element="getElement(report, item.id)" ref="reportElement"/>
           </grid-item>
         </grid-layout>
       </v-tab>
@@ -63,8 +63,7 @@
 
   export default{
     name: 'dashboard',
-    components: {
-      Report, ReportElement, VueTabs, VTab, 'grid-layout': VueGridLayout.GridLayout, 'grid-item': VueGridLayout.GridItem, Datepicker, AddButton},
+    components: { Report, ReportElement, VueTabs, VTab, 'grid-layout': VueGridLayout.GridLayout, 'grid-item': VueGridLayout.GridItem, Datepicker, AddButton},
     data: function () {
       return {
         selectedReportIdx: 0,
@@ -72,7 +71,7 @@
         gridItems: [],
         layoutList: []
       }
-    },
+    }, 
     methods: {
       tabChange: function (tabIdx) {
         this.selectedReportIdx = tabIdx
@@ -88,7 +87,6 @@
         HTTP.get('bi/report/list')
           .then((res) => {
             this.reports = res.data
-            console.log(this.reports)
             this.reports.forEach((report) => {
               //MOCK
               report.filterDefinitions = MOCK_FILTER_DEFINITIONS.get()
@@ -146,6 +144,7 @@
     }
   }
 </script>
+
 <style>
 .highcharts {
   position: absolute;
@@ -154,5 +153,4 @@
   top:15%;
 }
 .vue-grid-layout > div { background:#fff;box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.12);border:none !important; }
-
 </style>

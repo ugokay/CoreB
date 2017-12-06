@@ -3,7 +3,7 @@
     <div class="col-sm-12">
       <div class="row">
         <input type="input"  class="no-border col-xs-9" v-model="element.title"/>
-        <div  class="col-xs-3 btn-group btn-group-xs align-right no-padding">
+        <div  class="col-xs-3 btn-group btn-group-xs align-right no-padding toggleTriggerBox">
           <a class="dropdown-toggle" @click="toggleDropDown" data-toggle="dropdown">
             <i class="icon-more"></i>
           </a>
@@ -114,6 +114,14 @@
   }
 </script>
 <style>
+
+  .toggleTriggerBox {
+    position: inherit!important
+  }
+  .toggleTriggerBox .dropdown-menu {
+    right: 0;
+    left: auto;
+  }
 
   .highcharts-root{
     width: 100%;
