@@ -8,34 +8,29 @@
                 <a href="../../">Back to Dashboard</a></span>
             </li>
           </ul>
-
-            <ul class="top-related-actions pull-right" style="position:absolute; top:0; right:0">
-              <li v-on:click="seenHtml = !seenHtml"> <i   class="icon-query"></i> HTML</li>
-              <li v-on:click="seenQuery = !seenQuery"> <i  class="icon-query"></i> Query</li>
-              <li> <i  class="icon-refresh"></i> Refresh</li>
-              <li> <i  class="icon-export"></i> Export</li>
-              <li> <i  class="icon-export"></i> Save</li>
-            </ul>
+          <ul class="top-related-actions pull-right" style="position:absolute; top:0; right:0">
+            <li v-on:click="seenHtml = !seenHtml"> <i   class="icon-query"></i> HTML</li>
+            <li v-on:click="seenQuery = !seenQuery"> <i  class="icon-query"></i> Query</li>
+            <li> <i  class="icon-refresh"></i> Refresh</li>
+            <li> <i  class="icon-export"></i> Export</li>
+            <li> <i  class="icon-export"></i> Save</li>
+          </ul>
         </div>
       </div>
 
 
-    <div v-if="seenHtml"> <!-- 24262c-->
-      <editor    height="400px" :content="content" > </editor>
+    <div v-if="seenHtml">
+      <editor height="400px" :content="content" > </editor>
       <div style="background:#33353e; height:40px" class="col-xs-12">
         <span style="height:40px; width:30px; background:#24262c"> </span>
-        <span style="color:#fff; font-size:13px; margin-top:12px; display:block"> RUN <i class="icon-arrow-right" style="color:#ffffff"> </i>   </span>
+        <span style="color:#fff; font-size:13px; margin-top:12px; display:block"> RUN <i class="icon-arrow-right" style="color:#ffffff"> </i></span>
        </div>
     </div>
-    <div v-if="seenQuery"  >
+    <div v-if="seenQuery">
       <editor  height="400px" :content="content" > </editor>
     </div>
 
-
-
-
     <report-element v-if="queryResult" :queryResult="queryResult"/>
-
 
     <table class="table" v-if="queryResult.schema"  v-on:click="tableSeen = !tableSeen">
       <thead>
@@ -49,7 +44,6 @@
       </tbody>
     </table>
 
-
   </div>
 </template>
 <script>
@@ -59,7 +53,7 @@
   import 'brace/mode/javascript'
   import 'brace/mode/sql'
   import 'brace/theme/monokai'
-    // let code = this.$children[0].getValue();
+  // let code = this.$children[0].getValue();
 
   export default{
     components: {ReportElement, editor},
@@ -110,7 +104,7 @@ span.button-holder, .fixed-top-bar ul li span {
     font-size: 13px;
     font-weight: 500;
     text-align: left;
-        list-style: none;
+    list-style: none;
     float: left;
     padding: 11px 18px 13px 18px;
     cursor: pointer;
@@ -119,7 +113,7 @@ span.button-holder, .fixed-top-bar ul li span {
 .top-related-actions li  { list-style: none;
     float: left;
     padding: 11px 18px 13px 18px;
-    cursor: pointer;}
-
-    .is-hidden { display:none}
+    cursor: pointer;
+}
+.is-hidden { display:none}
 </style>

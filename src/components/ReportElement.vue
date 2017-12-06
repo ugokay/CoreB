@@ -4,10 +4,10 @@
       <div class="row">
         <input type="input"  class="no-border col-xs-9" v-model="element.title"/>
         <div  class="col-xs-3 btn-group btn-group-xs align-right no-padding">
-          <a  class="dropdown-toggle" @click="toggleDropDown" data-toggle="dropdown">
+          <a class="dropdown-toggle" @click="toggleDropDown" data-toggle="dropdown">
             <i class="icon-more"></i>
           </a>
-          <ul  class="dropdown-menu"  v-on:click="clickedDropDown = !clickedDropDown">
+          <ul :class="isVisible" v-on:click="clickedDropDown = !clickedDropDown">
             <li><a>Test Mustache</a></li>
             <li><a>Save</a></li>
             <li><a>Execute</a></li>
@@ -41,6 +41,7 @@
   import VueHighcharts from 'vue2-highcharts'
   import Mustache from 'mustache'
 
+
   export default{
     name: 'report-element',
     components: {VueHighcharts},
@@ -54,6 +55,9 @@
       }
     },
     computed: {
+      isVisible: function() {
+        return this.clickedDropDown ? 'dropdown-menu open' : 'dropdown-menu'
+      },
       customHtml: function () {
         if (this.queryResult.schema) {
           var data = {}
@@ -95,7 +99,7 @@
         }
       },
       toggleDropDown: function () {
-        clickedDropDown = true;
+        this.clickedDropDown = !this.clickedDropDown;
       }
     },
     created: function () {
@@ -110,9 +114,20 @@
   }
 </script>
 <style>
+
   .highcharts-root{
     width: 100%;
     height: 100%;
   }
   .no-border { border:none }
+
+  .dropdown-toggle {
+    color:#000;
+    cursor: pointer;
+    padding-top: 10px;
+  }
+  .dropdown-menu.open {
+    display: block!important;
+    z-index: 9999;
+  }
 </style>
