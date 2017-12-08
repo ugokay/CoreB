@@ -71,6 +71,7 @@
 </template>
 
 <script>
+  import Vue from 'vue'
   import Report from '@/components/Report'
   import ReportElement from '@/components/ReportElement'
   import AddButton from '@/components/AddButton'
@@ -80,7 +81,6 @@
   import {VueTabs, VTab} from 'vue-nav-tabs'
   import 'vue-nav-tabs/themes/vue-tabs.css'
   import Datepicker from 'vuejs-datepicker'
-  import {MOCK_FILTER_DEFINITIONS} from '@/helpers/helpers.js'
 
   export default{
     name: 'dashboard',
@@ -119,11 +119,9 @@
       getReports: function () {
         HTTP.get('bi/report/list')
           .then((res) => {
-            this.reports = res.data
-            this.reports.forEach((report) => {
-              // MOCK
-              var filterDefinitions = MOCK_FILTER_DEFINITIONS.get()
-              // MOCK END
+            var reports = res.data
+            reports.forEach((report) => {
+              var filterDefinitions = report.filterDefinitions
               var filters = {}
               filterDefinitions.forEach(filterDefinition => {
                 filters[filterDefinition.name] = filterDefinition.defaultValue
@@ -147,6 +145,7 @@
                 this.layoutList.push(layout)
               }
             })
+            this.reports = reports
           })
           .catch((error) => {
             console.log(error)
@@ -165,7 +164,8 @@
         this.reports[this.selectedReportIdx].filterDefinitions = this.filterDefinitionsList[this.selectedReportIdx]
         HTTP.post('bi/report', this.reports[this.selectedReportIdx])
           .then((res) => {
-            console.log(res)
+            console.log(res.data)
+            Vue.set('reports', this.selectedReportIdx, res.data)
           })
       },
       removeTab (index) {
@@ -173,14 +173,6 @@
       },
       addTab () {
         this.tabs.push('New Tab')
-      }
-    },
-    watch: {
-      reports: {
-        handler: function (newVal, oldVal) {
-          console.log('CHANGED: ' + newVal + ', ' + oldVal)
-        },
-        deep: true
       }
     },
     created: function () {

@@ -1,7 +1,7 @@
 <template>
   <div :class="isPopupVisible">
     <div class="popup">
-      <div class="close-icon">
+      <div class="close-icon" @click="close">
         <div class="icon-plus"></div>
       </div>
       <div class="input-row">
@@ -43,6 +43,9 @@
       }
     },
     methods: {
+      close: function () {
+        this.isVisible = false
+      },
       addNewFilter () {
         const filterObject = {
           label: this.filter_name,

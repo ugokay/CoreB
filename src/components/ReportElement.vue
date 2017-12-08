@@ -27,12 +27,8 @@
       </div>
     </div>
     <div v-if="loading">
-      <div class="progress-bar" style="width: {{progress}} %" v-if="progress > 0">{{progress}}</div>
+      <div class="progress-bar" v-bind:style="{width: progress + '%'}" v-if="progress > 0">{{progress}}</div>
       <div class="loader" v-else="">Loading...</div>
-
-
-
-
     </div>
     <div v-if="queryResult.schema">
       <div v-if="element.chartType === 6">
