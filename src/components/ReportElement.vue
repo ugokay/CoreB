@@ -26,6 +26,9 @@
         </div>
       </div>
     </div>
+    <div v-if="loading">
+      <div v-if="progress > 0">{{progress}}</div>
+    </div>
     <div v-if="queryResult.schema">
       <div v-if="element.chartType === 6">
         <div v-html="customHtml"></div>
@@ -41,7 +44,6 @@
   import VueHighcharts from 'vue2-highcharts'
   import Mustache from 'mustache'
 
-
   export default{
     name: 'report-element',
     components: {VueHighcharts},
@@ -51,11 +53,13 @@
     data: function () {
       return {
         clickedDropDown: false,
-        queryResult: {}
+        queryResult: {},
+        loading: false,
+        progress: 0
       }
     },
     computed: {
-      isVisible: function() {
+      isVisible: function () {
         return this.clickedDropDown ? 'dropdown-menu open' : 'dropdown-menu'
       },
       customHtml: function () {
@@ -99,17 +103,43 @@
         }
       },
       toggleDropDown: function () {
-        this.clickedDropDown = !this.clickedDropDown;
+        this.clickedDropDown = !this.clickedDropDown
+      },
+      execute: function () {
+        this.loading = true
+        HTTP.get('bi/analyze/execute/report-element/' + this.element.id, {
+          params: {
+            filterParamsJson: JSON.stringify(DUMMY_FILTER.get())
+          }
+        }).then((res) => {
+          if (res.status === 202) {
+            console.log(res.data)
+            this.checkExecution(res.data.queryId)
+          } else {
+            this.loading = false
+            this.progress = 0
+            this.queryResult = res.data
+          }
+        }).catch(() => {
+          this.loading = false
+          this.progress = 0
+        })
+      },
+      checkExecution: function (queryId) {
+        HTTP.get('bi/analyze/progress/' + queryId, {})
+          .then((res) => {
+            console.log(res.data)
+            if (res.status === 200 && res.data.percentage < 100) {
+              this.progress = res.data.percentage
+              setTimeout(() => {
+                this.checkExecution(queryId)
+              }, 1000)
+            }
+          })
       }
     },
     created: function () {
-      HTTP.get('bi/analyze/execute/report-element/' + this.element.id, {
-        params: {
-          filterParamsJson: JSON.stringify(DUMMY_FILTER.get())
-        }
-      }).then((res) => {
-        this.queryResult = res.data
-      })
+      this.execute()
     }
   }
 </script>

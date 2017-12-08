@@ -20,7 +20,7 @@ export const DUMMY_FILTER = {
 }
 
 export const MOCK_FILTER_DEFINITIONS = {
-  get: function() {
+  get: function () {
     const dayInMillis = 1000 * 60 * 60 * 24
     const today = new Date()
     today.setHours(3)
@@ -32,7 +32,7 @@ export const MOCK_FILTER_DEFINITIONS = {
     const cToday = new Date(today.getTime() - (tomorrow.getTime() - today.getTime()))
     return [
       { label: 'cDateRange_start', name: 'cDateRange_start', type: 'datepicker', defaultValue: cToday },
-      { label: 'cDateRange_end', name: 'cDateRange_end', type: 'datepicker', defaultValue: cTomorrow},
+      { label: 'cDateRange_end', name: 'cDateRange_end', type: 'datepicker', defaultValue: cTomorrow },
       { label: 'dateRange_start', name: 'dateRange_start', type: 'datepicker', defaultValue: today },
       { label: 'dateRange_end', name: 'dateRange_end', type: 'datepicker', defaultValue: tomorrow }
     ]

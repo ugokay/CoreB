@@ -63,7 +63,7 @@
 
   export default{
     name: 'dashboard',
-    components: { Report, ReportElement, VueTabs, VTab, 'grid-layout': VueGridLayout.GridLayout, 'grid-item': VueGridLayout.GridItem, Datepicker, AddButton},
+    components: {Report, ReportElement, VueTabs, VTab, 'grid-layout': VueGridLayout.GridLayout, 'grid-item': VueGridLayout.GridItem, Datepicker, AddButton},
     data: function () {
       return {
         selectedReportIdx: 0,
@@ -71,7 +71,7 @@
         gridItems: [],
         layoutList: []
       }
-    }, 
+    },
     methods: {
       tabChange: function (tabIdx) {
         this.selectedReportIdx = tabIdx
@@ -88,9 +88,9 @@
           .then((res) => {
             this.reports = res.data
             this.reports.forEach((report) => {
-              //MOCK
+              // MOCK
               report.filterDefinitions = MOCK_FILTER_DEFINITIONS.get()
-              //MOCK END
+              // MOCK END
               report.filters = {}
               report.filterDefinitions.forEach(filterDefinition => {
                 report.filters[filterDefinition.name] = filterDefinition.defaultValue
