@@ -28,6 +28,7 @@
     </div>
     <div v-if="loading">
       <div v-if="progress > 0">{{progress}}</div>
+      <div v-else="">Loading...</div>
     </div>
     <div v-if="queryResult.schema">
       <div v-if="element.chartType === 6">
@@ -129,11 +130,13 @@
         HTTP.get('bi/analyze/progress/' + queryId, {})
           .then((res) => {
             console.log(res.data)
+            this.progress = res.data.percentage
             if (res.status === 200 && res.data.percentage < 100) {
-              this.progress = res.data.percentage
               setTimeout(() => {
                 this.checkExecution(queryId)
               }, 1000)
+            } else {
+              this.execute()
             }
           })
       }
