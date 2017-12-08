@@ -16,7 +16,7 @@
       <div class="input-row">
         <label>Name</label>
         <input
-          v-model="filter_name" 
+          v-model="filter_name"
           type="text">
       </div>
       <div class="input-row">
@@ -28,13 +28,12 @@
 
 
 <script>
-
   export default {
     name: 'Popup',
-    data() {
+    data () {
       return {
         filter_type: '',
-        filter_name: '',
+        filter_name: ''
       }
     },
     props: {
@@ -44,7 +43,7 @@
       }
     },
     methods: {
-      addNewFilter() {
+      addNewFilter () {
         const filterObject = {
           label: this.filter_name,
           name: this.filter_name,
@@ -57,7 +56,7 @@
       }
     },
     computed: {
-      isPopupVisible() {
+      isPopupVisible () {
         return this.isVisible ? 'popup-area is-open' : 'popup-area'
       }
     }

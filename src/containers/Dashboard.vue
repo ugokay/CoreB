@@ -24,11 +24,11 @@
           </div>
           <div class="col-xs-7 form-group selected-report-options">
             <div
-              v-for="filterDefinition in report.filterDefinitions"
+              v-for="filterDefinition in filterDefinitionsList[reportIdx]"
               :key="filterDefinition.name"
               class="form-group col-sm-3">
                 <label style="font-size: 12px;margin-bottom: 0;"> {{filterDefinition.label}} </label>
-                <datepicker v-model="report.filters[filterDefinition.name]"></datepicker>
+                <datepicker v-model="filtersList[reportIdx][filterDefinition.name]"></datepicker>
             </div>
             <div
               class="form-group col-sm-1">
@@ -84,7 +84,7 @@
 
   export default{
     name: 'dashboard',
-    components: {Report, ReportElement, VueTabs, VTab, 'grid-layout': VueGridLayout.GridLayout, 'grid-item': VueGridLayout.GridItem, Datepicker, AddButton},
+    components: {Report, ReportElement, VueTabs, VTab, 'grid-layout': VueGridLayout.GridLayout, 'grid-item': VueGridLayout.GridItem, Datepicker, AddButton, Popup},
     data: function () {
       return {
         selectedReportIdx: 0,
@@ -92,13 +92,16 @@
         gridItems: [],
         layoutList: [],
         popupSeen: false,
-        newFilterData: null
+        newFilterData: null,
+        filterDefinitionsList: [],
+        filtersList: []
       }
     },
+    computed: {},
     methods: {
       newFilterItem: function (filter) {
-        this.reports[this.selectedReportIdx].filterDefinitions.push(filter)
-        console.log(this.reports[this.selectedReportIdx].filterDefinitions)
+        this.filterDefinitionsList[this.selectedReportIdx].push(filter)
+        console.log(this.filterDefinitionsList[this.selectedReportIdx])
       },
       showPopup: function () {
         this.popupSeen = !this.popupSeen
@@ -116,16 +119,17 @@
       getReports: function () {
         HTTP.get('bi/report/list')
           .then((res) => {
-            console.log(res.data)
             this.reports = res.data
             this.reports.forEach((report) => {
               // MOCK
-              report.filterDefinitions = MOCK_FILTER_DEFINITIONS.get()
+              var filterDefinitions = MOCK_FILTER_DEFINITIONS.get()
               // MOCK END
-              report.filters = {}
-              report.filterDefinitions.forEach(filterDefinition => {
-                report.filters[filterDefinition.name] = filterDefinition.defaultValue
+              var filters = {}
+              filterDefinitions.forEach(filterDefinition => {
+                filters[filterDefinition.name] = filterDefinition.defaultValue
               })
+              this.filtersList.push(filters)
+              this.filterDefinitionsList.push(filterDefinitions)
               if (report.layout) {
                 this.layoutList.push(JSON.parse(report.layout))
               } else {
@@ -158,6 +162,7 @@
       },
       saveReport: function () {
         this.reports[this.selectedReportIdx].layout = JSON.stringify(this.layoutList[this.selectedReportIdx])
+        this.reports[this.selectedReportIdx].filterDefinitions = this.filterDefinitionsList[this.selectedReportIdx]
         HTTP.post('bi/report', this.reports[this.selectedReportIdx])
           .then((res) => {
             console.log(res)
@@ -168,6 +173,14 @@
       },
       addTab () {
         this.tabs.push('New Tab')
+      }
+    },
+    watch: {
+      reports: {
+        handler: function (newVal, oldVal) {
+          console.log('CHANGED: ' + newVal + ', ' + oldVal)
+        },
+        deep: true
       }
     },
     created: function () {
