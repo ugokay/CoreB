@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="col-sm-12">
+    <div class="col-sm-12 report__element">
       <div class="row">
         <input type="input"  class="no-border col-xs-9" v-model="element.title"/>
         <div  class="col-xs-3 btn-group btn-group-xs align-right no-padding toggleTriggerBox">
