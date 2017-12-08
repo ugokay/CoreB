@@ -17,48 +17,48 @@
 </template>
 
 <script>
-  import Navigation from '@/components/Navigation'
-  import Login from '@/components/Login'
-  import {AUTH} from '@/helpers/auth-helper.js'
-  import {HTTP} from '@/helpers/http-helper.js'
-  export default {
-    name: 'app',
-    components: { Navigation, Login },
-    data: function () {
-      return {
-        isLogged: false
-      }
-    },
-    methods: {
-      onLoginSuccess: function (data) {
-        this.isLogged = true
-      },
-      onLoginError: function (data) {
-      }
-    },
-    created: function () {
-      this.isLogged = AUTH.isLogged()
-      var self = this
-      HTTP.interceptors.response.use(function (response) {
-        // Do something with response data
-        return response
-      }, function (error) {
-        // Do something with response error
-        if (error.response.status === 401) {
-          console.log('Unauthorized attept!')
-          AUTH.setToken('')
-          self.$router.push('login')
-        }
-        return Promise.reject(error)
-      })
+import Navigation from '@/components/Navigation'
+import Login from '@/components/Login'
+import {AUTH} from '@/helpers/auth-helper.js'
+import {HTTP} from '@/helpers/http-helper.js'
+export default {
+  name: 'app',
+  components: { Navigation, Login },
+  data: function () {
+    return {
+      isLogged: false
     }
+  },
+  methods: {
+    onLoginSuccess: function (data) {
+      this.isLogged = true
+    },
+    onLoginError: function (data) {
+    }
+  },
+  created: function () {
+    this.isLogged = AUTH.isLogged()
+    var self = this
+    HTTP.interceptors.response.use(function (response) {
+      // Do something with response data
+      return response
+    }, function (error) {
+      // Do something with response error
+      if (error.response.status === 401) {
+        console.log('Unauthorized attept!')
+        AUTH.setToken('')
+        self.$router.push('login')
+      }
+      return Promise.reject(error)
+    })
   }
+}
 </script>
 
 <style>
 .scrollable {
   height: 100vh;
   overflow-y: scroll;
-  overflow-x: hidden;
+  overflow-x: hiddenx
 }
 </style>

@@ -30,11 +30,10 @@ export const MOCK_FILTER_DEFINITIONS = {
     const tomorrow = new Date(today.getTime() + dayInMillis)
     const cTomorrow = new Date(today.getTime())
     const cToday = new Date(today.getTime() - (tomorrow.getTime() - today.getTime()))
-    return [
-      { label: 'cDateRange_start', name: 'cDateRange_start', type: 'datepicker', defaultValue: cToday },
-      { label: 'cDateRange_end', name: 'cDateRange_end', type: 'datepicker', defaultValue: cTomorrow},
-      { label: 'dateRange_start', name: 'dateRange_start', type: 'datepicker', defaultValue: today },
-      { label: 'dateRange_end', name: 'dateRange_end', type: 'datepicker', defaultValue: tomorrow }
+    const filterArray = [
+      { label: 'cDateRange_start', name: 'cDateRange_start', type: 'datepicker', defaultValue: cToday }
     ]
+    
+    return filterArray
   }
 }
