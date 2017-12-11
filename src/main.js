@@ -8,6 +8,7 @@ import storeOptions from './stores/store'
 
 Vue.use(Vuex)
 Vue.config.productionTip = false
+
 const store = new Vuex.Store(storeOptions)
 
 /* eslint-disable no-new */

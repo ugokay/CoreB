@@ -84,7 +84,11 @@
 
   export default{
     name: 'dashboard',
+<<<<<<< Updated upstream
     components: {Report, ReportElement, VueTabs, VTab, 'grid-layout': VueGridLayout.GridLayout, 'grid-item': VueGridLayout.GridItem, Datepicker, AddButton, Popup},
+=======
+    components: {Popup, Report, ReportElement, VueTabs, VTab, 'grid-layout': VueGridLayout.GridLayout, 'grid-item': VueGridLayout.GridItem, Datepicker, AddButton},
+>>>>>>> Stashed changes
     data: function () {
       return {
         selectedReportIdx: 0,
@@ -119,12 +123,24 @@
       getReports: function () {
         HTTP.get('bi/report/list')
           .then((res) => {
+<<<<<<< Updated upstream
             var reports = res.data
             reports.forEach((report) => {
               var filterDefinitions = report.filterDefinitions
               var filters = {}
               filterDefinitions.forEach(filterDefinition => {
                 filters[filterDefinition.name] = filterDefinition.defaultValue
+=======
+            // console.log(res.data)
+            this.reports = res.data
+            this.reports.forEach((report) => {
+              // MOCK
+              report.filterDefinitions = MOCK_FILTER_DEFINITIONS.get()
+              // MOCK END
+              report.filters = {}
+              report.filterDefinitions.forEach(filterDefinition => {
+                report.filters[filterDefinition.name] = filterDefinition.defaultValue
+>>>>>>> Stashed changes
               })
               this.filtersList.push(filters)
               this.filterDefinitionsList.push(filterDefinitions)

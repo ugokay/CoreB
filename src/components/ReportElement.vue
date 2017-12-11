@@ -114,7 +114,7 @@
           }
         }).then((res) => {
           if (res.status === 202) {
-            console.log(res.data)
+            // console.log(res.data)
             this.checkExecution(res.data.queryId)
           } else {
             this.loading = false
@@ -129,7 +129,7 @@
       checkExecution: function (queryId) {
         HTTP.get('bi/analyze/progress/' + queryId, {})
           .then((res) => {
-            console.log(res.data)
+            // console.log(res.data)
             this.progress = res.data.percentage
             if (res.status === 200 && res.data.percentage < 100) {
               setTimeout(() => {

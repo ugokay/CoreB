@@ -26,7 +26,6 @@
   </div>
 </template>
 
-
 <script>
   export default {
     name: 'Popup',
@@ -43,9 +42,12 @@
       }
     },
     methods: {
+<<<<<<< Updated upstream
       close: function () {
         this.isVisible = false
       },
+=======
+>>>>>>> Stashed changes
       addNewFilter () {
         const filterObject = {
           label: this.filter_name,
@@ -55,7 +57,7 @@
         }
 
         this.$emit('newFilterItem', filterObject)
-        // this.isVisible = false
+        // this.isVisible = false --> Avoid mutating a prop directly
       }
     },
     computed: {
@@ -125,7 +127,10 @@
   box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.15);
   padding: 0 10px
 }
-
+.input-row input {
+  background-color: #f0f0f0;
+  box-shadow: inset 1px 1px 2px 0 rgba(0, 0, 0, 0.1);
+}
 .caret {
   display: block;
   width: 5px;
