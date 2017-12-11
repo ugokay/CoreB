@@ -42,12 +42,9 @@
       }
     },
     methods: {
-<<<<<<< Updated upstream
       close: function () {
-        this.isVisible = false
+        this.isVisible = false // TODO:: Avoid mutating a prop directly
       },
-=======
->>>>>>> Stashed changes
       addNewFilter () {
         const filterObject = {
           label: this.filter_name,
@@ -56,8 +53,8 @@
           defaultValue: new Date() // FIX
         }
 
-        this.$emit('newFilterItem', filterObject)
-        // this.isVisible = false --> Avoid mutating a prop directly
+        this.$store.dispatch('addFilter', filterObject)
+        console.log(this.$store.state.mock_filter_definitions)
       }
     },
     computed: {

@@ -9,6 +9,7 @@
 export default {
   name: 'AddButton'
 }
+</script>}
 </script>
 
 <style>
@@ -29,6 +30,8 @@ export default {
   text-align: center;
   padding-right: 0;
   padding-left: 0;
+  position: relative;
+  z-index: 9999
 }
 .btn--add i {
   margin-right: 0!important;
