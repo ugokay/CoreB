@@ -194,7 +194,6 @@
   border:none !important;
   position: relative
 }
-
 .vdp-datepicker input {
   background: #fff;
   padding: .6em 1em;
