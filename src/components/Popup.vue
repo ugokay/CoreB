@@ -42,12 +42,9 @@
       }
     },
     methods: {
-<<<<<<< Updated upstream
       close: function () {
         this.isVisible = false
       },
-=======
->>>>>>> Stashed changes
       addNewFilter () {
         const filterObject = {
           label: this.filter_name,

@@ -9,23 +9,37 @@
             </li>
           </ul>
           <ul class="top-related-actions pull-right" style="position:absolute; top:0; right:0">
-            <li v-on:click="seenHtml = !seenHtml"> <i   class="icon-query"></i> HTML</li>
-            <li v-on:click="seenQuery = !seenQuery"> <i  class="icon-query"></i> Query</li>
+            <li @click="handleTabs('html')"> <i class="icon-query"></i> HTML</li>
+            <li @click="handleTabs('query')"> <i class="icon-query"></i> Query</li>
             <li> <i  class="icon-refresh"></i> Refresh</li>
             <li> <i  class="icon-export"></i> Export</li>
             <li> <i  class="icon-export"></i> Save</li>
           </ul>
         </div>
     </div>
-    <div v-if="seenHtml">
-      <editor height="400px" :content="content" > </editor>
-      <div style="background:#33353e; height:40px" class="col-xs-12">
+    <div v-show="showHtml">
+      <editor
+        lang="html"
+        theme="monokai"
+        :options="editorOptions"
+        :content="htmlContent">
+      </editor>
+      <div class="col-xs-12 action--area">
         <span style="height:40px; width:30px; background:#24262c"> </span>
-        <span style="color:#fff; font-size:13px; margin-top:12px; display:block"> RUN <i class="icon-arrow-right" style="color:#ffffff"> </i></span>
+        <span class="action--btn"> RUN <i class="icon-arrow-right" style="color:#ffffff"> </i></span>
        </div>
     </div>
-    <div v-if="seenQuery">
-      <editor  height="400px" :content="content" > </editor>
+    <div v-show="seenQuery">
+      <editor
+        lang="sql"
+        theme="monokai"
+        :options="editorOptions"
+        :content="sqlContent">
+      </editor>
+      <div class="col-xs-12 action--area">
+        <span style="height:40px; width:30px; background:#24262c"></span>
+        <span class="action--btn">RENDER <i class="icon-arrow-right" style="color:#ffffff"> </i></span>
+       </div>
     </div>
 
     <report-element v-if="queryResult" :queryResult="queryResult"/>
@@ -33,7 +47,9 @@
     <table class="table" v-if="queryResult.schema"  v-on:click="tableSeen = !tableSeen">
       <thead>
         <th v-for="field in queryResult.schema.fields">{{field.name}}</th>
-        <th style="    text-align: right;    position: relative;    padding-right: 20px;">  <i  class="icon-query-hide"> </i>  </th>
+        <th style="text-align: right;    position: relative;    padding-right: 20px;">
+          <i class="icon-query-hide"></i>
+        </th>
       </thead>
       <tbody>
         <tr v-for="row in queryResult.data">
@@ -50,21 +66,37 @@
   import editor from 'ace-vue2'
   import 'brace/mode/javascript'
   import 'brace/mode/sql'
+  import 'brace/mode/html'
   import 'brace/theme/monokai'
   // let code = this.$children[0].getValue();
 
-  export default{
-    components: {ReportElement, editor},
+  export default {
+    components: { ReportElement, editor },
     name: 'report-element-detail',
     data: function () {
       return {
-        seenHtml: false,
+        showHtml: false,
         seenQuery: false,
         tableSeen: false,
-        queryResult: {}
+        queryResult: {},
+        htmlContent: '<html>',
+        sqlContent: 'sql',
+        editorOptions: {
+          fontSize: '14pt'
+        }
       }
     },
-    methods: {},
+    methods: {
+      handleTabs(type) {
+        if (type == 'html') {
+          this.seenQuery = false
+          this.showHtml = true
+        } else if('query') {
+          this.showHtml = false
+          this.seenQuery = true
+        }
+      }
+    },
     created: function () {
       const dayInMillis = 1000 * 60 * 60 * 24
       const today = new Date()
@@ -108,6 +140,13 @@ span.button-holder, .fixed-top-bar ul li span {
     cursor: pointer;
 }
 
+.action--area {
+  background:#33353e; height:40px
+}
+
+.action--btn {
+  color:#fff; font-size:13px; margin-top:12px; display:block
+}
 .top-related-actions li  { list-style: none;
     float: left;
     padding: 11px 18px 13px 18px;
