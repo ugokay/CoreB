@@ -66,8 +66,8 @@
       saveReport: function () {
         this.$refs.reports[this.selectedReportIdx].save()
       },
-      goInFullscreen(element) {
-        requestFullscreen()
+      goInFullscreen (element) {
+        window.requestFullscreen()
       },
       removeTab (index) {
         this.tabs.splice(index, 1)

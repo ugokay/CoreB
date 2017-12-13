@@ -1,10 +1,6 @@
 <template>
   <div>
-    <popup
-      @addFilter="addFilter"
-      @hidePopup="hidePopup"
-      :isVisible="popupSeen">
-    </popup>
+    <popup ref="filterPopup" @addFilter="addFilter"></popup>
     <add-button></add-button>
     <div class="tabChores">
       <input class="col-xs-4" style="border: none; background-color: #f1f1f1" type="input" v-model="reportData.title">
@@ -14,13 +10,15 @@
         v-for="filterDefinition in report.filterDefinitions"
         :key="filterDefinition.name"
         class="form-group col-sm-3">
-        <label style="font-size: 12px;margin-bottom: 0;"> {{filterDefinition.label}} </label>
+        <label style="font-size: 12px;margin-bottom: 0;">
+          {{filterDefinition.label}} <i @click="openEditFilterPopup(filterDefinition)">Edit</i>
+        </label>
         <datepicker v-model="filters[filterDefinition.name]"></datepicker>
       </div>
       <div class="form-group col-sm-1">
         <label style="margin-bottom: 3px;">&nbsp;</label>
         <button
-          @click="showPopup"
+          @click="openNewFilterPopup"
           class="btn--add">
           <i class="icon-plus"></i>
         </button>
@@ -67,7 +65,7 @@
       'grid-layout': VueGridLayout.GridLayout,
       'grid-item': VueGridLayout.GridItem
     },
-    data() {
+    data () {
       return {
         reportData: this.report,
         reportIdx: this.index,
@@ -105,11 +103,11 @@
             this.reportData = res.data
           })
       },
-      showPopup: function () {
-        this.popupSeen = true
+      openNewFilterPopup: function () {
+        this.$refs.filterPopup.open()
       },
-      hidePopup: function() {
-        this.popupSeen = false
+      openEditFilterPopup: function (filter) {
+        this.$refs.filterPopup.open(filter)
       },
       addFilter: function (filter) {
         this.reportData.filterDefinitions.push(filter)

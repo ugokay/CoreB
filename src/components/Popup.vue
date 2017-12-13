@@ -1,5 +1,5 @@
 <template>
-  <div :class="isPopupVisible">
+  <div v-if="!hidden" class="popup-area">
     <div class="popup">
       <div class="close-icon" @click="close">
         <div class="icon-plus"></div>
@@ -7,16 +7,28 @@
       <div class="input-row">
         <label>Type</label>
         <select
-          v-model="filter_type">
+          v-model="filterData.type">
           <option value="text">Text</option>
           <option value="datepicker">Datepicker</option>
         </select>
         <span class="caret"></span>
       </div>
       <div class="input-row">
+        <label>Label</label>
+        <input
+          v-model="filterData.label"
+          type="text">
+      </div>
+      <div class="input-row">
         <label>Name</label>
         <input
-          v-model="filter_name"
+          v-model="filterData.name"
+          type="text">
+      </div>
+      <div class="input-row">
+        <label>Default Value</label>
+        <input
+          v-model="filterData.defaultValue"
           type="text">
       </div>
       <div class="input-row">
@@ -28,37 +40,46 @@
 
 <script>
   export default {
-    name: 'Popup',
+    name: 'popup',
     props: {
-      isVisible: {
-        type: Boolean,
-        required: false
+      filter: {
+        type: Object,
+        default: function () {
+          return {
+            label: '',
+            name: '',
+            type: '',
+            defaultValue: ''
+          }
+        }
       }
     },
-    data () {
+    data: function () {
       return {
-        filter_type: '',
-        filter_name: ''
+        hidden: true,
+        filterData: this.filter
       }
     },
     methods: {
       close: function () {
-        this.$emit('hidePopup')
+        this.hidden = true
+      },
+      open: function (filter) {
+        if (filter) {
+          this.filterData = filter
+        } else {
+          this.filterData = {
+            label: '',
+            name: '',
+            type: '',
+            defaultValue: ''
+          }
+        }
+        this.hidden = false
       },
       addNewFilter () {
-        const filter = {
-          label: this.filter_name,
-          name: this.filter_name,
-          type: this.filter_type,
-          defaultValue: new Date() // FIX
-        }
-        this.$emit('addFilter', filter)
-        this.$emit('hidePopup')
-      }
-    },
-    computed: {
-      isPopupVisible () {
-        return this.isVisible ? 'popup-area is-open' : 'popup-area'
+        this.$emit('addFilter', this.filterData)
+        this.close()
       }
     }
   }
@@ -76,10 +97,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  display: none
-}
-
-.popup-area.is-open {
   display: flex;
 }
 
