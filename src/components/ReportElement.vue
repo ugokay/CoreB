@@ -55,7 +55,10 @@
     name: 'report-element',
     components: { VueHighcharts },
     props: {
-      element: {type: Object, default: function () { return {}}}
+      element: {
+        type: Object,
+        required: true
+      }
     },
     data: function () {
       return {
@@ -104,12 +107,12 @@
       }
     },
     methods: {
-      hideDropdown: function() {
+      hideDropdown: function () {
         this.clickedDropDown = false
       },
       openDropdown: function () {
         this.clickedDropDown = true
-        document.querySelectorAll('.vue-grid-item').forEach(item => item.style.zIndex = '1')
+        document.querySelectorAll('.vue-grid-item').forEach(item => { item.style.zIndex = '1' })
         this.$el.parentNode.style.zIndex = '99999999'
       },
       redrawChart: function () {

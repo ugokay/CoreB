@@ -88,10 +88,10 @@
     },
     methods: {
       handleTabs (type) {
-        if (type == 'html') {
+        if (type === 'html') {
           this.seenQuery = false
           this.showHtml = true
-        } else if ('query') {
+        } else if (type === 'query') {
           this.showHtml = false
           this.seenQuery = true
         }

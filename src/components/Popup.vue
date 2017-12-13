@@ -29,32 +29,31 @@
 <script>
   export default {
     name: 'Popup',
-    data () {
-      return {
-        filter_type: '',
-        filter_name: ''
-      }
-    },
     props: {
       isVisible: {
         type: Boolean,
         required: false
       }
     },
+    data () {
+      return {
+        filter_type: '',
+        filter_name: ''
+      }
+    },
     methods: {
       close: function () {
-        this.isVisible = false // TODO:: Avoid mutating a prop directly
+        this.isVisible = false
       },
       addNewFilter () {
-        const filterObject = {
+        const filter = {
           label: this.filter_name,
           name: this.filter_name,
           type: this.filter_type,
           defaultValue: new Date() // FIX
         }
 
-        this.$store.dispatch('addFilter', filterObject)
-        console.log(this.$store.state.mock_filter_definitions)
+        this.$emit('addFilter', filter)
       }
     },
     computed: {
