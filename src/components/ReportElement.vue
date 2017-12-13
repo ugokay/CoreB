@@ -4,10 +4,14 @@
       <div class="row">
         <input type="input"  class="no-border col-xs-9" v-model="element.title"/>
         <div  class="col-xs-3 btn-group btn-group-xs align-right no-padding toggleTriggerBox">
-          <a class="dropdown-toggle" @click="toggleDropDown" data-toggle="dropdown">
+          <a
+            class="dropdown-toggle"
+            v-click-outside="hideDropdown"
+            @click="openDropdown"
+            data-toggle="dropdown">
             <i class="icon-more"></i>
           </a>
-          <ul :class="isVisible" v-on:click="clickedDropDown = !clickedDropDown">
+          <ul :class="isVisible">
             <li><a>Test Mustache</a></li>
             <li><a>Save</a></li>
             <li><a>Execute</a></li>
@@ -28,7 +32,7 @@
     </div>
     <div v-if="loading">
       <div class="progress-bar" v-bind:style="{width: progress + '%'}" v-if="progress > 0">{{progress}}</div>
-      <div class="loader" v-else="">Loading...</div>
+      <div class="loader">Loading...</div>
     </div>
     <div v-if="queryResult.schema">
       <div v-if="element.chartType === 6">
@@ -38,18 +42,20 @@
     </div>
   </div>
 </template>
+
 <script>
-  import {CHART} from '@/helpers/chart-helper.js'
-  import {HTTP} from '@/helpers/http-helper.js'
+  import { CHART } from '@/helpers/chart-helper.js'
+  import { HTTP } from '@/helpers/http-helper.js'
   import {DUMMY_FILTER} from '@/helpers/helpers.js'
   import VueHighcharts from 'vue2-highcharts'
   import Mustache from 'mustache'
+  import ClickOutside from 'vue-click-outside'
 
   export default{
     name: 'report-element',
-    components: {VueHighcharts},
+    components: { VueHighcharts },
     props: {
-      element: {type: Object, default: function () { return {} }}
+      element: {type: Object, default: function () { return {}}}
     },
     data: function () {
       return {
@@ -98,13 +104,18 @@
       }
     },
     methods: {
+      hideDropdown: function() {
+        this.clickedDropDown = false
+      },
+      openDropdown: function () {
+        this.clickedDropDown = true
+        document.querySelectorAll('.vue-grid-item').forEach(item => item.style.zIndex = '1')
+        this.$el.parentNode.style.zIndex = '99999999'
+      },
       redrawChart: function () {
         if (this.element.chartType !== 6) {
           this.$refs.chart.getChart().reflow()
         }
-      },
-      toggleDropDown: function () {
-        this.clickedDropDown = !this.clickedDropDown
       },
       execute: function () {
         this.loading = true
@@ -141,13 +152,16 @@
           })
       }
     },
+    directives: {
+      ClickOutside
+    },
     created: function () {
       this.execute()
     }
   }
 </script>
-<style>
 
+<style>
   .toggleTriggerBox {
     position: inherit!important
   }
@@ -172,8 +186,10 @@
     z-index: 9999;
   }
 
-
-
+.selected-report-options {
+  position: relative;
+  z-index: 999999999;
+}
 
   .loader,
 .loader:before,

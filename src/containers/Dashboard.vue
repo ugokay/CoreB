@@ -30,8 +30,7 @@
                 <label style="font-size: 12px;margin-bottom: 0;"> {{filterDefinition.label}} </label>
                 <datepicker v-model="filtersList[reportIdx][filterDefinition.name]"></datepicker>
             </div>
-            <div
-              class="form-group col-sm-1">
+            <div class="form-group col-sm-1">
                 <label style="margin-bottom: 3px;">&nbsp;</label>
                 <button
                   @click="showPopup"
@@ -84,7 +83,17 @@
 
   export default{
     name: 'dashboard',
-    components: {Report, ReportElement, VueTabs, VTab, 'grid-layout': VueGridLayout.GridLayout, 'grid-item': VueGridLayout.GridItem, Datepicker, AddButton, Popup},
+    components: {
+      Report,
+      ReportElement,
+      VueTabs,
+      VTab,
+      'grid-layout': VueGridLayout.GridLayout,
+      'grid-item': VueGridLayout.GridItem,
+      Datepicker,
+      AddButton,
+      Popup
+    },
     data: function () {
       return {
         selectedReportIdx: 0,
@@ -221,7 +230,7 @@
 
 .vue-grid-item {
   box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.12)!important;
-  border-radius: 2px
+  border-radius: 2px;
 }
 
 .selected-report-options {
