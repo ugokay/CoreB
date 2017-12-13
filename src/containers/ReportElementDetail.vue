@@ -87,11 +87,11 @@
       }
     },
     methods: {
-      handleTabs(type) {
+      handleTabs (type) {
         if (type == 'html') {
           this.seenQuery = false
           this.showHtml = true
-        } else if('query') {
+        } else if ('query') {
           this.showHtml = false
           this.seenQuery = true
         }

@@ -11,7 +11,7 @@
             data-toggle="dropdown">
             <i class="icon-more"></i>
           </a>
-          <ul :class="isVisible" @click="handleDropdown">
+          <ul :class="isVisible">
             <li><a>Test Mustache</a></li>
             <li><a>Save</a></li>
             <li><a>Execute</a></li>
@@ -55,7 +55,7 @@
     name: 'report-element',
     components: { VueHighcharts },
     props: {
-      element: { type: Object, default: function () { return {} }}
+      element: {type: Object, default: function () { return {}}}
     },
     data: function () {
       return {
@@ -107,13 +107,10 @@
       hideDropdown: function() {
         this.clickedDropDown = false
       },
-      openDropdown: function (e) {
-        document.querySelectorAll('.vue-grid-item').forEach(el => el.style.zIndex = "1")
-        e.path[6].style.zIndex = '999999'
+      openDropdown: function () {
         this.clickedDropDown = true
-      },
-      handleDropdown: function() {
-        this.clickedDropDown = !this.clickedDropDown
+        document.querySelectorAll('.vue-grid-item').forEach(item => item.style.zIndex = '1')
+        this.$el.parentNode.style.zIndex = '99999999'
       },
       redrawChart: function () {
         if (this.element.chartType !== 6) {
@@ -251,4 +248,5 @@
     box-shadow: 0 2.5em 0 0;
   }
 }
+
 </style>
