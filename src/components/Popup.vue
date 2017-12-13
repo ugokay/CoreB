@@ -43,7 +43,7 @@
     },
     methods: {
       close: function () {
-        this.isVisible = false
+        this.$emit('hidePopup')
       },
       addNewFilter () {
         const filter = {
@@ -52,8 +52,8 @@
           type: this.filter_type,
           defaultValue: new Date() // FIX
         }
-
         this.$emit('addFilter', filter)
+        this.$emit('hidePopup')
       }
     },
     computed: {
@@ -71,7 +71,7 @@
   left: 0;
   width: 100%;
   height: 100vh;
-  z-index: 999999;
+  z-index: 9999999999;
   background: rgba(0,0,0,.3);
   display: flex;
   align-items: center;

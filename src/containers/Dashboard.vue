@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <ul class="dash-actions col-xs-2 pull-right">
-      <li> Fullscreen</li>
+      <li @click="goInFullscreen"> Fullscreen</li>
       <!-- <li> Edit Layout</li> -->
       <li> Toggle Slide</li>
       <li><i class="icon-refresh"></i><span>Refresh</span></li>
@@ -15,7 +15,12 @@
         :title="report.title"
         style="position: relative;"
         :style="{zIndex:report.id}">
-          <report ref="reports" :report="report" :index="reportIdx" :isSelected="selectedReportIdx === reportIdx"></report>
+          <report
+            ref="reports"
+            :report="report"
+            :index="reportIdx"
+            :isSelected="selectedReportIdx === reportIdx">
+          </report>
         </v-tab>
       </vue-tabs>
   </div>
@@ -45,7 +50,6 @@
         reports: []
       }
     },
-    computed: {},
     methods: {
       tabChange: function (tabIdx) {
         this.selectedReportIdx = tabIdx
@@ -61,6 +65,9 @@
       },
       saveReport: function () {
         this.$refs.reports[this.selectedReportIdx].save()
+      },
+      goInFullscreen(element) {
+        requestFullscreen()
       },
       removeTab (index) {
         this.tabs.splice(index, 1)

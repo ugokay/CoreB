@@ -2,9 +2,11 @@
   <div>
     <popup
       @addFilter="addFilter"
-      :isVisible="popupSeen"></popup>
+      @hidePopup="hidePopup"
+      :isVisible="popupSeen">
+    </popup>
     <add-button></add-button>
-    <div class="tabChores" style="margin: 0 0 20px 19px;font-size: 20px;font-weight: bold;">
+    <div class="tabChores">
       <input class="col-xs-4" style="border: none; background-color: #f1f1f1" type="input" v-model="reportData.title">
     </div>
     <div class="col-xs-7 form-group selected-report-options">
@@ -24,10 +26,6 @@
         </button>
       </div>
     </div>
-    <br>
-    <br>
-    <br>
-    <br>
     <grid-layout
       v-if="isSelected"
       :layout="layout"
@@ -69,6 +67,15 @@
       'grid-layout': VueGridLayout.GridLayout,
       'grid-item': VueGridLayout.GridItem
     },
+    data() {
+      return {
+        reportData: this.report,
+        reportIdx: this.index,
+        layout: [],
+        filters: [],
+        popupSeen: false
+      }
+    },
     props: {
       report: {
         type: Object,
@@ -81,15 +88,6 @@
       isSelected: {
         type: Boolean,
         default: true
-      }
-    },
-    data: function () {
-      return {
-        reportData: this.report,
-        reportIdx: this.index,
-        layout: [],
-        filters: [],
-        popupSeen: false
       }
     },
     methods: {
@@ -109,6 +107,9 @@
       },
       showPopup: function () {
         this.popupSeen = true
+      },
+      hidePopup: function() {
+        this.popupSeen = false
       },
       addFilter: function (filter) {
         this.reportData.filterDefinitions.push(filter)
@@ -130,6 +131,14 @@
     }
   }
 </script>
-<style>
 
+<style>
+.vue-grid-layout {
+  top: 90px
+}
+.tabChores {
+  margin: 0 0 20px 19px;
+  font-size: 20px;
+  font-weight: bold;
+}
 </style>
