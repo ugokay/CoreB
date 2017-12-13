@@ -41,20 +41,21 @@ export const CHART = {
   },
   chartify: function (queryResult, valueIdxs, xAxisIdx) {
     let xAxis = []
-    let seriesList = []
+    let seriesDataList = []
     for (let i = 0; i < valueIdxs.length; i++) {
-      seriesList[i] = []
+      seriesDataList[i] = []
     }
     queryResult.data.forEach((row) => {
       if (!xAxis.includes(row[xAxisIdx])) {
         xAxis.push(row[xAxisIdx])
         valueIdxs.forEach((v, i) => {
-          seriesList[i].push(row[valueIdxs[i]])
+          seriesDataList[i].push(row[valueIdxs[i]])
         })
       }
     })
-    seriesList.forEach((series, i) => {
-      seriesList.push({data: seriesList[i], name: queryResult.schema.fields[valueIdxs[i]].name})
+    let seriesList = []
+    seriesDataList.forEach((seriesData, i) => {
+      seriesList.push({data: seriesData, name: queryResult.schema.fields[valueIdxs[i]].name})
     })
     return {seriesList, xAxis, schema: queryResult.schema}
   },
@@ -65,13 +66,13 @@ export const CHART = {
         data: []
       }
       let idx = 0
-      for (let value in chartData.seriesList[0]['data']) {
+      chartData.seriesList[0].data.forEach((value) => {
         pieData.data.push({
           y: value,
           name: chartData.xAxis[idx]
         })
         idx++
-      }
+      })
       return {
         title: '',
         reflow: true,

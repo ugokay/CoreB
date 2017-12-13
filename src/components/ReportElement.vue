@@ -65,7 +65,8 @@
         clickedDropDown: false,
         queryResult: {},
         loading: false,
-        progress: 0
+        progress: 0,
+        elementData: this.element
       }
     },
     computed: {
@@ -95,6 +96,32 @@
             valueIdxs.push(i)
           }
         }
+        let reportType = 'table'
+        switch (this.elementData.chartType) {
+          case 0:
+            reportType = 'table'
+            break
+          case 1:
+            reportType = 'pie'
+            break
+          case 2:
+            reportType = 'bar'
+            break
+          case 3:
+            reportType = 'line'
+            break
+          case 4:
+            reportType = 'column'
+            break
+          case 5:
+            reportType = 'single'
+            break
+          case 6:
+            reportType = 'custom'
+            break
+          default:
+            reportType = 'line'
+        }
         var chartData = {}
         if (this.queryResult.schema.fields.length === 3 &&
           this.queryResult.schema.fields[1].type.sqlTypeName === 'VARCHAR') {
@@ -102,7 +129,8 @@
         } else {
           chartData = CHART.chartify(this.queryResult, valueIdxs, 0)
         }
-        var chartOptions = CHART.createChartOptions(chartData)
+
+        var chartOptions = CHART.createChartOptions(chartData, reportType)
         return chartOptions
       }
     },
@@ -116,7 +144,7 @@
         this.$el.parentNode.style.zIndex = '99999999'
       },
       redrawChart: function () {
-        if (this.element.chartType !== 6) {
+        if (this.elementData.chartType !== 6) {
           this.$refs.chart.getChart().reflow()
         }
       },
