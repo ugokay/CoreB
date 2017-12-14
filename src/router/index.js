@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import GlobalFilters from '@/components/GlobalFilters'
 import Dashboard from '@/containers/Dashboard'
 import ReportElementDetail from '@/containers/ReportElementDetail'
 
@@ -16,6 +17,11 @@ export default new Router({
       path: '/report-element-detail/:id',
       name: 'ReportElementDetail',
       component: ReportElementDetail
+    },
+    {
+      path: '/global-filters',
+      name: 'GlobalFilters',
+      component: GlobalFilters
     }
   ]
   // mode: 'history'

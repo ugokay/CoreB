@@ -34,7 +34,7 @@
   import {VueTabs, VTab} from 'vue-nav-tabs'
   import 'vue-nav-tabs/themes/vue-tabs.css'
 
-  export default{
+  export default {
     name: 'dashboard',
     components: {
       Report,
@@ -66,8 +66,8 @@
       saveReport: function () {
         this.$refs.reports[this.selectedReportIdx].save()
       },
-      goInFullscreen (element) {
-        window.requestFullscreen()
+      goInFullscreen () {
+        
       },
       removeTab (index) {
         this.tabs.splice(index, 1)

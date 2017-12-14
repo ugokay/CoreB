@@ -20,7 +20,7 @@
         <report-filter ref="filters" :definition="filterDefinition" :filters="filters"></report-filter>
       </div>
       <div class="form-group col-sm-1">
-        <label style="margin-bottom: 3px;">&nbsp;</label>
+        <label class="filterDefinitionLabel">&nbsp;</label>
         <button
           @click="openNewFilterPopup"
           class="btn--add">
@@ -86,7 +86,7 @@
       },
       index: {
         type: Number,
-        required: true
+        required: false
       },
       isSelected: {
         type: Boolean,
@@ -197,6 +197,9 @@
         setTimeout(() => {
           this.$refs.reportElement[idx].redrawChart()
         }, 0)
+        setTimeout(() => {
+          this.$refs.reportElement[idx].redrawChart()
+        }, 0)
       }
     },
     created: function () {
@@ -213,5 +216,13 @@
   margin: 0 0 20px 19px;
   font-size: 20px;
   font-weight: bold;
+}
+.label.label-primary {
+  cursor: pointer
+}
+.filterDefinitionLabel {
+  font-size: 12px;
+  margin-bottom: 0;
+  display: block
 }
 </style>

@@ -33,7 +33,7 @@
       </div>
       <div class="input-row">
         <button v-if="isCreate" @click="addNewFilter">Create</button>
-        <button v-else @click="close">OK</button>
+        <button v-else @click="close">Update</button>
       </div>
     </div>
   </div>
@@ -50,7 +50,8 @@
             label: '',
             name: '',
             type: '',
-            defaultValue: ''
+            defaultValue: '',
+            buttonValue: 'Create'
           }
         }
       }
@@ -66,6 +67,9 @@
       close: function () {
         this.hidden = true
       },
+      edit: function(filter) {
+        
+      },
       open: function (filter) {
         if (filter) {
           this.filterData = filter
@@ -74,7 +78,7 @@
           this.filterData = {
             label: '',
             name: '',
-            type: '',
+            type: '', 
             defaultValue: ''
           }
           this.isCreate = true

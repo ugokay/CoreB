@@ -42,7 +42,10 @@
        </div>
     </div>
 
-    <report-element v-if="queryResult" :queryResult="queryResult"/>
+    <!-- <report
+      ref="reports"
+      :report="queryResult">
+    </report> -->
 
     <table class="table" v-if="queryResult.schema"  v-on:click="tableSeen = !tableSeen">
       <thead>
@@ -62,7 +65,9 @@
 </template>
 <script>
   import {HTTP} from '@/helpers/http-helper.js'
+  import Report from '../components/Report'
   import ReportElement from '../components/ReportElement'
+  import {DUMMY_FILTER} from '@/helpers/helpers.js'
   import editor from 'ace-vue2'
   import 'brace/mode/javascript'
   import 'brace/mode/sql'
@@ -71,7 +76,7 @@
   // let code = this.$children[0].getValue();
 
   export default {
-    components: { ReportElement, editor },
+    components: { ReportElement, editor, Report },
     name: 'report-element-detail',
     data: function () {
       return {
@@ -115,21 +120,21 @@
         'dateFormat': '%Y-%m-%dT%H:%i:%s.%fZ'
       }
 
-      var id = this.$route.params.id
-      HTTP.get('bi/analyze/executeElement/report-element/' + id, {
+      HTTP.get('bi/report/list', {
         params: {
-          filterParamsJson: JSON.stringify(filters)
+          filterParamsJson: JSON.stringify(DUMMY_FILTER.get())
+        }
+      }).then((res) => {
+        for (let i = 0; i < res.data.length; i++) {
+          res.data[i].elements.filter(item => item.id === this.$route.params.id)
         }
       })
-        .then((res) => {
-          this.queryResult = res.data
-        })
     }
   }
 </script>
 <style>
 
-thead th { verical-align: bottom; background: #d3d3d3 !important; border-bottom: 2px solid #ddd; font-size:10px; padding: 8px;}
+thead th { vertical-align: bottom; background: #d3d3d3 !important; border-bottom: 2px solid #ddd; font-size:10px; padding: 8px;}
 span.button-holder, .fixed-top-bar ul li span {
     font-size: 13px;
     font-weight: 500;

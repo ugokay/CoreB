@@ -13,6 +13,7 @@
           <ul class="sidebarLinks">
             <li><a href="#/">Home</a></li>
             <li><a href="#/report-element-detail/29">REP</a></li>
+            <li><router-link to="global-filters">Global Filters</router-link></li>
           </ul>
         </div>
         <div class="admin-settings">
