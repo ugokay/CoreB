@@ -6,7 +6,9 @@
           <navigation />
         </div>
         <div class="col-md-10 scrollable">
-          <router-view />
+          <transition name="fade">
+            <router-view />
+          </transition>
         </div>
       </div>
     </template>

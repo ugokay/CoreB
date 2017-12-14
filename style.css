@@ -242,6 +242,23 @@ li.nav-item {
         cursor: pointer;
     }
 
+    /* page transitions */
+    .fade-enter-active, .fade-leave-active {
+        transition-property: all;
+        transition-duration: .35s;
+    }
+    
+    .fade-enter-active {
+        transition-delay: .35s;
+    }
+    
+    .fade-enter, .fade-leave-active {
+        opacity: 0;
+        transform: translateX(-12px);
+    }
+    /* page transitions end */
+  
+
     .dash-actions li i{
         display: inline-block;
         margin-right: 6px;
