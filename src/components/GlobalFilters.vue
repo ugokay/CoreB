@@ -1,6 +1,6 @@
 <template>
   <div class="global-filters">
-    <popup @addFilter="addFilter" ref="filterPopup"  />
+    <popup @addFilter="addFilter" ref="filterPopup" @updateFilter="updateFilter"/>
     <a class="btn--add is-fixed" @click="openFilter">
       <i class="icon-plus" />
       Add
@@ -27,6 +27,7 @@
 <script>
 import Popup from '@/components/Popup'
 import AddButton from '@/components/AddButton'
+import {HTTP} from '@/helpers/http-helper'
 
 export default {
   name: 'GlobalFilters',
@@ -40,15 +41,32 @@ export default {
     Popup
   },
   methods: {
+    updateFilter(filter) {
+      HTTP.post('bi/report/filter', filter)
+        .then(res => {
+          console.log(res.data)
+        })
+    },
     openFilter() {
       this.$refs.filterPopup.open()
     },
     addFilter(filter) {
-      this.filterDefinitions.push(filter)
+      filter.global = true
+      HTTP.post('bi/report/filter', filter)
+        .then(res => {
+          console.log(res.data)
+          this.filterDefinitions.push(res.data)
+        })
     },
     openEditFilterPopup: function (index) {
       this.$refs.filterPopup.open(this.filterDefinitions[index])
-    },
+    }
+  },
+  created() {
+    HTTP.get('bi/report/filter/list').then(res => {
+      console.log(res.data)
+      this.filterDefinitions = res.data
+    })
   }
 }
 </script>

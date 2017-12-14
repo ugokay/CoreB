@@ -33,7 +33,7 @@
       </div>
       <div class="input-row">
         <button v-if="isCreate" @click="addNewFilter">Create</button>
-        <button v-else @click="close">Update</button>
+        <button v-else @click="updateFilter">Update</button>
       </div>
     </div>
   </div>
@@ -67,8 +67,9 @@
       close: function () {
         this.hidden = true
       },
-      edit: function(filter) {
-        
+      updateFilter: function() {
+        this.$emit('updateFilter', this.filterData)
+        this.close()
       },
       open: function (filter) {
         if (filter) {
