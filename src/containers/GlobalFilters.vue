@@ -9,7 +9,7 @@
       <h2>Global Filters</h2>
       <ul class="global-filters">
         <li
-          v-for="(filterDefinition, index) in filterDefinitions"
+          v-for="(filterDefinition, index) in reportElements"
           :key="filterDefinition.name">
           <span class="name">{{ filterDefinition.name }}</span>
           <span class="_label">{{ filterDefinition.label }}</span>
@@ -25,15 +25,15 @@
 </template>
 
 <script>
-import Popup from '@/components/Popup'
+import Popup from '@/components/FilterPopup'
 import AddButton from '@/components/AddButton'
 import {HTTP} from '@/helpers/http-helper'
 
 export default {
   name: 'GlobalFilters',
-  data() {
+  data () {
     return {
-      filterDefinitions: []
+      reportElements: []
     }
   },
   components: {
@@ -41,30 +41,30 @@ export default {
     Popup
   },
   methods: {
-    updateFilter(filter) {
+    updateFilter (filter) {
       HTTP.post('bi/report/filter', filter)
         .then(res => {
           console.log(res.data)
         })
     },
-    openFilter() {
+    openFilter () {
       this.$refs.filterPopup.open()
     },
-    addFilter(filter) {
+    addFilter (filter) {
       filter.global = true
       HTTP.post('bi/report/filter', filter)
         .then(res => {
           console.log(res.data)
-          this.filterDefinitions.push(res.data)
+          this.reportElements.push(res.data)
         })
     },
     openEditFilterPopup: function (index) {
-      this.$refs.filterPopup.open(this.filterDefinitions[index])
+      this.$refs.filterPopup.open(this.reportElements[index])
     }
   },
-  created() {
+  created () {
     HTTP.get('bi/report/filter/list').then(res => {
-      this.filterDefinitions = res.data
+      this.reportElements = res.data
     })
   }
 }

@@ -67,7 +67,7 @@
       close: function () {
         this.hidden = true
       },
-      updateFilter: function() {
+      updateFilter: function () {
         this.$emit('updateFilter', this.filterData)
         this.close()
       },
@@ -79,7 +79,7 @@
           this.filterData = {
             label: '',
             name: '',
-            type: '', 
+            type: '',
             defaultValue: ''
           }
           this.isCreate = true

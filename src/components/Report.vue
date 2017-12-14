@@ -8,7 +8,7 @@
     </div>
     <div class="col-xs-7 form-group selected-report-options">
       <div
-        v-for="filterDefinition in filterDefinitions"
+        v-for="filterDefinition in report.elements"
         :key="filterDefinition.name"
         class="form-group col-sm-3">
         <label style="font-size: 12px;margin-bottom: 0;">
@@ -46,7 +46,7 @@
                  :i="item.i"
                  @resized="resizeEnd(elementIdx)"
                  @resize="resize(elementIdx)">
-        <report-element :element="getElement(item.id)" :filters="filters"></report-element>
+        <report-element ref="reportElements" :element="getElement(item.id)" :filters="filters"></report-element>
       </grid-item>
     </grid-layout>
   </div>
@@ -55,7 +55,7 @@
   import ReportElement from '@/components/ReportElement'
   import VueGridLayout from 'vue-grid-layout'
   import AddButton from '@/components/AddButton'
-  import Popup from '@/components/Popup'
+  import Popup from '@/components/FilterPopup'
   import {HTTP} from '@/helpers/http-helper.js'
   import ReportFilter from '@/components/ReportFilter'
   import Mustache from 'mustache'
@@ -110,7 +110,7 @@
           let filterDefinitions = []
           unifiedTokens.forEach(filterToken => {
             let filterDefinition
-            /* this.reportData.filterDefinitions.forEach(fd => {
+            /* this.reportData.reportElements.forEach(fd => {
               if (fd.name === filterToken) {
                 filterDefinition = fd
               }
@@ -134,10 +134,7 @@
     },
     methods: {
       test: function () {
-        HTTP.get('bi/report/filter/list').then(res => {
-          console.log(res.data)
-        })
-        /*HTTP.post('bi/report/filter', {
+        HTTP.post('bi/report/filter', {
           name: 'test',
           label: 'Test',
           type: 'text',
@@ -148,10 +145,10 @@
           HTTP.get('bi/report/filter/list').then(res => {
             console.log(res.data)
           })
-        })*/
+        })
       },
       getFilterDefinition: function (name) {
-        for (let filterDefinition of this.reportData.filterDefinitions) {
+        for (let filterDefinition of this.reportData.reportElements) {
           if (filterDefinition.name === name) {
             return filterDefinition
           }
@@ -172,7 +169,6 @@
       },
       save: function () {
         this.reportData.layout = JSON.stringify(this.layout)
-        console.log(this.filterDefinitions)
         HTTP.post('bi/report', this.reportData)
           .then((res) => {
             this.reportData = res.data
@@ -185,20 +181,20 @@
         this.$refs.filterPopup.open(filter)
       },
       addFilter: function (filter) {
-        this.reportData.filterDefinitions.push(filter)
+        this.reportData.reportElements.push(filter)
       },
       deleteFilter: function (name) {
-        this.reportData.filterDefinitions.splice(name, 1)
+        this.reportData.reportElements.splice(name, 1)
       },
       resize: function (idx) {
-        this.$refs.reportElement[idx].redrawChart()
+        this.$refs.reportElements[idx].redrawChart()
       },
       resizeEnd: function (idx) {
         setTimeout(() => {
-          this.$refs.reportElement[idx].redrawChart()
+          this.$refs.reportElements[idx].redrawChart()
         }, 0)
         setTimeout(() => {
-          this.$refs.reportElement[idx].redrawChart()
+          this.$refs.reportElements[idx].redrawChart()
         }, 0)
       }
     },

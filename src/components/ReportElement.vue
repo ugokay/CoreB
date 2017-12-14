@@ -15,6 +15,7 @@
             <li><a>Save</a></li>
             <li><a @click.prevent="executeQuery">Execute</a></li>
             <li><router-link :to="detailLink">Detail</router-link></li>
+            <li><router-link :to="designLink">Design</router-link></li>
             <li class="divider"></li>
             <li><a @click.prevent="setChartType('table')">Table</a></li>
             <li><a @click.prevent="setChartType('line')">Line Chart</a></li>
@@ -72,8 +73,11 @@
       }
     },
     computed: {
-      detailLink: function() {
+      detailLink: function () {
         return `/report-element-detail/${this.element.id}`
+      },
+      designLink: function () {
+        return `/report-design/${this.element.id}`
       },
       isVisible: function () {
         return this.clickedDropDown ? 'dropdown-menu open' : 'dropdown-menu'

@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import GlobalFilters from '@/components/GlobalFilters'
+import GlobalFilters from '@/containers/GlobalFilters'
 import Dashboard from '@/containers/Dashboard'
-import ReportElementDetail from '@/containers/ReportElementDetail'
+import ReportDesign from '@/containers/ReportDesign'
 
 Vue.use(Router)
 
@@ -14,9 +14,9 @@ export default new Router({
       component: Dashboard
     },
     {
-      path: '/report-element-detail/:id',
-      name: 'ReportElementDetail',
-      component: ReportElementDetail
+      path: '/report-design/:id',
+      name: 'ReportDesign',
+      component: ReportDesign
     },
     {
       path: '/global-filters',

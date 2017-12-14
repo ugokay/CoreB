@@ -12,7 +12,6 @@
         <div>
           <ul class="sidebarLinks">
             <li><router-link to="/">Home</router-link></li>
-            <li><router-link to="/report-element-detail/29">REP</router-link></li>
             <li><router-link to="/global-filters">Global Filters</router-link></li>
           </ul>
         </div>
