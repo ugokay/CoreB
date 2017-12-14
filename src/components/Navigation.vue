@@ -2,18 +2,18 @@
     <div class="row">
       <aside class="navbar navbar-bundle col-xs-12">
         <div class="nav-head flex flex-space-between flex-middle">
-          <a class="logo" href="/">
+          <router-link class="logo" to="/">
             <img src="assets/logo.svg" alt="Corebi Logo">
-          </a>
+          </router-link>
           <a class="btn-menu" href="javascript:void(0);">
             <i class="icon-hamburger"></i>
           </a>
         </div>
         <div>
           <ul class="sidebarLinks">
-            <li><a href="#/">Home</a></li>
-            <li><a href="#/report-element-detail/29">REP</a></li>
-            <li><router-link to="global-filters">Global Filters</router-link></li>
+            <li><router-link to="/">Home</router-link></li>
+            <li><router-link to="/report-element-detail/29">REP</router-link></li>
+            <li><router-link to="/global-filters">Global Filters</router-link></li>
           </ul>
         </div>
         <div class="admin-settings">

@@ -64,7 +64,6 @@ export default {
   },
   created() {
     HTTP.get('bi/report/filter/list').then(res => {
-      console.log(res.data)
       this.filterDefinitions = res.data
     })
   }
