@@ -32,7 +32,8 @@
           type="text">
       </div>
       <div class="input-row">
-        <button @click="addNewFilter">Create</button>
+        <button v-if="isCreate" @click="addNewFilter">Create</button>
+        <button v-else @click="close">OK</button>
       </div>
     </div>
   </div>
@@ -57,7 +58,8 @@
     data: function () {
       return {
         hidden: true,
-        filterData: this.filter
+        filterData: this.filter,
+        isCreate: true
       }
     },
     methods: {
@@ -67,6 +69,7 @@
       open: function (filter) {
         if (filter) {
           this.filterData = filter
+          this.isCreate = false
         } else {
           this.filterData = {
             label: '',
@@ -74,6 +77,7 @@
             type: '',
             defaultValue: ''
           }
+          this.isCreate = true
         }
         this.hidden = false
       },

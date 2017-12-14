@@ -116,7 +116,7 @@
       }
 
       var id = this.$route.params.id
-      HTTP.get('bi/analyze/execute/report-element/' + id, {
+      HTTP.get('bi/analyze/executeElement/report-element/' + id, {
         params: {
           filterParamsJson: JSON.stringify(filters)
         }

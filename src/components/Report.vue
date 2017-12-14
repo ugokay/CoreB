@@ -2,18 +2,22 @@
   <div>
     <popup ref="filterPopup" @addFilter="addFilter"></popup>
     <add-button></add-button>
+    <button @click="test">Test</button>
     <div class="tabChores">
       <input class="col-xs-4" style="border: none; background-color: #f1f1f1" type="input" v-model="reportData.title">
     </div>
     <div class="col-xs-7 form-group selected-report-options">
       <div
-        v-for="filterDefinition in report.filterDefinitions"
+        v-for="filterDefinition in filterDefinitions"
         :key="filterDefinition.name"
         class="form-group col-sm-3">
         <label style="font-size: 12px;margin-bottom: 0;">
-          {{filterDefinition.label}} <i @click="openEditFilterPopup(filterDefinition)">Edit</i>
+          {{filterDefinition.label}}
+          <i @click="openEditFilterPopup(filterDefinition)">Edit</i> -
+          <i @click="deleteFilter(idx)">Remove</i>
         </label>
-        <datepicker v-model="filters[filterDefinition.name]"></datepicker>
+        <!--<datepicker v-model="filters[filterDefinition.name]"></datepicker>-->
+        <report-filter ref="filters" :definition="filterDefinition" :filters="filters"></report-filter>
       </div>
       <div class="form-group col-sm-1">
         <label style="margin-bottom: 3px;">&nbsp;</label>
@@ -42,7 +46,7 @@
                  :i="item.i"
                  @resized="resizeEnd(elementIdx)"
                  @resize="resize(elementIdx)">
-        <report-element :element="getElement(item.id)" ref="reportElement"></report-element>
+        <report-element :element="getElement(item.id)" :filters="filters"></report-element>
       </grid-item>
     </grid-layout>
   </div>
@@ -52,16 +56,17 @@
   import VueGridLayout from 'vue-grid-layout'
   import AddButton from '@/components/AddButton'
   import Popup from '@/components/Popup'
-  import Datepicker from 'vuejs-datepicker'
   import {HTTP} from '@/helpers/http-helper.js'
+  import ReportFilter from '@/components/ReportFilter'
+  import Mustache from 'mustache'
 
   export default {
     name: 'report',
     components: {
+      ReportFilter,
       ReportElement,
       AddButton,
       Popup,
-      Datepicker,
       'grid-layout': VueGridLayout.GridLayout,
       'grid-item': VueGridLayout.GridItem
     },
@@ -70,8 +75,8 @@
         reportData: this.report,
         reportIdx: this.index,
         layout: [],
-        filters: [],
-        popupSeen: false
+        popupSeen: false,
+        filters: {}
       }
     },
     props: {
@@ -88,7 +93,76 @@
         default: true
       }
     },
+    computed: {
+      filterDefinitions: {
+        get: function () {
+          const unifiedTokens = []
+          this.reportData.elements.forEach(element => {
+            const tokens = Mustache.parse(element.query)
+            tokens.forEach(token => {
+              const type = token[0]
+              const value = token[1]
+              if (type === 'name' && !unifiedTokens.includes(value)) {
+                unifiedTokens.push(value)
+              }
+            })
+          })
+          let filterDefinitions = []
+          unifiedTokens.forEach(filterToken => {
+            let filterDefinition
+            /* this.reportData.filterDefinitions.forEach(fd => {
+              if (fd.name === filterToken) {
+                filterDefinition = fd
+              }
+            }) */
+            if (!filterDefinition) {
+              filterDefinition = {
+                name: filterToken,
+                label: filterToken,
+                type: '',
+                defaultValue: ''
+              }
+            }
+            filterDefinitions.push(filterDefinition)
+          })
+          return filterDefinitions
+        },
+        set: function (newVal) {
+          console.log(newVal)
+        }
+      }
+    },
     methods: {
+      test: function () {
+        HTTP.get('bi/report/filter/list').then(res => {
+          console.log(res.data)
+        })
+        /*HTTP.post('bi/report/filter', {
+          name: 'test',
+          label: 'Test',
+          type: 'text',
+          defaultValue: 'test text',
+          global: true
+        }).then(res => {
+          console.log(res.data)
+          HTTP.get('bi/report/filter/list').then(res => {
+            console.log(res.data)
+          })
+        })*/
+      },
+      getFilterDefinition: function (name) {
+        for (let filterDefinition of this.reportData.filterDefinitions) {
+          if (filterDefinition.name === name) {
+            return filterDefinition
+          }
+        }
+        return {
+          name: name,
+          label: '',
+          type: '',
+          defaultValue: ''
+        }
+      },
       getElement: function (id) {
         for (let i = 0; i < this.reportData.elements.length; i++) {
           if (this.reportData.elements[i].id === id) {
@@ -98,6 +172,7 @@
       },
       save: function () {
         this.reportData.layout = JSON.stringify(this.layout)
+        console.log(this.filterDefinitions)
         HTTP.post('bi/report', this.reportData)
           .then((res) => {
             this.reportData = res.data
@@ -112,6 +187,9 @@
       addFilter: function (filter) {
         this.reportData.filterDefinitions.push(filter)
       },
+      deleteFilter: function (name) {
+        this.reportData.filterDefinitions.splice(name, 1)
+      },
       resize: function (idx) {
         this.$refs.reportElement[idx].redrawChart()
       },
@@ -123,9 +201,6 @@
     },
     created: function () {
       this.layout = JSON.parse(this.reportData.layout)
-      this.reportData.filterDefinitions.forEach(filterDefinition => {
-        this.filters[filterDefinition.name] = filterDefinition.defaultValue
-      })
     }
   }
 </script>

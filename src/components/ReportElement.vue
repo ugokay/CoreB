@@ -12,18 +12,16 @@
             <i class="icon-more"></i>
           </a>
           <ul :class="isVisible">
-            <li><a>Test Mustache</a></li>
             <li><a>Save</a></li>
-            <li><a>Execute</a></li>
+            <li><a @click.prevent="executeQuery">Execute</a></li>
             <li><a>Detail</a></li>
             <li class="divider"></li>
-            <li><a>Table</a></li>
-            <li><a>Single Value</a></li>
-            <li><a>Line Chart</a></li>
-            <li><a>Bar Chart</a></li>
-            <li><a>Bar Chart (Horizontal)</a></li>
-            <li><a>Pie Chart</a></li>
-            <li><a>Custom Html</a></li>
+            <li><a @click.prevent="setChartType('table')">Table</a></li>
+            <li><a @click.prevent="setChartType('line')">Line Chart</a></li>
+            <li><a @click.prevent="setChartType('column')">Bar Chart</a></li>
+            <li><a @click.prevent="setChartType('bar')">Bar Chart (Horizontal)</a></li>
+            <li><a @click.prevent="setChartType('pie')">Pie Chart</a></li>
+            <li><a @click.prevent="setChartType('custom')">Custom Html</a></li>
             <li class="divider"></li>
             <li><a>Remove</a></li>
           </ul>
@@ -46,7 +44,7 @@
 <script>
   import { CHART } from '@/helpers/chart-helper.js'
   import { HTTP } from '@/helpers/http-helper.js'
-  import {DUMMY_FILTER} from '@/helpers/helpers.js'
+  import {DUMMY_FILTER, Util} from '@/helpers/helpers.js'
   import VueHighcharts from 'vue2-highcharts'
   import Mustache from 'mustache'
   import ClickOutside from 'vue-click-outside'
@@ -56,6 +54,10 @@
     components: { VueHighcharts },
     props: {
       element: {
+        type: Object,
+        required: true
+      },
+      filters: {
         type: Object,
         required: true
       }
@@ -96,32 +98,7 @@
             valueIdxs.push(i)
           }
         }
-        let reportType = 'table'
-        switch (this.elementData.chartType) {
-          case 0:
-            reportType = 'table'
-            break
-          case 1:
-            reportType = 'pie'
-            break
-          case 2:
-            reportType = 'bar'
-            break
-          case 3:
-            reportType = 'line'
-            break
-          case 4:
-            reportType = 'column'
-            break
-          case 5:
-            reportType = 'single'
-            break
-          case 6:
-            reportType = 'custom'
-            break
-          default:
-            reportType = 'line'
-        }
+        let reportType = Util.chartType(this.elementData.chartType)
         var chartData = {}
         if (this.queryResult.schema.fields.length === 3 &&
           this.queryResult.schema.fields[1].type.sqlTypeName === 'VARCHAR') {
@@ -135,6 +112,9 @@
       }
     },
     methods: {
+      setChartType: function (value) {
+        this.elementData.chartType = Util.chartType(value)
+      },
       hideDropdown: function () {
         this.clickedDropDown = false
       },
@@ -148,7 +128,7 @@
           this.$refs.chart.getChart().reflow()
         }
       },
-      execute: function () {
+      executeElement: function () {
         this.loading = true
         HTTP.get('bi/analyze/execute/report-element/' + this.element.id, {
           params: {
@@ -156,7 +136,26 @@
           }
         }).then((res) => {
           if (res.status === 202) {
-            // console.log(res.data)
+            this.checkExecution(res.data.queryId)
+          } else {
+            this.loading = false
+            this.progress = 0
+            this.queryResult = res.data
+          }
+        }).catch(() => {
+          this.loading = false
+          this.progress = 0
+        })
+      },
+      executeQuery: function () {
+        console.log(this.filters)
+        this.loading = true
+        HTTP.post('bi/analyze/execute', {query: this.element.query}, {
+          params: {
+            filterParamsJson: JSON.stringify(DUMMY_FILTER.get())
+          }
+        }).then((res) => {
+          if (res.status === 202) {
             this.checkExecution(res.data.queryId)
           } else {
             this.loading = false
@@ -178,7 +177,7 @@
                 this.checkExecution(queryId)
               }, 1000)
             } else {
-              this.execute()
+              this.executeElement()
             }
           })
       }
@@ -187,7 +186,7 @@
       ClickOutside
     },
     created: function () {
-      this.execute()
+      this.executeElement()
     }
   }
 </script>
