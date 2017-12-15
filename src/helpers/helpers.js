@@ -1,4 +1,48 @@
+import Mustache from 'mustache'
+
 export const Util = {
+  calculateFilterDefinitions: function (filterTokens, globalFilterDefinitions) {
+    let filterDefinitions = []
+    filterTokens.forEach(filterToken => {
+      let found = false
+      globalFilterDefinitions.forEach(globalFilterDefinition => {
+        if (globalFilterDefinition.name === filterToken) {
+          filterDefinitions.push(globalFilterDefinition)
+          found = true
+        }
+      })
+      if (!found) {
+        filterDefinitions.push({
+          type: '',
+          name: filterToken,
+          label: filterToken,
+          defaultValue: '',
+          global: false
+        })
+      }
+    })
+    return filterDefinitions
+  },
+  getUnifiedMustacheTokens: function (textArr) {
+    const unifiedTokens = []
+    textArr.forEach(text => {
+      try {
+        const tokens = Mustache.parse(text)
+        tokens.forEach(token => {
+          const type = token[0]
+          const value = token[1]
+          if (type === 'name' && !unifiedTokens.includes(value)) {
+            unifiedTokens.push(value)
+          }
+        })
+        return unifiedTokens
+      } catch (e) {
+        console.log('aaa')
+        return null
+      }
+    })
+    return unifiedTokens
+  },
   chartType: function (value) {
     if (typeof value === 'string') {
       switch (value) {

@@ -77,13 +77,12 @@
   import Report from '../components/Report'
   import ReportElement from '../components/ReportElement'
   import ReportFilter from '../components/ReportFilter'
-  import {DUMMY_FILTER} from '@/helpers/helpers.js'
+  import {DUMMY_FILTER, Util} from '@/helpers/helpers.js'
   import Editor from 'ace-vue2'
   import 'brace/mode/javascript'
   import 'brace/mode/sql'
   import 'brace/mode/html'
   import 'brace/theme/monokai'
-  import Mustache from 'mustache'
 
   export default {
     components: { ReportElement, Editor, Report, ReportFilter, FilterPopup },
@@ -91,7 +90,6 @@
     data: function () {
       return {
         element: null,
-        filterTokens: [],
         globalFilterDefinitions: [],
         filterDefinitions: [],
         filters: DUMMY_FILTER.get(),
@@ -116,44 +114,11 @@
       openFilterPopup: function (filterDefinition) {
         this.$refs.filterPopup.open(filterDefinition)
       },
-      getFilterTokens: function () {
-        const unifiedTokens = []
-        try {
-          const tokens = Mustache.parse(this.element.query)
-          tokens.forEach(token => {
-            const type = token[0]
-            const value = token[1]
-            if (type === 'name' && !unifiedTokens.includes(value)) {
-              unifiedTokens.push(value)
-            }
-          })
-          this.filterTokens = unifiedTokens
-          return unifiedTokens
-        } catch (e) {}
-        return this.filterTokens
-      },
       calculateFilterDefinitions: function () {
-        let filterDefinitions = []
-        let filterTokens = this.getFilterTokens()
-        filterTokens.forEach(filterToken => {
-          let found = false
-          this.globalFilterDefinitions.forEach(globalFilterDefinition => {
-            if (globalFilterDefinition.name === filterToken) {
-              filterDefinitions.push(globalFilterDefinition)
-              found = true
-            }
-          })
-          if (!found) {
-            filterDefinitions.push({
-              type: '',
-              name: filterToken,
-              label: filterToken,
-              defaultValue: '',
-              global: false
-            })
-          }
-        })
-        this.filterDefinitions = filterDefinitions
+        let filterTokens = Util.getUnifiedMustacheTokens([this.element.query])
+        if (filterTokens.length > 0) {
+          this.filterDefinitions = Util.calculateFilterDefinitions(filterTokens, this.globalFilterDefinitions)
+        }
       },
       save: function () {
         HTTP.post('/bi/report/element', this.element)
@@ -185,12 +150,7 @@
       HTTP.get('bi/report/element/' + this.$route.params.id)
         .then((res) => {
           this.element = res.data
-          this.calculateFilterDefinitions()
         })
-      HTTP.get('bi/report/filter/list').then(res => {
-        this.globalFilterDefinitions = res.data
-        this.calculateFilterDefinitions()
-      })
     }
   }
 </script>

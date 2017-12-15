@@ -1,31 +1,17 @@
 <template>
   <div>
-    <popup ref="filterPopup" @addFilter="addFilter"></popup>
     <add-button></add-button>
     <button @click="test">Test</button>
     <div class="tabChores">
       <input class="col-xs-4" style="border: none; background-color: #f1f1f1" type="input" v-model="reportData.title">
     </div>
-    <div class="col-xs-7 form-group selected-report-options">
+    <div class="col-xs-9 form-group selected-report-options">
       <div
-        v-for="filterDefinition in report.elements"
+        v-for="filterDefinition in filterDefinitions"
         :key="filterDefinition.name"
         class="form-group col-sm-3">
-        <label style="font-size: 12px;margin-bottom: 0;">
-          {{filterDefinition.label}}
-          <i @click="openEditFilterPopup(filterDefinition)">Edit</i> -
-          <i @click="deleteFilter(idx)">Remove</i>
-        </label>
-        <!--<datepicker v-model="filters[filterDefinition.name]"></datepicker>-->
-        <report-filter ref="filters" :definition="filterDefinition" :filters="filters"></report-filter>
-      </div>
-      <div class="form-group col-sm-1">
-        <label class="filterDefinitionLabel">&nbsp;</label>
-        <button
-          @click="openNewFilterPopup"
-          class="btn--add">
-          <i class="icon-plus"></i>
-        </button>
+        <label style="font-size: 12px;margin-bottom: 0;">{{filterDefinition.label}}</label>
+        <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
       </div>
     </div>
     <grid-layout
@@ -55,10 +41,9 @@
   import ReportElement from '@/components/ReportElement'
   import VueGridLayout from 'vue-grid-layout'
   import AddButton from '@/components/AddButton'
-  import Popup from '@/components/FilterPopup'
   import {HTTP} from '@/helpers/http-helper.js'
+  import {Util} from '@/helpers/helpers.js'
   import ReportFilter from '@/components/ReportFilter'
-  import Mustache from 'mustache'
 
   export default {
     name: 'report',
@@ -66,7 +51,6 @@
       ReportFilter,
       ReportElement,
       AddButton,
-      Popup,
       'grid-layout': VueGridLayout.GridLayout,
       'grid-item': VueGridLayout.GridItem
     },
@@ -76,7 +60,9 @@
         reportIdx: this.index,
         layout: [],
         popupSeen: false,
-        filters: {}
+        filters: {},
+        filterDefinitions: [],
+        globalFilterDefinitions: []
       }
     },
     props: {
@@ -94,43 +80,6 @@
       }
     },
     computed: {
-      filterDefinitions: {
-        get: function () {
-          const unifiedTokens = []
-          this.reportData.elements.forEach(element => {
-            const tokens = Mustache.parse(element.query)
-            tokens.forEach(token => {
-              const type = token[0]
-              const value = token[1]
-              if (type === 'name' && !unifiedTokens.includes(value)) {
-                unifiedTokens.push(value)
-              }
-            })
-          })
-          let filterDefinitions = []
-          unifiedTokens.forEach(filterToken => {
-            let filterDefinition
-            /* this.reportData.reportElements.forEach(fd => {
-              if (fd.name === filterToken) {
-                filterDefinition = fd
-              }
-            }) */
-            if (!filterDefinition) {
-              filterDefinition = {
-                name: filterToken,
-                label: filterToken,
-                type: '',
-                defaultValue: ''
-              }
-            }
-            filterDefinitions.push(filterDefinition)
-          })
-          return filterDefinitions
-        },
-        set: function (newVal) {
-          console.log(newVal)
-        }
-      }
     },
     methods: {
       test: function () {
@@ -147,17 +96,14 @@
           })
         })
       },
-      getFilterDefinition: function (name) {
-        for (let filterDefinition of this.reportData.reportElements) {
-          if (filterDefinition.name === name) {
-            return filterDefinition
-          }
-        }
-        return {
-          name: name,
-          label: '',
-          type: '',
-          defaultValue: ''
+      calculateFilterDefinitions: function () {
+        let queries = []
+        this.reportData.elements.forEach(element => {
+          queries.push(element.query)
+        })
+        let filterTokens = Util.getUnifiedMustacheTokens(queries)
+        if (filterTokens.length > 0) {
+          this.filterDefinitions = Util.calculateFilterDefinitions(filterTokens, this.globalFilterDefinitions)
         }
       },
       getElement: function (id) {
@@ -174,18 +120,6 @@
             this.reportData = res.data
           })
       },
-      openNewFilterPopup: function () {
-        this.$refs.filterPopup.open()
-      },
-      openEditFilterPopup: function (filter) {
-        this.$refs.filterPopup.open(filter)
-      },
-      addFilter: function (filter) {
-        this.reportData.reportElements.push(filter)
-      },
-      deleteFilter: function (name) {
-        this.reportData.reportElements.splice(name, 1)
-      },
       resize: function (idx) {
         this.$refs.reportElements[idx].redrawChart()
       },
@@ -200,6 +134,10 @@
     },
     created: function () {
       this.layout = JSON.parse(this.reportData.layout)
+      HTTP.get('bi/report/filter/list').then(res => {
+        this.globalFilterDefinitions = res.data
+        this.calculateFilterDefinitions()
+      })
     }
   }
 </script>

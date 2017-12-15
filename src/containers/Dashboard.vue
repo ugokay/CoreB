@@ -28,6 +28,7 @@
 
 <script>
   import {HTTP} from '@/helpers/http-helper.js'
+  import {Util} from '@/helpers/helpers.js'
   import Report from '@/components/Report'
   import ReportElement from '@/components/ReportElement'
   import VueGridLayout from 'vue-grid-layout'
@@ -58,6 +59,10 @@
         HTTP.get('bi/report/list')
           .then((res) => {
             this.reports = res.data
+            Util.getUnifiedMustacheTokens([this.element.query])
+            HTTP.get('bi/report/filter/list').then(res => {
+              this.globalFilterDefinitions = res.data
+            })
           })
           .catch((error) => {
             console.log(error)
