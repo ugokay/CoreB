@@ -1,16 +1,18 @@
 <template>
   <div>
     <add-button></add-button>
-    <div class="tabChores">
-      <input class="col-xs-4" style="border: none; background-color: #f1f1f1" type="input" v-model="reportData.title">
-    </div>
-    <div class="col-xs-9 form-group selected-report-options">
-      <div
-        v-for="filterDefinition in filterDefinitions"
-        :key="filterDefinition.name"
-        class="form-group col-sm-3">
-        <label style="font-size: 12px;margin-bottom: 0;">{{filterDefinition.label}}</label>
-        <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
+    <div class="row mt20">
+      <div class="tabChores col-xs-3">
+        <input style="border: none; background-color: #f1f1f1" type="input" v-model="reportData.title">
+      </div>
+      <div class="col-xs-8 form-group selected-report-options">
+        <div
+          v-for="filterDefinition in filterDefinitions"
+          :key="filterDefinition.name"
+          class="form-group col-sm-3">
+          <label style="font-size: 12px;margin-bottom: 0;">{{filterDefinition.label}}</label>
+          <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
+        </div>
       </div>
     </div>
     <grid-layout
@@ -129,10 +131,13 @@
 
 <style>
 .vue-grid-layout {
-  top: 90px
+  margin-left: 20px
+}
+.mt20 {
+  margin-top: 20px;
 }
 .tabChores {
-  margin: 0 0 20px 19px;
+  margin: 20px;
   font-size: 20px;
   font-weight: bold;
 }
@@ -142,6 +147,7 @@
 .filterDefinitionLabel {
   font-size: 12px;
   margin-bottom: 0;
-  display: block
+  display: block;
+  margin-top: 20px;
 }
 </style>

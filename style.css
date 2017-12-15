@@ -31,7 +31,22 @@ ICOMOON SET */
   -moz-osx-font-smoothing: grayscale;
 }
 
-
+.report--design .filterDefinitionLabel {
+  margin-top: 25px;
+}
+.report--design .comparison-outer {
+  margin: 1em 26px;
+  background: #fff;
+  padding: 1.5em;
+  box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.12);
+}
+.report--design .report-element--title {
+  width: calc(100% - 60px) !important;
+  margin-left: 26px;
+  font-size: 20px;
+  background: #fff!important;
+  padding: 20px 0 20px 20px!important;
+}
 
 thead th {
   verical-align: bottom;
@@ -39,6 +54,12 @@ thead th {
   border-bottom: 2px solid #ddd;
   font-size: 10px;
   padding: 8px;
+}
+
+.report--design .selected-report-options {
+  margin-left: 10px;
+  margin-bottom: 0!important;
+  width: calc(100% - 20px);
 }
 
 span.button-holder,
@@ -55,7 +76,6 @@ span.button-holder,
 .action--area {
   background: #33353e;
   height: 40px;
-  margin-bottom: 30px
 }
 
 .filterDefinitionLabel {
@@ -186,14 +206,14 @@ span.button-holder,
 
 .report--design .highcharts {
   position: inherit!important;
-  width: 100%;
+  width: calc(100% - 60px) !important;
   height: 400px!important;
-  top: auto;
-  bottom: 0;
+  margin-left: 26px;
+  margin-bottom: 30px;
 }
-
-
-
+.report--design {
+  margin-bottom: 60px;
+}
 
 .highcharts {
   position: absolute;
@@ -237,10 +257,6 @@ span.button-holder,
 .vue-grid-item {
   box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.12)!important;
   border-radius: 2px;
-}
-
-.selected-report-options {
-  width: 65%;
 }
 
 .vdp-datepicker__calendar {
