@@ -56,7 +56,7 @@
           <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
         </div>
       </div>
-      <report-element ref="reportElement" :element="element" :filters="filters"></report-element>
+      <report-element v-if="filtersLoaded"  ref="reportElement" :element="element" :filters="filters"></report-element>
       <table class="table" v-if="queryResult"  v-on:click="tableSeen = !tableSeen">
         <thead>
           <th v-for="field in queryResult.schema.fields">{{field.name}}</th>
@@ -79,7 +79,7 @@
   import Report from '../components/Report'
   import ReportElement from '../components/ReportElement'
   import ReportFilter from '../components/ReportFilter'
-  import {DUMMY_FILTER, Util} from '@/helpers/helpers.js'
+  import {Util} from '@/helpers/helpers.js'
   import Editor from 'ace-vue2'
   import 'brace/mode/javascript'
   import 'brace/mode/sql'
@@ -94,7 +94,8 @@
         element: null,
         globalFilterDefinitions: [],
         filterDefinitions: [],
-        filters: DUMMY_FILTER.get(),
+        filters: {},
+        filtersLoaded: false,
         showHtml: false,
         seenQuery: true,
         tableSeen: false,
@@ -102,7 +103,7 @@
         htmlContent: '<html>',
         sqlContent: 'sql',
         editorOptions: {
-          fontSize: '14pt'
+          fontSize: '12pt'
         }
       }
     },
@@ -120,6 +121,11 @@
         let filterTokens = Util.getUnifiedMustacheTokens([this.element.query])
         if (filterTokens.length > 0) {
           this.filterDefinitions = Util.calculateFilterDefinitions(filterTokens, this.globalFilterDefinitions)
+          /* this.filterDefinitions.forEach(filterDefinition => {
+            if (!this.filters[filterDefinition.name]) {
+              this.filters.push(filterDefinition.defaultValue)
+            }
+          }) */
         }
       },
       save: function () {
@@ -155,6 +161,7 @@
           HTTP.get('bi/report/filter/list').then(res => {
             this.globalFilterDefinitions = res.data
             this.calculateFilterDefinitions()
+            this.filtersLoaded = true
           })
         })
     }

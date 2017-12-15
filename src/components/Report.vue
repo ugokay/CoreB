@@ -1,5 +1,6 @@
 <template>
   <div>
+    <button @click="refresh">Refresh</button>
     <add-button></add-button>
     <div class="row mt20">
       <div class="tabChores col-xs-3">
@@ -9,6 +10,7 @@
         <div
           v-for="filterDefinition in filterDefinitions"
           :key="filterDefinition.name"
+          v-if="!filterDefinition.static"
           class="form-group col-sm-3">
           <label style="font-size: 12px;margin-bottom: 0;">{{filterDefinition.label}}</label>
           <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
@@ -16,7 +18,7 @@
       </div>
     </div>
     <grid-layout
-      v-if="isSelected"
+      v-if="isSelected && filtersLoaded"
       :layout="layout"
       :col-num="12"
       :row-height="30"
@@ -62,6 +64,7 @@
         layout: [],
         popupSeen: false,
         filters: {},
+        filtersLoaded: false,
         filterDefinitions: [],
         globalFilterDefinitions: []
       }
@@ -83,6 +86,11 @@
     computed: {
     },
     methods: {
+      refresh: function () {
+        this.$refs.reportElements.forEach(reportElement => {
+          reportElement.executeQuery()
+        })
+      },
       calculateFilterDefinitions: function () {
         let queries = []
         this.reportData.elements.forEach(element => {
@@ -92,6 +100,11 @@
         if (filterTokens.length > 0) {
           this.filterDefinitions = Util.calculateFilterDefinitions(filterTokens, this.globalFilterDefinitions)
         }
+        this.filterDefinitions.forEach(filterDefinition => {
+          if (filterDefinition.static) {
+            this.filters[filterDefinition.name] = filterDefinition.defaultValue
+          }
+        })
       },
       getElement: function (id) {
         for (let i = 0; i < this.reportData.elements.length; i++) {
@@ -122,6 +135,7 @@
     created: function () {
       this.layout = JSON.parse(this.reportData.layout)
       HTTP.get('bi/report/filter/list').then(res => {
+        this.filtersLoaded = true
         this.globalFilterDefinitions = res.data
         this.calculateFilterDefinitions()
       })

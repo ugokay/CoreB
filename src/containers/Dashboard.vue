@@ -4,7 +4,7 @@
       <li @click="goInFullscreen"> Fullscreen</li>
       <!-- <li> Edit Layout</li> -->
       <li> Toggle Slide</li>
-      <li><i class="icon-refresh"></i><span>Refresh</span></li>
+      <li><a @click.prevent="refresh"><i class="icon-refresh"></i><span>Refresh</span></a></li>
       <li><i class="icon-export"></i><span>Export</span></li>
       <li @click="saveReport"><i class="icon-export"></i><span>Save</span></li>
     </ul>
@@ -28,7 +28,6 @@
 
 <script>
   import {HTTP} from '@/helpers/http-helper.js'
-  import {Util} from '@/helpers/helpers.js'
   import Report from '@/components/Report'
   import ReportElement from '@/components/ReportElement'
   import VueGridLayout from 'vue-grid-layout'
@@ -52,6 +51,9 @@
       }
     },
     methods: {
+      refresh: function () {
+        this.$refs.reports[this.selectedReportIdx].refresh()
+      },
       tabChange: function (tabIdx) {
         this.selectedReportIdx = tabIdx
       },
@@ -59,10 +61,6 @@
         HTTP.get('bi/report/list')
           .then((res) => {
             this.reports = res.data
-            Util.getUnifiedMustacheTokens([this.element.query])
-            HTTP.get('bi/report/filter/list').then(res => {
-              this.globalFilterDefinitions = res.data
-            })
           })
           .catch((error) => {
             console.log(error)

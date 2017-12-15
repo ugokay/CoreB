@@ -57,6 +57,7 @@ thead th {
 }
 
 .report--design .selected-report-options {
+  float: left;
   margin-left: 10px;
   margin-bottom: 0!important;
   width: calc(100% - 20px);
@@ -90,7 +91,13 @@ span.button-holder,
   color: #fff;
   font-size: 13px;
   margin-top: 12px;
-  display: block
+  display: block;
+  cursor: pointer;
+  opacity: 0.85;
+}
+
+.action--btn:hover {
+  opacity: 1;
 }
 
 .top-related-actions li {
