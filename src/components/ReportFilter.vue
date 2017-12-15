@@ -1,8 +1,19 @@
 <template>
   <div>
-    <datepicker v-if="definition.type === 'datepicker'" :options="dpOptions" v-model="value"></datepicker>
-    <input v-else-if="definition.type === 'text'" v-model="value" />
-    <span v-else="definition.type === 'text'" v-model="value">Set Filter Options</span>
+    <datepicker 
+      v-if="definition.type === 'datepicker'"
+      :options="dpOptions"
+      v-model="value">
+    </datepicker>
+    <input 
+      v-else-if="definition.type === 'text'" 
+      v-model="value"
+      class="main--input" />
+    <span 
+      v-else="definition.type === 'text'" 
+      v-model="value">
+      Set Filter Options
+    </span>
   </div>
 </template>
 <script>
@@ -66,6 +77,3 @@
     }
   }
 </script>
-<style>
-
-</style>
