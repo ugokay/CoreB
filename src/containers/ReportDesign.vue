@@ -48,7 +48,7 @@
           <label class="filterDefinitionLabel">
             {{filterDefinition.label}}
             <span
-              class="label label-default" 
+              class="label label-default"
               @click="openFilterPopup(filterDefinition)">
               Edit
             </span>
@@ -153,6 +153,10 @@
       HTTP.get('bi/report/element/' + this.$route.params.id)
         .then((res) => {
           this.element = res.data
+          HTTP.get('bi/report/filter/list').then(res => {
+            this.globalFilterDefinitions = res.data
+            this.calculateFilterDefinitions()
+          })
         })
     }
   }

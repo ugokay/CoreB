@@ -1,7 +1,6 @@
 <template>
   <div>
     <add-button></add-button>
-    <button @click="test">Test</button>
     <div class="tabChores">
       <input class="col-xs-4" style="border: none; background-color: #f1f1f1" type="input" v-model="reportData.title">
     </div>
@@ -82,20 +81,6 @@
     computed: {
     },
     methods: {
-      test: function () {
-        HTTP.post('bi/report/filter', {
-          name: 'test',
-          label: 'Test',
-          type: 'text',
-          defaultValue: 'test text',
-          global: true
-        }).then(res => {
-          console.log(res.data)
-          HTTP.get('bi/report/filter/list').then(res => {
-            console.log(res.data)
-          })
-        })
-      },
       calculateFilterDefinitions: function () {
         let queries = []
         this.reportData.elements.forEach(element => {
