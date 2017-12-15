@@ -1,14 +1,14 @@
 <template>
   <div class="row">
     <ul class="dash-actions col-xs-2 pull-right">
-      <li @click="goInFullscreen"> Fullscreen</li>
+      <li @click="fullscreen"> Fullscreen</li>
       <!-- <li> Edit Layout</li> -->
       <li> Toggle Slide</li>
       <li><a @click.prevent="refresh"><i class="icon-refresh"></i><span>Refresh</span></a></li>
       <li><i class="icon-export"></i><span>Export</span></li>
       <li @click="saveReport"><i class="icon-export"></i><span>Save</span></li>
     </ul>
-    <vue-tabs @tab-change="tabChange">
+    <vue-tabs @tab-change="tabChange" id="tabs">
       <v-tab
         v-for="(report, reportIdx) in reports"
         :key="report.id"
@@ -51,6 +51,10 @@
       }
     },
     methods: {
+      fullscreen: function () {
+        console.log(document.getElementById('tabs'))
+        document.getElementById('grid').webkitRequestFullscreen()
+      },
       refresh: function () {
         this.$refs.reports[this.selectedReportIdx].refresh()
       },
@@ -69,7 +73,9 @@
       saveReport: function () {
         this.$refs.reports[this.selectedReportIdx].save()
       },
-      goInFullscreen () {},
+      goInFullscreen () {
+        this.$el.parentNode.requestFullscreen()
+      },
       removeTab (index) {
         this.tabs.splice(index, 1)
       },

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <button @click="refresh">Refresh</button>
     <add-button></add-button>
     <div class="row mt20">
       <div class="tabChores col-xs-3">
@@ -18,6 +17,7 @@
       </div>
     </div>
     <grid-layout
+      id="grid"
       v-if="isSelected && filtersLoaded"
       :layout="layout"
       :col-num="12"

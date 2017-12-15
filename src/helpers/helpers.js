@@ -60,7 +60,6 @@ export const Util = {
             unifiedTokens.push(parsedToken)
           }
         })
-        console.log(unifiedTokens)
         return unifiedTokens
       } catch (e) {
         return null
