@@ -83,8 +83,6 @@
         default: true
       }
     },
-    computed: {
-    },
     methods: {
       refresh: function () {
         this.$refs.reportElements.forEach(reportElement => {
@@ -119,6 +117,7 @@
           .then((res) => {
             this.reportData = res.data
           })
+          .then(() => this.$swal("Success!", "Changes has been saved!", "success"))
       },
       resize: function (idx) {
         this.$refs.reportElements[idx].redrawChart()

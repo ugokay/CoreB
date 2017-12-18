@@ -24,7 +24,7 @@
               </report>
             </v-tab>
           </vue-tabs>
-       </fullscreen>
+      </fullscreen>
   </div>
 </template>
 
@@ -86,9 +86,7 @@
         this.tabs.push('New Tab')
       },
       toggle: function () {
-        this.$refs['fullscreen'].toggle(/*{
-          callback: setTimeout(,1)
-        }*/)
+        this.$refs['fullscreen'].toggle()
       },
     },
     created: function () {

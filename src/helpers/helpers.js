@@ -148,3 +148,11 @@ export const MOCK_FILTER_DEFINITIONS = {
     return filterArray
   }
 }
+
+export const MOCK_MAPPERS = [
+  { id: 6320951, name: 'Insights', isEnabled: false },
+  { id: 156611, name: 'Mock', isEnabled: true },
+  { id: 458567, name: 'Data', isEnabled: false },
+  { id: 3737, name: 'Coming', isEnabled: true },
+  { id: 579679, name: 'Here', isEnabled: false },
+]

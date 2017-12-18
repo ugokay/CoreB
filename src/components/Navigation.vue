@@ -11,8 +11,9 @@
         </div>
         <div>
           <ul class="sidebarLinks">
-            <li><router-link to="/">Home</router-link></li>
-            <li><router-link to="/global-filters">Global Filters</router-link></li>
+            <li><router-link to="/"><i class="icon-plus" />Home</router-link></li>
+            <li><router-link to="/global-filters"><i class="icon-plus" />Global Filters</router-link></li>
+            <li><router-link to="/mappers"><i class="icon-plus" />Mappers</router-link></li>
           </ul>
         </div>
         <div class="admin-settings">
