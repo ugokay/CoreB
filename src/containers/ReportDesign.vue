@@ -5,8 +5,9 @@
       <div class="nav-tabs-wrapper">
         <ul class="nav nav-tabs pull-left">
             <li>
-              <span  class="button-holder title title_center">
-                <router-link to="/">Back to Dashboard</router-link></span>
+              <span class="button-holder title title_center">
+                <router-link to="/">Back to Dashboard</router-link>
+              </span>
             </li>
           </ul>
           <ul class="top-related-actions pull-right" style="position:absolute; top:0; right:0">
@@ -41,7 +42,7 @@
           <span @click="run" class="action--btn">RUN <i class="icon-arrow-right" style="color:#ffffff"> </i></span>
          </div>
       </div>
-      <div class="form-group selected-report-options row">
+      <div class="form-group selected-report-options row mb-0">
         <div
           v-for="filterDefinition in filterDefinitions"
           class="form-group col-sm-3 col-lg-2">
@@ -56,6 +57,7 @@
           <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
         </div>
       </div>
+      <div class="clearfix"></div>
       <report-element v-if="filtersLoaded"  ref="reportElement" :element="element" :filters="filters"></report-element>
       <table class="table" v-if="queryResult"  v-on:click="tableSeen = !tableSeen">
         <thead>

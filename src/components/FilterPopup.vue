@@ -33,10 +33,13 @@
           type="text">
       </div>
       <div class="input-row">
-        <label>Is static?</label>
-        <input
+        <label class="toggle-checkbox">
+          <input
           v-model="filterData.static"
           type="checkbox">
+          <span>Is static?</span>
+          <span class="box"></span>
+        </label>
       </div>
       <div class="input-row">
         <button v-if="isCreate" @click="addNewFilter">Create</button>

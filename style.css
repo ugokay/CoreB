@@ -26,11 +26,17 @@ ICOMOON SET */
   font-variant: normal;
   text-transform: none;
   line-height: 1;
-
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+.mb-0 {
+  margin-bottom: 0px!important;
+}
+.report--design .highcharts-container {
+  -webkit-box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.12)
+}
 .report--design .filterDefinitionLabel {
   margin-top: 25px;
 }
@@ -55,11 +61,60 @@ thead th {
   font-size: 10px;
   padding: 8px;
 }
+.toggle-checkbox {
+  display: flex!important;
+  align-items: center;
+  cursor: pointer;
+}
+.toggle-checkbox input {
+  display: none!important
+}
+.toggle-checkbox span.box {
+  display: block;
+  width: 45px;
+  height: 20px;
+  background: #ddd;
+  border-radius: 20px;
+  margin-left: 20px;
+  position: relative;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.toggle-checkbox span.box::before {
+  content: '';
+  display:  inline-block;
+  width: 25px;
+  height: 25px;
+  border-radius: 30px;
+  background: #707075;
+  position: absolute;
+  top: -2.5px;
+  left: 0;
+  transition: all 300ms
+}
+.toggle-checkbox input:checked ~ span.box::before {
+  background: #5b64fc;
+  left: calc(100% - 25px);
+  -webkit-box-shadow: 2px 2px 3px 0 rgba(91, 100, 252, 0.3);
+  box-shadow: 2px 2px 3px 0 rgba(91, 100, 252, 0.3);
+}
+
+.mx-datepicker input {
+  border: 0!important;
+  -webkit-box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.15);
+}
+.mx-datepicker {
+  width: 100%!important;
+  min-width: auto!important;
+  position: relative;
+  top: 5px;
+}
 
 .report--design .selected-report-options {
   float: left;
-  margin-left: 10px;
-  width: calc(100% - 20px);
+  margin-left: 30px;
+  width: 100%;
 }
 
 span.button-holder,
@@ -109,8 +164,6 @@ span.button-holder,
 .is-hidden {
   display: none
 }
-
-
 
 .toggleTriggerBox {
   position: inherit!important
