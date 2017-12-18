@@ -76,12 +76,12 @@
   </div>
 </template>
 <script>
-  import {HTTP} from '@/helpers/http-helper.js'
+  import {HTTP} from '@/helpers/http-helper'
   import FilterPopup from '@/components/FilterPopup'
   import Report from '../components/Report'
   import ReportElement from '../components/ReportElement'
   import ReportFilter from '../components/ReportFilter'
-  import {Util} from '@/helpers/helpers.js'
+  import {Util} from '@/helpers/helpers'
   import Editor from 'ace-vue2'
   import 'brace/mode/javascript'
   import 'brace/mode/sql'
@@ -105,7 +105,7 @@
         htmlContent: '<html>',
         sqlContent: 'sql',
         editorOptions: {
-          fontSize: '12pt'
+          fontSize: '13pt'
         }
       }
     },
