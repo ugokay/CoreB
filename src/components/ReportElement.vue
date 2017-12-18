@@ -45,7 +45,7 @@
 <script>
   import { CHART } from '@/helpers/chart-helper.js'
   import { HTTP } from '@/helpers/http-helper.js'
-  import {DUMMY_FILTER, Util} from '@/helpers/helpers.js'
+  import {Util} from '@/helpers/helpers.js'
   import VueHighcharts from 'vue2-highcharts'
   import Mustache from 'mustache'
   import ClickOutside from 'vue-click-outside'
@@ -139,7 +139,7 @@
         this.loading = true
         HTTP.get('bi/analyze/execute/report-element/' + this.element.id, {
           params: {
-            filterParamsJson: JSON.stringify(DUMMY_FILTER.get())
+            filterParamsJson: JSON.stringify(this.filters)
           }
         }).then((res) => {
           if (res.status === 202) {
@@ -155,11 +155,10 @@
         })
       },
       executeQuery: function () {
-        console.log(this.filters)
         this.loading = true
         HTTP.post('bi/analyze/execute', {query: this.element.query}, {
           params: {
-            filterParamsJson: JSON.stringify(DUMMY_FILTER.get())
+            filterParamsJson: JSON.stringify(this.filters)
           }
         }).then((res) => {
           if (res.status === 202) {

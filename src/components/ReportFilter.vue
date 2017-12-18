@@ -1,16 +1,21 @@
 <template>
   <div>
-    <datepicker 
+    <date-picker
       v-if="definition.type === 'datepicker'"
-      :options="dpOptions"
+      lang="en" :confirm="true"
       v-model="value">
-    </datepicker>
-    <input 
-      v-else-if="definition.type === 'text'" 
+    </date-picker>
+    <date-picker
+      v-else-if="definition.type === 'daterangepicker'"
+      range lang="en" :confirm="true"
+      v-model="value">
+    </date-picker>
+    <input
+      v-else-if="definition.type === 'text'"
       v-model="value"
       class="main--input" />
-    <span 
-      v-else="definition.type === 'text'" 
+    <span
+      v-else="definition.type === 'text'"
       v-model="value">
       Set Filter Options
     </span>
@@ -18,10 +23,13 @@
 </template>
 <script>
   import Datepicker from 'vuejs-datepicker'
+  import DatePicker from 'vue2-datepicker'
+  import {Util} from '@/helpers/helpers.js'
 
   export default{
     components: {
-      Datepicker
+      Datepicker,
+      DatePicker
     },
     name: 'report-filter',
     props: {
@@ -36,10 +44,7 @@
     },
     data: function () {
       return {
-        value: null,
-        dpOptions: {
-          format: 'YYYY-MM-DD'
-        }
+        value: null
       }
     },
     methods: {
@@ -47,32 +52,41 @@
     created: function () {
       let initialValue
       if (this.definition.type === 'datepicker') {
-        const today = new Date()
-        today.setHours(3)
-        today.setMinutes(0)
-        today.setSeconds(0)
-        today.setMilliseconds(0)
+        const fixedDates = Util.calculateFixedDates()
         switch (this.definition.defaultValue) {
           case 'today':
-            initialValue = today
+            initialValue = fixedDates.today
             break
           case 'yesterday':
-            const dayInMillis = 1000 * 60 * 60 * 24
-            const tomorrow = new Date(today.getTime() - dayInMillis)
-            initialValue = tomorrow
+            initialValue = fixedDates.yesterday
+            break
+          case 'tomorrow':
+            initialValue = fixedDates.tomorrow
             break
           default:
-            initialValue = today
+            initialValue = fixedDates.today
+        }
+      } else if (this.definition.type === 'daterangepicker') {
+        const fixedDates = Util.calculateFixedDates()
+        switch (this.definition.defaultValue) {
+          case 'today':
+            initialValue = [fixedDates.yesterday, fixedDates.today]
+            break
+          case 'tomorrow':
+            initialValue = [fixedDates.today, fixedDates.tomorrow]
+            break
+          default:
+            initialValue = [fixedDates.yesterday, fixedDates.today]
         }
       } else {
         initialValue = this.definition.defaultValue
       }
       this.value = initialValue
-      this.filters[this.definition.name] = initialValue
+      this.filters[this.definition.name] = Util.calculateFilterValue(initialValue, this.definition.type)
     },
     watch: {
-      value: function (newVal, oldVal) {
-        this.filters[this.definition.name] = newVal
+      value: function (newVal) {
+        this.filters[this.definition.name] = Util.calculateFilterValue(newVal, this.definition.type)
       }
     }
   }

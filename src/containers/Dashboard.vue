@@ -1,14 +1,14 @@
 <template>
   <div class="row">
     <ul class="dash-actions col-xs-2 pull-right">
-      <li @click="goInFullscreen"> Fullscreen</li>
+      <li @click="fullscreen"> Fullscreen</li>
       <!-- <li> Edit Layout</li> -->
       <li> Toggle Slide</li>
-      <li><i class="icon-refresh"></i><span>Refresh</span></li>
+      <li><a @click.prevent="refresh"><i class="icon-refresh"></i><span>Refresh</span></a></li>
       <li><i class="icon-export"></i><span>Export</span></li>
       <li @click="saveReport"><i class="icon-export"></i><span>Save</span></li>
     </ul>
-    <vue-tabs @tab-change="tabChange">
+    <vue-tabs @tab-change="tabChange" id="tabs">
       <v-tab
         v-for="(report, reportIdx) in reports"
         :key="report.id"
@@ -28,7 +28,6 @@
 
 <script>
   import {HTTP} from '@/helpers/http-helper.js'
-  import {Util} from '@/helpers/helpers.js'
   import Report from '@/components/Report'
   import ReportElement from '@/components/ReportElement'
   import VueGridLayout from 'vue-grid-layout'
@@ -52,6 +51,13 @@
       }
     },
     methods: {
+      fullscreen: function () {
+        console.log(document.getElementById('tabs'))
+        document.getElementById('grid').webkitRequestFullscreen()
+      },
+      refresh: function () {
+        this.$refs.reports[this.selectedReportIdx].refresh()
+      },
       tabChange: function (tabIdx) {
         this.selectedReportIdx = tabIdx
       },
@@ -59,10 +65,6 @@
         HTTP.get('bi/report/list')
           .then((res) => {
             this.reports = res.data
-            Util.getUnifiedMustacheTokens([this.element.query])
-            HTTP.get('bi/report/filter/list').then(res => {
-              this.globalFilterDefinitions = res.data
-            })
           })
           .catch((error) => {
             console.log(error)
@@ -71,7 +73,9 @@
       saveReport: function () {
         this.$refs.reports[this.selectedReportIdx].save()
       },
-      goInFullscreen () {},
+      goInFullscreen () {
+        this.$el.parentNode.requestFullscreen()
+      },
       removeTab (index) {
         this.tabs.splice(index, 1)
       },

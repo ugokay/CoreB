@@ -1,6 +1,30 @@
 import Mustache from 'mustache'
 
 export const Util = {
+  dayInMillis: 1000 * 60 * 60 * 24,
+  calculateFilterValue: function (value, type) {
+    if (type === 'daterangepicker') {
+      return {
+        start: value[0],
+        end: value[1]
+      }
+    }
+    return value
+  },
+  calculateFixedDates: function () {
+    const today = new Date()
+    today.setHours(3)
+    today.setMinutes(0)
+    today.setSeconds(0)
+    today.setMilliseconds(0)
+    const yesterday = new Date(today.getTime() - this.dayInMillis)
+    const tomorrow = new Date(today.getTime() + this.dayInMillis)
+    return {
+      today,
+      yesterday,
+      tomorrow
+    }
+  },
   calculateFilterDefinitions: function (filterTokens, globalFilterDefinitions) {
     let filterDefinitions = []
     filterTokens.forEach(filterToken => {
@@ -31,13 +55,13 @@ export const Util = {
         tokens.forEach(token => {
           const type = token[0]
           const value = token[1]
-          if (type === 'name' && !unifiedTokens.includes(value)) {
-            unifiedTokens.push(value)
+          let parsedToken = value.split('.')[0]
+          if (type === 'name' && !unifiedTokens.includes(parsedToken)) {
+            unifiedTokens.push(parsedToken)
           }
         })
         return unifiedTokens
       } catch (e) {
-        console.log('aaa')
         return null
       }
     })

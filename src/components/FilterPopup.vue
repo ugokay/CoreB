@@ -10,6 +10,7 @@
           v-model="filterData.type">
           <option value="text">Text</option>
           <option value="datepicker">Datepicker</option>
+          <option value="daterangepicker">DateRangePicker</option>
         </select>
         <span class="caret"></span>
       </div>
@@ -32,6 +33,12 @@
           type="text">
       </div>
       <div class="input-row">
+        <label>Is static?</label>
+        <input
+          v-model="filterData.static"
+          type="checkbox">
+      </div>
+      <div class="input-row">
         <button v-if="isCreate" @click="addNewFilter">Create</button>
         <button v-else @click="updateFilter">Update</button>
       </div>
@@ -51,7 +58,7 @@
             name: '',
             type: '',
             defaultValue: '',
-            buttonValue: 'Create'
+            static: true
           }
         }
       }
@@ -80,7 +87,8 @@
             label: '',
             name: '',
             type: '',
-            defaultValue: ''
+            defaultValue: '',
+            static: false
           }
           this.isCreate = true
         }
