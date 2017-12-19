@@ -123,8 +123,7 @@
       updateFilter: function (filterDefinition) {
         HTTP.post('bi/report/filter', filterDefinition)
           .then(res => {
-            // console.log(res.data)
-           this.$swal('Success!', 'Filter has been updated successfully!', 'success') 
+            this.$swal('Success!', 'Filter has been updated successfully!', 'success')
           })
       },
       openFilterPopup: function (filterDefinition) {
