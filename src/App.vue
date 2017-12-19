@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <template v-if="isLoadingRest">Loading</template>
     <template v-if="isLogged">
       <div class="row">
         <div class="col-md-2">
@@ -28,7 +29,8 @@ export default {
   components: { Navigation, Login },
   data: function () {
     return {
-      isLogged: false
+      isLogged: false,
+      isLoadingRest: false
     }
   },
   methods: {
@@ -42,15 +44,20 @@ export default {
     this.isLogged = AUTH.isLogged()
     var self = this
     HTTP.interceptors.response.use(function (response) {
-      // Do something with response data
+      self.isLoadingRest = false
       return response
     }, function (error) {
-      // Do something with response error
       if (error.response.status === 401) {
         console.log('Unauthorized attept!')
         AUTH.setToken('')
         self.$router.push('login')
       }
+      return Promise.reject(error)
+    })
+    HTTP.interceptors.request.use(function (config) {
+      self.isLoadingRest = true
+      return config
+    }, function (error) {
       return Promise.reject(error)
     })
   }

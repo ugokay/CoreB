@@ -9,6 +9,7 @@
           <span class="label label-default">{{ reportElement.id }}</span>
           <span class="name">{{ reportElement.title }}</span>
           <span class="pull-right">
+            <span @click="deleteElement(reportElement.id)" class="label label-default" >Delete</span>
             <span @click="openDesign(reportElement.id)" class="label label-default" >Design</span>
           </span>
         </li>
@@ -30,6 +31,29 @@ export default {
   methods: {
     openDesign: function (id) {
       this.$router.push('/report-design/' + id)
+    },
+    deleteElement: function (id) {
+      this.$swal({
+        title: 'Are you sure?',
+        text: 'You will not be able to recover this imaginary file!',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, keep it'
+      }).then(res => {
+        if (res.value) {
+          HTTP.delete('bi/report/element/' + id)
+            .then(res => {
+              this.$swal('Deleted')
+              for (let i = 0; i < this.reportElements.length; i++) {
+                if (this.reportElements[i].id === id) {
+                  this.reportElements.splice(i, 1)
+                  break
+                }
+              }
+            })
+        }
+      })
     }
   },
   created () {

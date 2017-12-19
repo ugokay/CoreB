@@ -41,6 +41,5 @@ export default new Router({
       name: 'Mapper',
       component: Mapper
     }
-  ],
-  mode: 'history'
+  ]
 })
