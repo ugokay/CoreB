@@ -1,7 +1,7 @@
 <template>
   <div class="row dashboard">
       <ul class="dash-actions col-xs-2 pull-right">
-        <li @click="addReport"> +</li>
+        <li @click="addReport"><i class="icon-plus mr-0"></i></li>
         <li @click="toggle"> Fullscreen</li>
         <!-- <li> Edit Layout</li> -->
         <li> Toggle Slide</li>

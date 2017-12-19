@@ -721,10 +721,14 @@ li.nav-item {
   color: #5b64fc !important;
 }
 
+.mr-0 {
+  margin-right: 0!important;
+}
+
 .dash-actions li {
   list-style: none;
   display: inline-block;
-  padding: 11px 16px 13px 18px;
+  padding: 11px 16px 10px 18px;
   font-size: 13px !important;
   font-weight: bold !important;
   text-align: left !important;
