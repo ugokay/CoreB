@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import {HTTP} from '@/helpers/http-helper'
+import { HTTP } from '@/helpers/http-helper'
 
 export default {
   name: 'GlobalFilters',
@@ -26,8 +26,6 @@ export default {
     return {
       reportElements: []
     }
-  },
-  components: {
   },
   methods: {
     openDesign: function (id) {
@@ -41,21 +39,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.global-filters li{
-  padding: 1em;
-  height: 50px;
-  background-color: #ffffff;
-  box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.12);
-  margin-bottom: 1px
-}
-.global-filters li .name {
-  font-size: 15px;
-  color:#000;
-}
-.global-filters li ._label {
-  font-size: 13px;
-  color:#000;
-}
-</style>

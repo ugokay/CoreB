@@ -1,6 +1,8 @@
 <template>
   <div class="row report--design">
-    <filter-popup @updateFilter="updateFilter" ref="filterPopup"/>
+    <filter-popup
+      @updateFilter="updateFilter"
+      ref="filterPopup" />
     <div class="nav-tabs-navigation">
       <div class="nav-tabs-wrapper">
         <ul class="nav nav-tabs pull-left">
@@ -59,7 +61,14 @@
         </div>
       </div>
       <div class="clearfix"></div>
-      <report-element v-if="filtersLoaded"  ref="reportElement" :element="element" :filters="filters"></report-element>
+
+      <report-element
+        v-if="filtersLoaded"
+        ref="reportElement"
+        :element="element"
+        :filters="filters">
+      </report-element>
+
       <table class="table" v-if="queryResult"  v-on:click="tableSeen = !tableSeen">
         <thead>
           <th v-for="field in queryResult.schema.fields">{{field.name}}</th>
@@ -114,7 +123,8 @@
       updateFilter: function (filterDefinition) {
         HTTP.post('bi/report/filter', filterDefinition)
           .then(res => {
-            console.log(res.data)
+            // console.log(res.data)
+           this.$swal('Success!', 'Filter has been updated successfully!', 'success') 
           })
       },
       openFilterPopup: function (filterDefinition) {

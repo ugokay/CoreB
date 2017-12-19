@@ -1,5 +1,16 @@
 <template>
   <div>
+    <div v-if="loading">
+      <div 
+        class="progress-bar"
+        v-bind:style="{width: progress + '%'}"
+        v-if="progress > 0">
+        {{progress}}
+      </div>
+      <div class="loading-nice">
+        <span></span>
+      </div>
+    </div>
     <div class="col-sm-12 report__element">
       <div class="row">
         <input type="input" class="report-element--title no-border col-xs-9" v-model="element.title"/>
@@ -28,10 +39,6 @@
           </ul>
         </div>
       </div>
-    </div>
-    <div v-if="loading">
-      <div class="progress-bar" v-bind:style="{width: progress + '%'}" v-if="progress > 0">{{progress}}</div>
-      <div class="loader">Loading...</div>
     </div>
     <div v-if="queryResult.schema">
       <div v-if="element.chartType === 6">
