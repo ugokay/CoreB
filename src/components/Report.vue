@@ -1,6 +1,6 @@
 <template>
   <div>
-    <add-button></add-button>
+    <add-button @click="addElement"></add-button>
     <div class="row mt20">
       <div class="tabChores col-xs-3">
         <input style="border: none; background-color: #f1f1f1" type="input" v-model="reportData.title">
@@ -35,7 +35,7 @@
                  :i="item.i"
                  @resized="resizeEnd(elementIdx)"
                  @resize="resize(elementIdx)">
-        <report-element ref="reportElements" :element="getElement(item.id)" :filters="filters"></report-element>
+        <report-element ref="reportElements" :element="getElement(item.id)" :filters="filters" @remove="removeElement"></report-element>
       </grid-item>
     </grid-layout>
   </div>
@@ -104,6 +104,42 @@
           }
         })
       },
+      removeElement: function (id) {
+        console.log(id)
+        for (let i = 0; i < this.reportData.elements.length; i++) {
+          console.log(this.reportData.elements[i].id)
+          if (this.reportData.elements[i].id === id) {
+            this.reportData.elements.splice(i, 1)
+            break
+          }
+        }
+        for (let i = 0; i < this.layout.length; i++) {
+          if (this.layout[i].id === id) {
+            this.layout.splice(i, 1)
+            break
+          }
+        }
+      },
+      addElement: function () {
+        HTTP.post('bi/report/element', {
+          title: 'Untitled',
+          filterDefinitions: [],
+          query: 'SELECT COUNT(*) FROM events'
+        }).then(res => {
+          const newElement = res.data
+          console.log(newElement)
+          let maxY = 0
+          let maxI = 0
+          this.layout.forEach(lay => {
+            maxY = Math.max(maxY, lay.y)
+            maxI = Math.max(maxI, lay.i)
+          })
+          this.layout.push({
+            id: newElement.id, x: 0, y: maxY, w: 2, h: 6, i: (maxI + 1).toString()
+          })
+          this.reportData.elements.push(newElement)
+        })
+      },
       getElement: function (id) {
         for (let i = 0; i < this.reportData.elements.length; i++) {
           if (this.reportData.elements[i].id === id) {
@@ -117,7 +153,7 @@
           .then((res) => {
             this.reportData = res.data
           })
-          .then(() => this.$swal("Success!", "Changes has been saved!", "success"))
+          .then(() => this.$swal('Success!', 'Changes has been saved!', 'success'))
       },
       resize: function (idx) {
         this.$refs.reportElements[idx].redrawChart()

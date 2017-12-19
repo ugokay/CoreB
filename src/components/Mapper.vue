@@ -71,7 +71,7 @@
       FilterPopup,
       Editor
     },
-    data() {
+    data () {
       return {
         editorOptions: {
           fontSize: '13pt'
@@ -80,10 +80,10 @@
       }
     },
     methods: {
-      closePopup() {
+      closePopup () {
         this.hidden = false
       },
-      showPopup() {
+      showPopup () {
         this.hidden = true
       }
     }

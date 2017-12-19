@@ -13,7 +13,7 @@ export const Util = {
   },
   calculateFixedDates: function () {
     const today = new Date()
-    today.setHours(3)
+    today.setHours(6)
     today.setMinutes(0)
     today.setSeconds(0)
     today.setMilliseconds(0)
@@ -154,5 +154,5 @@ export const MOCK_MAPPERS = [
   { id: 156611, name: 'Mock', isEnabled: true },
   { id: 458567, name: 'Data', isEnabled: false },
   { id: 3737, name: 'Coming', isEnabled: true },
-  { id: 579679, name: 'Here', isEnabled: false },
+  { id: 579679, name: 'Here', isEnabled: false }
 ]

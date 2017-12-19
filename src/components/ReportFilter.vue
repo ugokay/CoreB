@@ -7,7 +7,7 @@
     </date-picker>
     <date-picker
       v-else-if="definition.type === 'daterangepicker'"
-      range lang="en" :confirm="true"
+      range lang="en" :confirm="true" @confirm="confirm"
       v-model="value">
     </date-picker>
     <input
@@ -48,6 +48,7 @@
       }
     },
     methods: {
+      confirm: function (value) {}
     },
     created: function () {
       let initialValue
@@ -70,10 +71,10 @@
         const fixedDates = Util.calculateFixedDates()
         switch (this.definition.defaultValue) {
           case 'today':
-            initialValue = [fixedDates.yesterday, fixedDates.today]
-            break
-          case 'tomorrow':
             initialValue = [fixedDates.today, fixedDates.tomorrow]
+            break
+          case 'yesterday':
+            initialValue = [fixedDates.yesterday, fixedDates.today]
             break
           default:
             initialValue = [fixedDates.yesterday, fixedDates.today]

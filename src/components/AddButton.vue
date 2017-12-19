@@ -1,5 +1,5 @@
 <template>
-  <a href="#" class="btn--add is-fixed">
+  <a @click.prevent="click" href="#" class="btn--add is-fixed">
     <i class="icon-plus" />
     Add
   </a>
@@ -7,6 +7,11 @@
 
 <script>
 export default {
-  name: 'AddButton'
+  name: 'AddButton',
+  methods: {
+    click: function () {
+      this.$emit('click')
+    }
+  }
 }
 </script>

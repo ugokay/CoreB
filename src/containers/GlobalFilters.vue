@@ -57,7 +57,7 @@ export default {
           console.log(res.data)
           this.reportElements.push(res.data)
         })
-        .then(() => this.$swal("Success!", "Filter has been added global filters successfully!", "success"))
+        .then(() => this.$swal('Success!', 'Filter has been added global filters successfully!', 'success'))
     },
     openEditFilterPopup: function (index) {
       this.$refs.filterPopup.open(this.reportElements[index])

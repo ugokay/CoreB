@@ -1,6 +1,7 @@
 <template>
   <div class="row dashboard">
       <ul class="dash-actions col-xs-2 pull-right">
+        <li @click="addReport"> +</li>
         <li @click="toggle"> Fullscreen</li>
         <!-- <li> Edit Layout</li> -->
         <li> Toggle Slide</li>
@@ -73,6 +74,12 @@
             console.log(error)
           })
       },
+      addReport: function () {
+        this.reports.push({
+          title: 'Untitled',
+          elements: []
+        })
+      },
       saveReport: function () {
         this.$refs.reports[this.selectedReportIdx].save()
       },
@@ -87,7 +94,7 @@
       },
       toggle: function () {
         this.$refs['fullscreen'].toggle()
-      },
+      }
     },
     created: function () {
       this.getReports()

@@ -3,12 +3,12 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import VueSweetAlert from 'vue-sweetalert'
+import VueSweetalert2 from 'vue-sweetalert2'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '../style.css'
 
-Vue.use(VueSweetAlert)
+Vue.use(VueSweetalert2)
 
 Vue.config.productionTip = false
 

@@ -24,7 +24,7 @@
             <li><a @click.prevent="setChartType('pie')">Pie Chart</a></li>
             <li><a @click.prevent="setChartType('custom')">Custom Html</a></li>
             <li class="divider"></li>
-            <li><a>Remove</a></li>
+            <li><a @click.prevent="remove">Remove</a></li>
           </ul>
         </div>
       </div>
@@ -119,6 +119,9 @@
       }
     },
     methods: {
+      remove: function () {
+        this.$emit('remove', this.elementData.id)
+      },
       setChartType: function (value) {
         this.elementData.chartType = Util.chartType(value)
       },
@@ -156,6 +159,7 @@
       },
       executeQuery: function () {
         this.loading = true
+        console.log(this.filters)
         HTTP.post('bi/analyze/execute', {query: this.element.query}, {
           params: {
             filterParamsJson: JSON.stringify(this.filters)

@@ -42,7 +42,6 @@
 
 <script>
 import FilterPopup from '@/components/FilterPopup'
-import {HTTP} from '@/helpers/http-helper'
 import { MOCK_MAPPERS } from '@/helpers/helpers'
 
 export default {
@@ -50,18 +49,18 @@ export default {
   components: {
     FilterPopup
   },
-  data() {
+  data () {
     return {
       mappers: MOCK_MAPPERS
     }
   },
   methods: {
-    openFilter() {
+    openFilter () {
       this.$refs.filterPopup.open()
     }
   },
   computed: {
-    isDisabled() {
+    isDisabled () {
 
     }
   }
