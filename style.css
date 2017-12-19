@@ -8,11 +8,11 @@ ICOMOON SET */
 
 @font-face {
   font-family: 'icomoon';
-  src: url('assets/fonts/icomoon/icomoon.eot?dbkv5n');
-  src: url('assets/fonts/icomoon/icomoon.eot?dbkv5n#iefix') format('embedded-opentype'),
-  url('assets/fonts/icomoon/icomoon.ttf?dbkv5n') format('truetype'),
-  url('assets/fonts/icomoon/icomoon.woff?dbkv5n') format('woff'),
-  url('assets/fonts/icomoon/icomoon.svg?dbkv5n#icomoon') format('svg');
+  src: url('static/fonts/icomoon/icomoon.eot?dbkv5n');
+  src: url('static/fonts/icomoon/icomoon.eot?dbkv5n#iefix') format('embedded-opentype'),
+  url('static/fonts/icomoon/icomoon.ttf?dbkv5n') format('truetype'),
+  url('static/fonts/icomoon/icomoon.woff?dbkv5n') format('woff'),
+  url('static/fonts/icomoon/icomoon.svg?dbkv5n#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }

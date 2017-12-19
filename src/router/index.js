@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import GlobalFilters from '@/containers/GlobalFilters'
+import ReportList from '@/containers/ReportList'
 import Dashboard from '@/containers/Dashboard'
 import ReportDesign from '@/containers/ReportDesign'
 import Mappers from '@/containers/Mappers'
@@ -19,6 +20,11 @@ export default new Router({
       path: '/report-design/:id',
       name: 'ReportDesign',
       component: ReportDesign
+    },
+    {
+      path: '/report-list',
+      name: 'ReportList',
+      component: ReportList
     },
     {
       path: '/global-filters',
