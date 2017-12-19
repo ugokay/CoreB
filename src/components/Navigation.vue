@@ -3,7 +3,7 @@
       <aside class="navbar navbar-bundle col-xs-12">
         <div class="nav-head flex flex-space-between flex-middle">
           <router-link class="logo" to="/">
-            <img src="assets/logo.svg" alt="Corebi Logo">
+            <img src="/static/logo.svg" alt="Corebi Logo">
           </router-link>
           <a class="btn-menu" href="javascript:void(0);">
             <i class="icon-hamburger"></i>
@@ -12,6 +12,7 @@
         <div>
           <ul class="sidebarLinks">
             <li><router-link to="/"><i class="icon-plus" />Home</router-link></li>
+            <li><router-link to="/report-list"><i class="icon-plus" />Report List</router-link></li>
             <li><router-link to="/global-filters"><i class="icon-plus" />Global Filters</router-link></li>
             <li><router-link to="/mappers"><i class="icon-plus" />Mappers</router-link></li>
           </ul>
