@@ -45,6 +45,7 @@
       <div class="form-group selected-report-options row mb-0">
         <div
           v-for="filterDefinition in filterDefinitions"
+          v-if="!filterDefinition.static"
           class="form-group col-sm-3 col-lg-2">
           <label class="filterDefinitionLabel">
             {{filterDefinition.label}}
@@ -105,7 +106,7 @@
         htmlContent: '<html>',
         sqlContent: 'sql',
         editorOptions: {
-          fontSize: '13pt'
+          fontSize: '11pt'
         }
       }
     },
