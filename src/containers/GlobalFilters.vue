@@ -12,11 +12,11 @@
           v-for="(filterDefinition, index) in reportElements"
           :key="filterDefinition.name">
           <span class="name">{{ filterDefinition.name }}</span>
+          <span class="label label-default">{{ filterDefinition.defaultValue }}</span>
           <span class="_label">{{ filterDefinition.label }}</span>
           <span class="label label-default">{{ filterDefinition.type }}</span>
           <span class="pull-right">
-            <span class="label label-default">{{ filterDefinition.defaultValue }}</span>
-            <span @click="openEditFilterPopup(index)" class="label label-default" >Edit</span>
+            <span @click="openEditFilterPopup(index)" class="label label-default">Edit</span>
           </span>
         </li>
       </ul>
@@ -58,7 +58,10 @@ export default {
           console.log(res.data)
           this.reportElements.push(res.data)
         })
-        .then(() => this.$swal('Success!', 'Filter has been added global filters successfully!', 'success'))
+        .then(() => this.$swal(
+          'Success!',
+          'Filter has been added global filters successfully!', 'success')
+        )
     },
     openEditFilterPopup: function (index) {
       this.$refs.filterPopup.open(this.reportElements[index])

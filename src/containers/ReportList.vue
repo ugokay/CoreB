@@ -9,8 +9,8 @@
           <span class="label label-default">{{ reportElement.id }}</span>
           <span class="name">{{ reportElement.title }}</span>
           <span class="pull-right">
-            <span @click="deleteElement(reportElement.id)" class="label label-default" >Delete</span>
-            <span @click="openDesign(reportElement.id)" class="label label-default" >Design</span>
+            <span @click="deleteElement(reportElement.id)" class="label label-danger" >Delete</span>
+            <span @click="openDesign(reportElement.id)" class="label label-primary" >Design</span>
           </span>
         </li>
       </ul>

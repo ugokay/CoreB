@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    <template v-if="isLoadingRest">Loading</template>
     <template v-if="isLogged">
       <div class="row">
         <div class="col-md-2">
           <navigation />
         </div>
         <div class="col-md-10 scrollable">
+          <div class="rest-loading" v-if="isLoadingRest"></div>
           <transition name="fade">
             <router-view />
           </transition>
@@ -24,6 +24,7 @@ import Navigation from '@/components/Navigation'
 import Login from '@/components/Login'
 import {AUTH} from '@/helpers/auth-helper.js'
 import {HTTP} from '@/helpers/http-helper.js'
+
 export default {
   name: 'app',
   components: { Navigation, Login },
@@ -63,11 +64,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.scrollable {
-  height: 100vh;
-  overflow-y: scroll;
-  overflow-x: hidden
-}
-</style>

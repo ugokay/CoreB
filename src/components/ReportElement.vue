@@ -7,13 +7,16 @@
         v-if="progress > 0">
         {{progress}}
       </div>
-      <div class="loading-nice">
+      <div v-else class="loading-nice">
         <span></span>
       </div>
     </div>
     <div class="col-sm-12 report__element">
       <div class="row">
-        <input type="input" class="report-element--title no-border col-xs-9" v-model="element.title"/>
+        <input 
+          type="input"
+          class="report-element--title no-border col-xs-9"
+          v-model="element.title"/>
         <div  class="col-xs-3 btn-group btn-group-xs align-right no-padding toggleTriggerBox">
           <a
             class="dropdown-toggle"
@@ -44,7 +47,11 @@
       <div v-if="element.chartType === 6">
         <div v-html="customHtml"></div>
       </div>
-      <vue-highcharts v-else :options="chartOptions" ref="chart"></vue-highcharts>
+      <vue-highcharts
+        v-else
+        :options="chartOptions"
+        ref="chart">
+      </vue-highcharts>
     </div>
   </div>
 </template>
