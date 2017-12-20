@@ -48,6 +48,7 @@ export default {
       self.isLoadingRest = false
       return response
     }, function (error) {
+      self.isLoadingRest = false
       if (error.response.status === 401) {
         console.log('Unauthorized attept!')
         AUTH.setToken('')

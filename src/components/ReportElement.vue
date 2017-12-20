@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="loading">
-      <div 
+      <div
         class="progress-bar"
         v-bind:style="{width: progress + '%'}"
         v-if="progress > 0">
@@ -13,7 +13,7 @@
     </div>
     <div class="col-sm-12 report__element">
       <div class="row">
-        <input 
+        <input
           type="input"
           class="report-element--title no-border col-xs-9"
           v-model="element.title"/>
@@ -46,6 +46,21 @@
     <div v-if="queryResult.schema">
       <div v-if="element.chartType === 6">
         <div v-html="customHtml"></div>
+      </div>
+      <div v-else-if="element.chartType === 0">
+        <table class="table" v-if="queryResult"  v-on:click="tableSeen = !tableSeen">
+          <thead>
+          <th v-for="field in queryResult.schema.fields">{{field.name}}</th>
+          <th style="text-align: right;    position: relative;    padding-right: 20px;">
+            <i class="icon-query-hide"></i>
+          </th>
+          </thead>
+          <tbody>
+          <tr v-for="row in queryResult.data">
+            <td v-for="value in row">{{value}}</td>
+          </tr>
+          </tbody>
+        </table>
       </div>
       <vue-highcharts
         v-else
@@ -173,7 +188,6 @@
       },
       executeQuery: function () {
         this.loading = true
-        console.log(this.filters)
         HTTP.post('bi/analyze/execute', {query: this.element.query}, {
           params: {
             filterParamsJson: JSON.stringify(this.filters)

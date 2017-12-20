@@ -31,8 +31,8 @@
     name: 'login',
     data: function () {
       return {
-        userName: 'flormar_admin',
-        password: '123456'
+        userName: '',
+        password: ''
       }
     },
     methods: {
