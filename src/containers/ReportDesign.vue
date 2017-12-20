@@ -1,5 +1,5 @@
 <template>
-  <div class="row report--design">
+  <div v-hotkey="keymap" class="row report--design">
     <filter-popup
       @updateFilter="updateFilter"
       ref="filterPopup" />
@@ -119,6 +119,14 @@
         }
       }
     },
+    computed: {
+      keymap () {
+        return {
+          // 'esc+ctrl' is OK.
+          'ctrl+shift+s': this.save
+        }
+      }
+    },
     methods: {
       updateFilter: function (filterDefinition) {
         HTTP.post('bi/report/filter', filterDefinition)
@@ -143,7 +151,7 @@
       save: function () {
         HTTP.post('/bi/report/element', this.element)
           .then(res => {
-            console.log(res)
+            console.log('Element Saved ' + this.element.id)
           })
       },
       run: function () {
@@ -172,6 +180,11 @@
           this.element = res.data
           HTTP.get('bi/report/filter/list').then(res => {
             this.globalFilterDefinitions = res.data
+            this.globalFilterDefinitions.forEach(filterDef => {
+              if (filterDef.static) {
+                this.filters[filterDef.name] = filterDef.defaultValue
+              }
+            })
             this.calculateFilterDefinitions()
             this.filtersLoaded = true
           })

@@ -39,7 +39,7 @@ import {AUTH} from '@/helpers/auth-helper'
 export default{
   name: 'navigation',
   methods: {
-    logout() {
+    logout () {
       AUTH.logout()
       window.location.replace('/')
     }

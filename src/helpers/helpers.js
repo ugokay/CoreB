@@ -158,14 +158,14 @@ export const MOCK_MAPPERS = [
 ]
 
 export const MOCK_USERS = [
-  { id: 148, full_name: 'Ali Korkmaz', email: 'ali@gmail.com', roles: [1]},
-  { id: 74182, full_name: 'Veli Korkmaz', email: 'veli@gmail.com', roles: [3]},
-  { id: 9158, full_name: 'Ahmet Korkmaz', email: 'ahmet@gmail.com', roles: [2]},
-  { id: 3875, full_name: 'Mehmet Korkmaz', email: 'mehmet@gmail.com', roles: [1]},
+  { id: 148, full_name: 'Ali Korkmaz', email: 'ali@gmail.com', roles: [1] },
+  { id: 74182, full_name: 'Veli Korkmaz', email: 'veli@gmail.com', roles: [3] },
+  { id: 9158, full_name: 'Ahmet Korkmaz', email: 'ahmet@gmail.com', roles: [2] },
+  { id: 3875, full_name: 'Mehmet Korkmaz', email: 'mehmet@gmail.com', roles: [1] }
 ]
 
 export const MOCK_USERS_GROUP = [
   { id: 1, name: 'Admins' },
   { id: 2, name: 'Inspectors' },
-  { id: 3, name: '3rd Party Contributors' },
+  { id: 3, name: '3rd Party Contributors' }
 ]
