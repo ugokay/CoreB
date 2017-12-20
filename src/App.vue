@@ -19,6 +19,7 @@
   </div>
 </template>
 
+
 <script>
 import Navigation from '@/components/Navigation'
 import Login from '@/components/Login'

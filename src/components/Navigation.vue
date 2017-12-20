@@ -15,22 +15,34 @@
             <li><router-link to="/report-list"><i class="icon-plus" />Report List</router-link></li>
             <li><router-link to="/global-filters"><i class="icon-plus" />Global Filters</router-link></li>
             <li><router-link to="/mappers"><i class="icon-plus" />Mappers</router-link></li>
+            <li><router-link to="/users"><i class="icon-plus" />Users</router-link></li>
           </ul>
         </div>
         <div class="admin-settings">
-          <i class="icon-settings"></i>
-          <span class="text-holder">Admin</span>
-          <button class="menu-toggler pull-right"><i class="icon-tri-left"></i> </button>
+          <a href="#">
+            <i class="icon-settings"></i>
+            <span class="text-holder">Admin</span>
+            <button class="menu-toggler pull-right"><i class="icon-tri-left"></i> </button>
+          </a>
+          <a @click.prevent="logout">
+            <i class="icon-tri-left"></i>
+            <span class="text-holder">Logout</span>
+          </a>
         </div>
       </aside>
     </div>
 </template>
 
 <script>
+import {AUTH} from '@/helpers/auth-helper'
+
 export default{
   name: 'navigation',
-  data: function () {
-    return {}
+  methods: {
+    logout() {
+      AUTH.logout()
+      window.location.replace('/')
+    }
   }
 }
 </script>

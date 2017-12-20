@@ -31,5 +31,9 @@ export const AUTH = {
         'Accept': 'application/json'
       }
     })
+  },
+  logout: function () {
+    window.localStorage.removeItem('token')
+    this.token = ''
   }
 }
