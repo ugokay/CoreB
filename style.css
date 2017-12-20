@@ -1331,3 +1331,29 @@ li.tab.active a,
   left: 0;
   width: 100%;
 }
+
+.elementList li {
+  padding: 1em;
+  border-bottom: 1px solid #ddd;
+}
+.elementList li .btn {
+  background: #5b64fc;
+}
+.elementList li:last-child {
+  border: 0;
+}
+
+.elementList {
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
+.filterElement {
+  width: 100%;
+  border: 0;
+  margin-bottom: 20px;
+  background: #f1f1f1;
+  padding: 1.2em;
+  color: #000;
+  border-radius: 3px
+}

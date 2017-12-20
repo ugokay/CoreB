@@ -1,5 +1,6 @@
 <template>
   <div>
+    <element-popup ref="elementPopup"/>
     <add-button @click="addElement"></add-button>
     <div class="row mt20">
       <div class="tabChores col-xs-3">
@@ -47,6 +48,7 @@
   import {HTTP} from '@/helpers/http-helper.js'
   import {Util} from '@/helpers/helpers.js'
   import ReportFilter from '@/components/ReportFilter'
+  import ElementPopup from '@/components/ElementPopup'
 
   export default {
     name: 'report',
@@ -55,7 +57,8 @@
       ReportElement,
       AddButton,
       'grid-layout': VueGridLayout.GridLayout,
-      'grid-item': VueGridLayout.GridItem
+      'grid-item': VueGridLayout.GridItem,
+      ElementPopup
     },
     data () {
       return {
@@ -121,24 +124,27 @@
         }
       },
       addElement: function () {
-        HTTP.post('bi/report/element', {
-          title: 'Untitled',
-          filterDefinitions: [],
-          query: 'SELECT COUNT(*) FROM events'
-        }).then(res => {
-          const newElement = res.data
-          console.log(newElement)
-          let maxY = 0
-          let maxI = 0
-          this.layout.forEach(lay => {
-            maxY = Math.max(maxY, lay.y)
-            maxI = Math.max(maxI, lay.i)
-          })
-          this.layout.push({
-            id: newElement.id, x: 0, y: maxY, w: 2, h: 6, i: (maxI + 1).toString()
-          })
-          this.reportData.elements.push(newElement)
-        })
+        this.$refs.elementPopup.open()
+
+
+        // HTTP.post('bi/report/element', {
+        //   title: 'Untitled',
+        //   filterDefinitions: [],
+        //   query: 'SELECT COUNT(*) FROM events'
+        // }).then(res => {
+        //   const newElement = res.data
+        //   console.log(newElement)
+        //   let maxY = 0
+        //   let maxI = 0
+        //   this.layout.forEach(lay => {
+        //     maxY = Math.max(maxY, lay.y)
+        //     maxI = Math.max(maxI, lay.i)
+        //   })
+        //   this.layout.push({
+        //     id: newElement.id, x: 0, y: maxY, w: 2, h: 6, i: (maxI + 1).toString()
+        //   })
+        //   this.reportData.elements.push(newElement)
+        // })
       },
       getElement: function (id) {
         for (let i = 0; i < this.reportData.elements.length; i++) {
