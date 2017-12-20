@@ -1,9 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 import GlobalFilters from '@/containers/GlobalFilters'
 import ReportList from '@/containers/ReportList'
 import Dashboard from '@/containers/Dashboard'
+import Users from '@/containers/Users'
 import ReportDesign from '@/containers/ReportDesign'
+
 import Mappers from '@/containers/Mappers'
 import Mapper from '@/components/Mapper'
 
@@ -40,6 +43,11 @@ export default new Router({
       path: '/mapper/:id',
       name: 'Mapper',
       component: Mapper
+    },
+    {
+      path: '/users',
+      name: 'Users',
+      component: Users
     }
   ]
 })

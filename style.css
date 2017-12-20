@@ -59,6 +59,9 @@ ICOMOON SET */
 .btn--add {
   cursor: pointer
 }
+.is-pointer {
+  cursor: pointer;
+}
 thead th {
   verical-align: bottom;
   background: #d3d3d3 !important;
@@ -911,20 +914,6 @@ aside.navbar {
   max-width: 70%;
 }
 
-.admin-settings .menu-toggler {
-  background: none;
-  border: 0
-}
-
-.admin-settings {
-  height: 50px;
-  padding: 16px 20px 16px 35px;
-  color: #fff;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-}
 
 .tab-headers {
   border-bottom: 1px solid #ddd;
@@ -1043,6 +1032,25 @@ li.tab.active a,
   font-size: 11px;
   transform: rotate(-40deg)
 }
+.checkbox-item.icon-before span.text::after{
+  position: absolute;
+  left: -40px;
+  top: -2px;
+}
+.checkbox-item.icon-before span.text i {
+  left: -25px;
+  top: 2px;
+}
+.checkbox-item.icon-before {
+  margin-top: 10px;
+  margin-left: -15px;
+  margin-right: 0;
+}
+.checkbox-item.icon-before .text{
+  margin-left: 30px;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 13px;
+}
 .checkbox-item .text::after {
   content: '';
   display: inline-block;
@@ -1072,7 +1080,7 @@ li.tab.active a,
   margin-right: 20px;
 }
 .checkbox-item input {
-  display: none
+  display: none!important
 }
 
 .ace-monokai {
@@ -1289,4 +1297,37 @@ li.tab.active a,
   100% {
     width: 100%;
   }
+}
+
+.btn--add a:first-child {
+  border-right: 1px solid #6f5fcc;
+}
+.btn--add a:last-child {
+  padding-left: 1em;
+}
+.btn--add a{
+  color: #fff;
+}
+.btn--add.has-multiple a:not(:last-child){
+  padding-right: 1em;
+}
+
+.admin-settings a {
+  display: block;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 1em;
+}
+
+.admin-settings .menu-toggler {
+  background: none;
+  border: 0
+}
+.admin-settings {
+  padding: 16px 20px 16px 35px;
+  color: #fff;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }
