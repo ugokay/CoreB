@@ -1,7 +1,7 @@
 <template>
   <div class="global-filters">
     <user-popup ref="userPopup" @addNewUser="addNewUser" />
-    <group-popup ref="groupPopup" />
+    <group-popup ref="groupPopup" @addNewGroup="addNewGroup"/>
     <div class="btn--add has-multiple is-fixed">
       <a @click.prevent="addUser"><i class="icon-plus" /> Add User</a>
       <a @click.prevent="addGroup">Add Group</a>
@@ -18,7 +18,11 @@
           </span>
           <span class="pull-right">
             <span class="label label-danger">Delete</span>
-            <span class="label label-primary">Edit</span>
+            <span 
+              class="label label-primary is-pointer"
+              @click="editGroup(index)">
+              Edit
+            </span>
           </span>
         </li>
       </ul>
@@ -87,17 +91,25 @@ export default {
       })
       return users.length + ' User' + (users.length > 1 ? 's' : '')
     },
+    // user stuff
+    addNewUser(user) {
+      this.users.push(user)
+    },
     addUser() {
       this.$refs.userPopup.open()
     },
     editUser(index) {
       this.$refs.userPopup.open(this.users[index])
     },
-    addNewUser(user) {
-      this.users.push(user)
-    },
+    // group stuff
     addGroup() {
       this.$refs.groupPopup.open()
+    },
+    editGroup(index) {
+      this.$refs.groupPopup.open(this.user_groups[index])
+    },
+    addNewGroup(group) {
+      this.user_groups.push(group)
     }
   }
   

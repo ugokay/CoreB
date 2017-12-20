@@ -26,7 +26,6 @@
 
 <script>
 import Popup from '@/components/FilterPopup'
-import AddButton from '@/components/AddButton'
 import {HTTP} from '@/helpers/http-helper'
 
 export default {
@@ -37,7 +36,6 @@ export default {
     }
   },
   components: {
-    AddButton,
     Popup
   },
   methods: {

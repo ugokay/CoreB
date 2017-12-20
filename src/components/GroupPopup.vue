@@ -5,18 +5,12 @@
         <div class="icon-plus"></div>
       </div>
       <div class="input-row">
-        <label>Fullname</label>
+        <label>Group Name</label>
         <input
-          v-model="userData.full_name"
+          v-model="groupData.name"
           type="text">
       </div>
-      <div class="input-row">
-        <label>Email</label>
-        <input
-          v-model="userData.email"
-          type="text">
-      </div>
-      <div class="input-row row no-margin">
+      <!-- <div class="input-row row no-margin">
         <label>Group(s)</label>
         <label
           class="checkbox-item icon-before no-padding-right col-md-6"
@@ -24,13 +18,13 @@
             <input
               type="checkbox"
               :value="group.id"
-              v-model="userData.roles" />
+              v-model="groupData.roles" />
             <span class="text">{{group.name}}<i></i></span>
         </label>
-      </div>
+      </div> -->
       <div class="input-row">
-        <button v-if="isCreate" @click="addNewUser">Create User</button>
-        <button v-else @click="updateFilter">Update</button>
+        <button v-if="isCreate" @click="addNewGroup">Create Group</button>
+        <button v-else @click="updateGroup">Update the Group</button>
       </div>
     </div>
   </div>
@@ -42,14 +36,12 @@
   export default {
     name: 'popup',
     props: {
-      user: {
+      group: {
         type: Object,
         default: function () {
           return {
             id: '',
-            full_name: '',
-            email: '',
-            roles: []
+            group_name: ''
           }
         }
       }
@@ -57,7 +49,7 @@
     data: function () {
       return {
         hidden: true,
-        userData: this.user,
+        groupData: this.group,
         isCreate: true,
         groups: MOCK_USERS_GROUP
       }
@@ -66,16 +58,16 @@
       close: function () {
         this.hidden = true
       },
-      updateFilter: function () {
-        // this.$emit('updateFilter', this.userData)
+      updateGroup: function () {
+        // this.$emit('updateGroup', this.groupData)
         // this.close()
       },
-      open: function (user) {
-        if (user) {
-          this.userData = user
+      open: function (group) {
+        if (group) {
+          this.groupData = group
           this.isCreate = false
         } else {
-          this.userData = {
+          this.groupData = {
             id: Math.round(Math.random() * 10000),
             full_name: '',
             email: '',
@@ -85,8 +77,8 @@
         }
         this.hidden = false
       },
-      addNewUser () {
-        this.$emit('addNewUser', this.userData)
+      addNewGroup () {
+        this.$emit('addNewGroup', this.groupData)
         this.close()
       }
     }
