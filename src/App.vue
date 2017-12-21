@@ -39,7 +39,8 @@ export default {
     onLoginSuccess: function (data) {
       this.isLogged = true
     },
-    onLoginError: function (data) {
+    onLoginError: function (res) {
+      this.$swal('Unauthorized', res.data.message, 'error')
     }
   },
   created: function () {
