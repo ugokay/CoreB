@@ -2,15 +2,14 @@
   <div class="row dashboard">
       <ul class="dash-actions col-xs-2 pull-right">
         <li @click="addReport"><i class="icon-plus mr-0"></i></li>
-        <li @click="toggle"> Fullscreen</li>
-        <!-- <li> Edit Layout</li> -->
-        <li> Toggle Slide</li>
+        <li @click="toggleFullscreen"> Fullscreen</li>
+        <li @click="toggleSlide"> {{isSliding ? 'Stop' : 'Start'}} Slide</li>
         <li><a @click.prevent="refresh"><i class="icon-refresh"></i><span>Refresh</span></a></li>
         <li><i class="icon-export"></i><span>Export</span></li>
         <li @click="saveReport"><i class="icon-export"></i><span>Save</span></li>
       </ul>
      <fullscreen ref="fullscreen" :fullscreen.sync="fullscreen">
-        <vue-tabs @tab-change="tabChange" id="tabs">
+        <vue-tabs @tab-change="tabChange" id="tabs" ref="tabs">
           <v-tab
             v-for="(report, reportIdx) in reports"
             :key="report.id"
@@ -55,7 +54,8 @@
       return {
         selectedReportIdx: 0,
         reports: [],
-        fullscreen: false
+        fullscreen: false,
+        isSliding: false
       }
     },
     methods: {
@@ -83,17 +83,35 @@
       saveReport: function () {
         this.$refs.reports[this.selectedReportIdx].save()
       },
-      goInFullscreen () {
-        this.$el.parentNode.requestFullscreen()
-      },
       removeTab (index) {
         this.tabs.splice(index, 1)
       },
       addTab () {
         this.tabs.push('New Tab')
       },
-      toggle: function () {
+      toggleFullscreen: function () {
         this.$refs['fullscreen'].toggle()
+      },
+      toggleSlide: function () {
+        if (!this.isSliding) {
+          this.isSliding = true
+          const self = this
+          const changeTab = function (tabIdx) {
+            if (self.isSliding) {
+              self.$refs.tabs.navigateToTab(tabIdx)
+              let nextTabIdx = tabIdx + 1
+              if (nextTabIdx >= self.reports.length) {
+                nextTabIdx = 0
+              }
+              setTimeout(function () {
+                changeTab(nextTabIdx)
+              }, 10000)
+            }
+          }
+          changeTab(0)
+        } else {
+          this.isSliding = false
+        }
       }
     },
     created: function () {
