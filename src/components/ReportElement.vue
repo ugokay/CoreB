@@ -181,9 +181,10 @@
             this.progress = 0
             this.queryResult = res.data
           }
-        }).catch(() => {
+        }).catch((error) => {
           this.loading = false
           this.progress = 0
+          this.catchExecutionError(error)
         })
       },
       executeQuery: function () {
@@ -200,10 +201,19 @@
             this.progress = 0
             this.queryResult = res.data
           }
-        }).catch(() => {
+        }).catch((error) => {
           this.loading = false
           this.progress = 0
+          this.catchExecutionError(error)
         })
+      },
+      catchExecutionError: function (error) {
+        if (error.response.data.message) {
+          const msg = error.response.data.message.replace('com.facebook.presto.sql.parser.ParsingException: ', '')
+          this.$swal('Execution Error', msg, 'error')
+        } else {
+          this.$swal('Execution Error', 'Unknown error!', 'error')
+        }
       },
       checkExecution: function (queryId) {
         HTTP.get('bi/analyze/progress/' + queryId, {})
