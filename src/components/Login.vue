@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-md-4 col-sm-offset-4">
-      <img src="/assets/logo_invert.png" alt="" style="margin: auto;      display: block;      padding: 50px;">
+      <img src="/static/logo_invert.png" alt="" style="margin: auto;      display: block;      padding: 50px;">
       <div class="panel panel-primary" style="border-color: #24262c">
         <div class="panel-heading" style="background:#24262c">
           <h3 class="panel-title">Login</h3>
