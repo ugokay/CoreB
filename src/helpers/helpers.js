@@ -1,4 +1,23 @@
+/* eslint-disable no-extend-native */
 import Mustache from 'mustache'
+
+Date.prototype.toJSON = function () {
+  function pad (number) {
+    if (number < 10) {
+      return '0' + number
+    }
+    return number
+  }
+
+  return this.getUTCFullYear() +
+    '-' + pad(this.getMonth() + 1) +
+    '-' + pad(this.getDate()) +
+    'T' + pad(this.getHours()) +
+    ':' + pad(this.getMinutes()) +
+    ':' + pad(this.getSeconds()) +
+    '.' + (this.getMilliseconds() / 1000).toFixed(3).slice(2, 5) +
+    'Z'
+}
 
 export const Util = {
   dayInMillis: 1000 * 60 * 60 * 24,
@@ -13,7 +32,7 @@ export const Util = {
   },
   calculateFixedDates: function () {
     const today = new Date()
-    today.setHours(6)
+    today.setHours(0)
     today.setMinutes(0)
     today.setSeconds(0)
     today.setMilliseconds(0)
