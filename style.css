@@ -943,6 +943,15 @@ li.tab.active a,
 }
 
 
+@media screen and (max-width: 760px) {
+  .vue-grid-item {
+    position: inherit!important;
+    width: 100%!important;
+    transform: none!important;
+    margin-bottom: 20px
+  }
+}
+
 
 .vue-tabs .nav-pills>li+li {
   margin-left: 0
@@ -1115,7 +1124,8 @@ li.tab.active a,
   background: #fff;
   box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.12);
   border-radius: 3px;
-  min-width: 520px;
+  max-width: 520px;
+  width: 95%;
   position: relative;
 }
 

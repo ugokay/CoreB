@@ -39,27 +39,8 @@
         <a @click.prevent="logout"><icon name="power-off"></icon></a>
         <a href="#"><icon name="user-circle"></icon></a>
         <a href="#"><icon name="arrows-alt"></icon></a>
-        <a @click="toggleSidebar"><icon name="chevron-left"></icon></a>
+        <a class="hidden-xs" @click="toggleSidebar"><icon name="chevron-left"></icon></a>
       </div>
-      <!-- <ul class="sidebarLinks admin-settings">
-        <li>
-          <a href="#">
-            <i class="icon-settings text-holder"></i>
-            <span class="text-holder">Admin</span>
-            <button
-              class="menu-toggler"
-              @click="toggleSidebar">
-                <i class="icon-tri-left"></i>
-            </button>
-          </a>
-        </li>
-        <li>
-          <a @click.prevent="logout">
-            <icon name="power-off"></icon>
-            <span class="text-holder">Logout</span>
-          </a>
-        </li>
-      </ul> -->
     </aside>
   </div>
 </template>
@@ -164,5 +145,45 @@ export default {
 }
 .sidebarLinks.admin-settings li{
   margin: 0 -20px;
+}
+
+@media screen and (max-width: 760px) {
+  .navbar {
+    width: 60px;
+    position: relative;
+    z-index: 9999;
+  }
+  .navbar span.text-holder {
+    position: absolute;
+    background: #3a3c46;
+    right: -5px;
+    transform: translate(100%, -50%);
+    top: 50%;
+    font-size: 13px;
+    padding: .3em 1em;
+    border-radius: 20px;
+    display: none
+  }
+  .navbar .nav-settings {
+    flex-direction: column
+  }
+  .navbar .nav-settings a:last-child {
+    transform: rotate(180deg);
+  }
+  .navbar .nav-settings a {
+    padding: .6em 1.6em!important
+  }
+
+  .sidebarLinks li a {
+    display: flex!important;
+    align-items: center
+  }
+  .navbar .nav-head {
+    width: calc(100% + 30px);
+    overflow: hidden;
+    margin-left: -17px;
+  }
+
+
 }
 </style>
