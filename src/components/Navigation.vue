@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="hidden-xs">
     <aside :class="navigation">
       <div class="nav-head flex flex-space-between flex-middle">
         <router-link class="logo" to="/">
@@ -147,11 +147,15 @@ export default {
   margin: 0 -20px;
 }
 
-@media screen and (max-width: 760px) {
+@media screen and (max-width: 769px) {
+  .btn--add {
+    display: none!important
+  }
   .navbar {
     width: 60px;
     position: relative;
     z-index: 9999;
+    display: none
   }
   .navbar span.text-holder {
     position: absolute;
@@ -165,7 +169,7 @@ export default {
     display: none
   }
   .navbar .nav-settings {
-    flex-direction: column
+    flex-direction: column;
   }
   .navbar .nav-settings a:last-child {
     transform: rotate(180deg);
@@ -176,7 +180,8 @@ export default {
 
   .sidebarLinks li a {
     display: flex!important;
-    align-items: center
+    align-items: center;
+    justify-content: center
   }
   .navbar .nav-head {
     width: calc(100% + 30px);
@@ -184,6 +189,22 @@ export default {
     margin-left: -17px;
   }
 
-
+  .dash-actions {
+    width: calc(100% - 60px)!important;
+    position: absolute!important;
+    z-index: 999999;
+    background: #fff;
+    border-bottom: 4px solid #5b64fc;
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    align-items: right;
+    display: none
+  }
+  .dash-actions li {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end
+  }
 }
 </style>
