@@ -26,8 +26,8 @@
       :layout="layout"
       :col-num="12"
       :row-height="30"
-      :is-draggable="true"
-      :is-resizable="true"
+      :is-draggable="editable"
+      :is-resizable="editable"
       :margin="[10, 10]"
       :vertical-compact="false"
       :use-css-transforms="true">
@@ -87,6 +87,10 @@
       isSelected: {
         type: Boolean,
         default: true
+      },
+      editable: {
+        type: Boolean,
+        default: false
       }
     },
     methods: {

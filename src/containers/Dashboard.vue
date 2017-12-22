@@ -2,6 +2,7 @@
   <div class="dashboard">
       <ul class="dash-actions col-xs-2 pull-right hidden-xs">
         <li @click="addReport"><i class="icon-plus mr-0"></i></li>
+        <li @click="toggleEditable"> {{editable ? 'View' : 'Edit'}} Mode</li>
         <li @click="toggleFullscreen"> Fullscreen</li>
         <li @click="toggleSlide"> {{isSliding ? 'Stop' : 'Start'}} Slide</li>
         <li><a @click.prevent="refresh"><i class="icon-refresh"></i><span>Refresh</span></a></li>
@@ -18,6 +19,7 @@
             :style="{zIndex:report.id}">
               <report
                 ref="reports"
+                :editable="editable"
                 :report="report"
                 :index="reportIdx"
                 :isSelected="selectedReportIdx === reportIdx">
@@ -55,7 +57,8 @@
         selectedReportIdx: 0,
         reports: [],
         fullscreen: false,
-        isSliding: false
+        isSliding: false,
+        editable: false
       }
     },
     methods: {
@@ -64,6 +67,9 @@
       },
       tabChange: function (tabIdx) {
         this.selectedReportIdx = tabIdx
+      },
+      toggleEditable: function () {
+        this.editable = !this.editable
       },
       getReports: function () {
         HTTP.get('bi/report/list')
