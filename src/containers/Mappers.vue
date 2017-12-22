@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import FilterPopup from '@/components/FilterPopup'
+import FilterPopup from '@/components/popups/FilterPopup'
 import { MOCK_MAPPERS } from '@/helpers/helpers'
 
 export default {

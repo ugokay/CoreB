@@ -889,7 +889,6 @@ li.nav-item {
 
 .sidebarLinks i {
   font-size: 13px!important;
-  margin-right: 10px;
 }
 
 .navbar {
@@ -910,8 +909,10 @@ aside.navbar {
   position: relative;
 }
 
-.navbar .nav-head .logo {
-  max-width: 70%;
+.navbar.is-scaled .nav-head {
+  width: calc(100% + 30px);
+  overflow: hidden;
+  margin-left: -17px;
 }
 
 
@@ -1126,6 +1127,10 @@ li.tab.active a,
   cursor:pointer;
   transform: rotate(45deg)
 }
+.is-rotated {
+  transform: rotate(45deg);
+  transform-origin: center center
+}
 .input-row {
   display: block;
   margin-bottom: 20px;
@@ -1319,12 +1324,12 @@ li.tab.active a,
   margin-top: 1em;
 }
 
-.admin-settings .menu-toggler {
-  background: none;
+.menu-toggler {
+  background: transparent!important;
   border: 0
 }
 .admin-settings {
-  padding: 16px 20px 16px 35px;
+  padding: 16px 20px;
   color: #fff;
   position: absolute;
   bottom: 0;
@@ -1356,4 +1361,65 @@ li.tab.active a,
   padding: 1.2em;
   color: #000;
   border-radius: 3px
+}
+
+.mx-datepicker-top {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: right
+}
+.mx-datepicker-top span:first-child::after {
+  display: none
+}
+
+.App-container {
+  display: flex
+}
+
+.main-content {
+  transition: all 300ms;
+  flex: 1;
+}
+
+.sidebarLinks a{
+  display: flex;
+  align-items: center;
+}
+.sidebarLinks.admin-settings a {
+  margin-top: 0
+}
+.nav-settings {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  background: #32343c;
+  align-items: center
+}
+
+.nav-settings a {
+  flex-basis: 100%;
+  text-align: center;
+  padding: 1.2em 0 .8em 0;
+  color: #fff;
+  cursor: pointer;
+  transition: background 300ms
+}
+.nav-settings a:hover {
+  background:#272830
+}
+.navbar.is-scaled .nav-settings {
+  flex-direction: column
+}
+.navbar.is-scaled .nav-settings a:last-child {
+  transform: rotate(180deg);
+}
+.navbar.is-scaled .nav-settings a {
+  padding: 1em 1.6em!important
+}
+
+.sidebarLinks li a {
+  display: flex!important;
+  align-items: center
 }

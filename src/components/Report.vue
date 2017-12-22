@@ -51,7 +51,7 @@
   import {HTTP} from '@/helpers/http-helper.js'
   import {Util} from '@/helpers/helpers.js'
   import ReportFilter from '@/components/ReportFilter'
-  import ElementPopup from '@/components/ElementPopup'
+  import ElementPopup from '@/components/popups/ElementPopup'
 
   export default {
     name: 'report',

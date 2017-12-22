@@ -1,6 +1,6 @@
 <template>
   <div class="global-filters">
-    <popup @addFilter="addFilter" ref="filterPopup" @updateFilter="updateFilter"/>
+    <filter-popup @addFilter="addFilter" ref="filterPopup" @updateFilter="updateFilter"/>
     <a class="btn--add is-fixed" @click="openFilter">
       <i class="icon-plus" />
       Add
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import Popup from '@/components/FilterPopup'
+import FilterPopup from '@/components/popups/FilterPopup'
 import {HTTP} from '@/helpers/http-helper'
 
 export default {
@@ -36,7 +36,7 @@ export default {
     }
   },
   components: {
-    Popup
+    FilterPopup
   },
   methods: {
     updateFilter (filter) {

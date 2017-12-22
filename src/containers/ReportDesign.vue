@@ -87,7 +87,7 @@
 </template>
 <script>
   import {HTTP} from '@/helpers/http-helper'
-  import FilterPopup from '@/components/FilterPopup'
+  import FilterPopup from '@/components/popups/FilterPopup'
   import Report from '../components/Report'
   import ReportElement from '../components/ReportElement'
   import ReportFilter from '../components/ReportFilter'

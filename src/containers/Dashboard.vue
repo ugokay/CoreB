@@ -1,5 +1,5 @@
 <template>
-  <div class="row dashboard">
+  <div class="dashboard">
       <ul class="dash-actions col-xs-2 pull-right">
         <li @click="addReport"><i class="icon-plus mr-0"></i></li>
         <li @click="toggleFullscreen"> Fullscreen</li>

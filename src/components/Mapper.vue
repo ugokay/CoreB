@@ -58,7 +58,7 @@
 </template>
 
 <script>
-  import FilterPopup from '@/components/FilterPopup'
+  import FilterPopup from '@/components/popups/FilterPopup'
   import Editor from 'ace-vue2'
   import 'brace/mode/javascript'
   import 'brace/mode/sql'

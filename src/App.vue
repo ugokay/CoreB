@@ -1,11 +1,9 @@
 <template>
   <div id="app">
     <template v-if="isLogged">
-      <div class="row">
-        <div class="col-md-2">
-          <navigation />
-        </div>
-        <div class="col-md-10 scrollable">
+      <div class="App-container">
+        <navigation />
+        <div class="main-content scrollable">
           <div class="rest-loading" v-if="isLoadingRest"></div>
           <transition name="fade">
             <router-view />

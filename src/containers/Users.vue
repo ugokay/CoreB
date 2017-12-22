@@ -48,8 +48,8 @@
 <script>
 import { HTTP } from '@/helpers/http-helper'
 import { MOCK_USERS_GROUP, MOCK_USERS } from '@/helpers/helpers'
-import UserPopup from '@/components/UserPopup'
-import GroupPopup from '@/components/GroupPopup'
+import UserPopup from '@/components/popups/UserPopup'
+import GroupPopup from '@/components/popups/GroupPopup'
 
 export default {
   name: 'Users',
