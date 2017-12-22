@@ -17,12 +17,11 @@
           type="input"
           class="report-element--title no-border col-xs-9"
           v-model="element.title"/>
-        <div  class="col-xs-3 btn-group btn-group-xs align-right no-padding toggleTriggerBox">
-          <a
-            class="dropdown-toggle"
-            v-click-outside="hideDropdown"
-            @click="openDropdown"
-            data-toggle="dropdown">
+        <div class="col-xs-3 btn-group btn-group-xs align-right no-padding toggleTriggerBox hidden-xs">
+          <a class="dropdown-toggle"
+             v-click-outside="hideDropdown"
+             @click="openDropdown"
+             data-toggle="dropdown">
             <i class="icon-more"></i>
           </a>
           <ul :class="isVisible">
