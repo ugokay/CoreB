@@ -66,7 +66,8 @@
         v-if="filtersLoaded"
         ref="reportElement"
         :element="element"
-        :filters="filters">
+        :filters="filters"
+        @executed="executed">
       </report-element>
 
       <table class="table" v-if="queryResult"  v-on:click="tableSeen = !tableSeen">
@@ -128,6 +129,9 @@
       }
     },
     methods: {
+      executed: function (queryResult) {
+        this.queryResult = queryResult
+      },
       updateFilter: function (filterDefinition) {
         HTTP.post('bi/report/filter', filterDefinition)
           .then(res => {

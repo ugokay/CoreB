@@ -167,6 +167,21 @@
           this.$refs.chart.getChart().reflow()
         }
       },
+      resolveExecution: function (res) {
+        if (res.status === 202) {
+          this.checkExecution(res.data.queryId)
+        } else {
+          this.loading = false
+          this.progress = 0
+          this.queryResult = res.data
+          this.$emit('executed', this.queryResult)
+        }
+      },
+      catchExecution: function (error) {
+        this.loading = false
+        this.progress = 0
+        this.catchExecutionError(error)
+      },
       executeElement: function () {
         this.loading = true
         HTTP.get('bi/analyze/execute/report-element/' + this.element.id, {
@@ -174,17 +189,9 @@
             filterParamsJson: JSON.stringify(this.filters)
           }
         }).then((res) => {
-          if (res.status === 202) {
-            this.checkExecution(res.data.queryId)
-          } else {
-            this.loading = false
-            this.progress = 0
-            this.queryResult = res.data
-          }
+          this.resolveExecution(res)
         }).catch((error) => {
-          this.loading = false
-          this.progress = 0
-          this.catchExecutionError(error)
+          this.catchExecution(error)
         })
       },
       executeQuery: function () {
@@ -194,22 +201,16 @@
             filterParamsJson: JSON.stringify(this.filters)
           }
         }).then((res) => {
-          if (res.status === 202) {
-            this.checkExecution(res.data.queryId)
-          } else {
-            this.loading = false
-            this.progress = 0
-            this.queryResult = res.data
-          }
+          this.resolveExecution(res)
         }).catch((error) => {
-          this.loading = false
-          this.progress = 0
-          this.catchExecutionError(error)
+          this.catchExecution(error)
         })
       },
       catchExecutionError: function (error) {
         if (error.response.data.message) {
-          const msg = error.response.data.message.replace('com.facebook.presto.sql.parser.ParsingException: ', '')
+          const msg = error.response.data.message
+            .replace('com.facebook.presto.sql.parser.ParsingException: ', '')
+            .replace('java.sql.SQLException: ', '')
           this.$swal('Execution Error', msg, 'error')
         } else {
           this.$swal('Execution Error', 'Unknown error!', 'error')
