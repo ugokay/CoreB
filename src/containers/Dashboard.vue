@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-      <ul class="dash-actions col-xs-2 pull-right">
+      <ul class="dash-actions col-xs-2 pull-right hidden-xs">
         <li @click="addReport"><i class="icon-plus mr-0"></i></li>
         <li @click="toggleFullscreen"> Fullscreen</li>
         <li @click="toggleSlide"> {{isSliding ? 'Stop' : 'Start'}} Slide</li>
