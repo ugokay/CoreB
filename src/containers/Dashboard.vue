@@ -2,12 +2,30 @@
   <div class="dashboard">
       <ul class="dash-actions col-xs-2 pull-right hidden-xs">
         <li @click="addReport"><i class="icon-plus mr-0"></i></li>
-        <li @click="toggleEditable"> {{editable ? 'View' : 'Edit'}} Mode</li>
-        <li @click="toggleFullscreen"> Fullscreen</li>
-        <li @click="toggleSlide"> {{isSliding ? 'Stop' : 'Start'}} Slide</li>
-        <li><a @click.prevent="refresh"><i class="icon-refresh"></i><span>Refresh</span></a></li>
-        <li><i class="icon-export"></i><span>Export</span></li>
-        <li @click="saveReport"><i class="icon-export"></i><span>Save</span></li>
+        <li @click="toggleEditable">
+          <span class="icon"><icon name="arrows"></icon></span>
+          <span class="text"> {{editable ? 'View' : 'Edit'}} Mode</span>
+        </li>
+        <li @click="toggleFullscreen">
+          <span class="icon"><icon name="expand"></icon></span>
+          <span class="text">Fullscreen</span>
+        </li>
+        <li @click="toggleSlide">
+          <span class="icon"><icon name="play"></icon></span>
+          <span class="text"> {{isSliding ? 'Stop' : 'Start'}} Slide</span>
+        </li>
+        <li><a @click.prevent="refresh">
+          <span class="icon"><icon name="refresh"></icon></span>
+          <span class="text"><i class="icon-refresh"></i><span>Refresh</span></span>
+        </a></li>
+        <li>
+          <span class="icon"><icon name="upload"></icon></span>
+          <span class="text"><i class="icon-export"></i><span>Export</span></span>
+        </li>
+        <li @click="saveReport">
+          <span class="icon"><icon name="floppy-o"></icon></span>
+          <span class="text"><i class="icon-export"></i><span>Save</span></span>
+        </li>
       </ul>
      <fullscreen ref="fullscreen" :fullscreen.sync="fullscreen">
         <vue-tabs @tab-change="tabChange" id="tabs" ref="tabs">
@@ -35,6 +53,8 @@
   import Report from '@/components/Report'
   import ReportElement from '@/components/ReportElement'
   import VueGridLayout from 'vue-grid-layout'
+  import Icon from 'vue-awesome/components/Icon'
+  import { arrows, expand, play, upload, floppyO  } from 'vue-awesome/icons'
   import {VueTabs, VTab} from 'vue-nav-tabs'
   import 'vue-nav-tabs/themes/vue-tabs.css'
 
@@ -49,6 +69,7 @@
       ReportElement,
       VueTabs,
       VTab,
+      Icon,
       'grid-layout': VueGridLayout.GridLayout,
       'grid-item': VueGridLayout.GridItem
     },
