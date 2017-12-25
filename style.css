@@ -1601,12 +1601,31 @@ li.tab.active a,
   }
 }
 
-@media screen and (max-width: 1440px) and (min-width: 1101px) {
+/* @media screen and (max-width: 1440px) and (min-width: 1101px) { */
+  .dash-actions li {
+    position: relative;
+  }
   .dash-actions li span.text {
+    position: absolute;
+    display: inline-block;
+    background: #5b64fc;
+    color :#fff;
+    padding: 5px 13px;
+    bottom: 0;
+    white-space: nowrap;
+    left: 50%;
+    transform: translate(-50%, 28px);
+    border-radius: 60px;
+    display: none
+  }
+  .dash-actions li:hover span.text {
+    display: block
+  }
+  .dash-actions li span.text i {
     display: none
   }
   .dash-actions li span.icon {
     display: inline-block
   }
-}
+/* } */
 

@@ -1,7 +1,10 @@
 <template>
   <div class="dashboard">
       <ul class="dash-actions col-xs-2 pull-right hidden-xs">
-        <li @click="addReport"><i class="icon-plus mr-0"></i></li>
+        <li @click="addReport">
+          <span class="icon"><icon name="plus"></icon></span>
+          <span class="text">Add Report</span>
+        </li>
         <li @click="toggleEditable">
           <span class="icon"><icon name="arrows"></icon></span>
           <span class="text"> {{editable ? 'View' : 'Edit'}} Mode</span>
@@ -54,7 +57,7 @@
   import ReportElement from '@/components/ReportElement'
   import VueGridLayout from 'vue-grid-layout'
   import Icon from 'vue-awesome/components/Icon'
-  import { arrows, expand, play, upload, floppyO  } from 'vue-awesome/icons'
+  import { arrows, expand, play, upload, floppyO, plus  } from 'vue-awesome/icons'
   import {VueTabs, VTab} from 'vue-nav-tabs'
   import 'vue-nav-tabs/themes/vue-tabs.css'
 
