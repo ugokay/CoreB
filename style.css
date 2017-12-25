@@ -1137,6 +1137,31 @@ li.tab.active a,
   cursor:pointer;
   transform: rotate(45deg)
 }
+.mobileNav {
+  position:  absolute;
+  background: #3a3c46;
+  height: 50px;
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: 999;
+  display: none;
+  align-items: center;
+  padding: 0 10px;
+  justify-content: space-between;
+}
+.mobileNav ul {
+  display: flex;
+  align-items: center;
+  margin-bottom: -5px;
+}
+.mobileNav ul li {
+  margin-left: 15px;
+}
+.mobileNav ul li a {
+  color: #fff;
+  opacity: .7
+}
 .is-rotated {
   transform: rotate(45deg);
   transform-origin: center center
@@ -1432,4 +1457,141 @@ li.tab.active a,
 .sidebarLinks li a {
   display: flex!important;
   align-items: center
+}
+
+.sidebarLinks  {
+  margin-top: 30px;
+}
+.sidebarLinks li a{
+  padding: 12px 20px;
+  display: block;
+  font-size: 15px;
+  color: #fff;
+  transition: all 200ms
+}
+.sidebarLinks li a:hover{
+  background: #282a33
+}
+/* .navbar {
+  transition: all 300ms
+} */
+.navbar.is-scaled {
+  width: 60px;
+  position: relative;
+  z-index: 9999;
+}
+.navbar.is-scaled li:hover span.text-holder {
+  display: block
+}
+.navbar li {
+  margin:0 -15px;
+  position: relative;
+  white-space: nowrap;
+}
+.navbar.is-scaled .btn-menu {
+  transform: translate(4px, 45px);
+}
+.navbar span.text-holder {
+  margin-left: 10px;
+} 
+.navbar.is-scaled span.text-holder {
+  position: absolute;
+  background: #3a3c46;
+  right: -5px;
+  transform: translate(100%, -50%);
+  top: 50%;
+  font-size: 13px;
+  padding: .3em 1em;
+  border-radius: 20px;
+  display: none
+}
+.navbar.is-scaled .sidebarLinks a {
+  /* text-align: center; */
+}
+.navbar.is-scaled .sidebarLinks i {
+  /*margin-right: -10px!important*/
+}
+.sidebarLinks.admin-settings li{
+  margin: 0 -20px;
+}
+
+@media screen and (max-width: 769px) {
+  .btn--add {
+    display: none!important
+  }
+  .navbar {
+    width: 60px;
+    position: relative;
+    z-index: 9999;
+    display: none
+  }
+  .navbar span.text-holder {
+    position: absolute;
+    background: #3a3c46;
+    right: -5px;
+    transform: translate(100%, -50%);
+    top: 50%;
+    font-size: 13px;
+    padding: .3em 1em;
+    border-radius: 20px;
+    display: none
+  }
+  .navbar .nav-settings {
+    flex-direction: column;
+  }
+  .navbar .nav-settings a:last-child {
+    transform: rotate(180deg);
+  }
+  .navbar .nav-settings a {
+    padding: .6em 1.6em!important
+  }
+
+  .sidebarLinks li a {
+    display: flex!important;
+    align-items: center;
+    justify-content: center
+  }
+  .navbar .nav-head {
+    width: calc(100% + 30px);
+    overflow: hidden;
+    margin-left: -17px;
+  }
+
+  .dash-actions {
+    width: calc(100% - 60px)!important;
+    position: absolute!important;
+    z-index: 999999;
+    background: #fff;
+    border-bottom: 4px solid #5b64fc;
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    align-items: right;
+    display: none
+  }
+  .dash-actions li {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end
+  }
+  .vue-grid-layout {
+    margin-left: 10px!important;
+    margin-right: 10px!important
+  }
+  .nav-tabs-navigation ul li {
+    float: none!important;
+    
+  }
+  body {
+    padding-top: 49px
+  }
+  .nav-tabs-navigation {
+    display: none
+  }
+  .nav-tabs-navigation.is-open {
+    display: block
+  }
+  .mobileNav{
+    display: flex!important
+  }
 }

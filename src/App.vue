@@ -3,6 +3,7 @@
     <template v-if="isLogged">
       <div class="App-container">
         <navigation />
+        <mobile-navigation />
         <div class="main-content scrollable">
           <div class="rest-loading" v-if="isLoadingRest"></div>
           <transition name="fade">
@@ -12,7 +13,9 @@
       </div>
     </template>
     <template v-else>
-      <login @success="onLoginSuccess" @error="onLoginError"/>
+      <login
+        @success="onLoginSuccess"
+        @error="onLoginError" />
     </template>
   </div>
 </template>
@@ -20,13 +23,14 @@
 
 <script>
 import Navigation from '@/components/Navigation'
+import MobileNavigation from '@/components/MobileNavigation'
 import Login from '@/components/Login'
 import {AUTH} from '@/helpers/auth-helper.js'
 import {HTTP} from '@/helpers/http-helper.js'
 
 export default {
   name: 'app',
-  components: { Navigation, Login },
+  components: { Navigation, Login, MobileNavigation },
   data: function () {
     return {
       isLogged: false,
