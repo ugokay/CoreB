@@ -6,7 +6,10 @@
           <span class="text">Add Report</span>
         </li>
         <li @click="toggleEditable">
-          <span class="icon"><icon name="arrows"></icon></span>
+          <span class="icon">
+            <icon name="arrows" v-if="!editable"></icon>
+            <icon name="eye" v-else></icon>
+          </span>
           <span class="text"> {{editable ? 'View' : 'Edit'}} Mode</span>
         </li>
         <li @click="toggleFullscreen">
@@ -14,13 +17,18 @@
           <span class="text">Fullscreen</span>
         </li>
         <li @click="toggleSlide">
-          <span class="icon"><icon name="play"></icon></span>
+          <span class="icon">
+            <icon name="play" v-if="!isSliding"></icon>
+            <icon name="pause" v-else></icon>
+          </span>
           <span class="text"> {{isSliding ? 'Stop' : 'Start'}} Slide</span>
         </li>
-        <li><a @click.prevent="refresh">
-          <span class="icon"><icon name="refresh"></icon></span>
-          <span class="text"><i class="icon-refresh"></i><span>Refresh</span></span>
-        </a></li>
+        <!-- <li>
+          <a @click.prevent="refresh">
+            <span class="icon"><icon name="refresh"></icon></span>
+            <span class="text"><i class="icon-refresh"></i><span>Refresh</span></span>
+          </a>
+        </li> -->
         <li>
           <span class="icon"><icon name="upload"></icon></span>
           <span class="text"><i class="icon-export"></i><span>Export</span></span>
@@ -57,7 +65,7 @@
   import ReportElement from '@/components/ReportElement'
   import VueGridLayout from 'vue-grid-layout'
   import Icon from 'vue-awesome/components/Icon'
-  import { arrows, expand, play, upload, floppyO, plus  } from 'vue-awesome/icons'
+  import { arrows, expand, play, upload, floppyO, plus, eye, pause } from 'vue-awesome/icons'
   import {VueTabs, VTab} from 'vue-nav-tabs'
   import 'vue-nav-tabs/themes/vue-tabs.css'
 

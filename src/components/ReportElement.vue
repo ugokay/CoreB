@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="report-element-wrapper">
     <div v-if="loading">
       <div
         class="progress-bar"
@@ -49,10 +49,10 @@
       <div v-else-if="element.chartType === 0">
         <table class="table" v-if="queryResult"  v-on:click="tableSeen = !tableSeen">
           <thead>
-          <th v-for="field in queryResult.schema.fields">{{field.name}}</th>
-          <th style="text-align: right;    position: relative;    padding-right: 20px;">
-            <i class="icon-query-hide"></i>
-          </th>
+            <th v-for="field in queryResult.schema.fields">{{field.name}}</th>
+            <th style="text-align: right;    position: relative;    padding-right: 20px;">
+              <i class="icon-query-hide"></i>
+            </th>
           </thead>
           <tbody>
           <tr v-for="row in queryResult.data">
@@ -101,6 +101,15 @@
       }
     },
     computed: {
+      formatNumber(decimals, dec_point, thousands_sep) {
+        dec_point = typeof dec_point !== 'undefined' ? dec_point : '.';
+        thousands_sep = typeof thousands_sep !== 'undefined' ? thousands_sep : ',';
+
+        let parts = this.toFixed(decimals).split('.');
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousands_sep);
+
+        return parts.join(dec_point);
+      },
       detailLink: function () {
         return `/report-element-detail/${this.element.id}`
       },

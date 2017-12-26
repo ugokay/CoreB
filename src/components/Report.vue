@@ -15,8 +15,17 @@
           :key="filterDefinition.name"
           v-if="!filterDefinition.static"
           class="form-group col-sm-3">
-          <label style="font-size: 12px;margin-bottom: 0;">{{filterDefinition.label}}</label>
+          <label style="font-size: 12px;margin-bottom: 0;display: block">{{filterDefinition.label}}</label>
           <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
+        </div>
+        <div
+          class="form-group col-sm-1">
+          <label style="font-size: 12px;margin-bottom: 0;display:block">&nbsp;</label>
+          <button
+            class="btn--add is-gray no-shadow"
+            @click="refresh">
+            <icon name="refresh"></icon>
+          </button>
         </div>
       </div>
     </div>
@@ -52,6 +61,8 @@
   import {Util} from '@/helpers/helpers.js'
   import ReportFilter from '@/components/ReportFilter'
   import ElementPopup from '@/components/popups/ElementPopup'
+  import Icon from 'vue-awesome/components/Icon'
+  import { refresh } from 'vue-awesome/icons'
 
   export default {
     name: 'report',
@@ -61,7 +72,8 @@
       AddButton,
       'grid-layout': VueGridLayout.GridLayout,
       'grid-item': VueGridLayout.GridItem,
-      ElementPopup
+      ElementPopup,
+      Icon
     },
     data () {
       return {
