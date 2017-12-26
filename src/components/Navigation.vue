@@ -10,8 +10,8 @@
         <ul class="sidebarLinks">
           <li>
             <router-link to="/">
-            <icon name="home"></icon> <span class="text-holder">Home</span>
-          </router-link>
+              <icon name="home"></icon> <span class="text-holder">Home</span>
+            </router-link>
         </li>
           <li>
             <router-link to="/report-list">
@@ -25,12 +25,17 @@
           </li>
           <li>
             <router-link to="/mappers">
-            <icon name="map-signs"></icon> <span class="text-holder">Mappers</span>
+              <icon name="map-signs"></icon> <span class="text-holder">Mappers</span>
             </router-link>
           </li>
           <li>
             <router-link to="/users">
-            <icon name="users"></icon> <span class="text-holder">Users</span>
+              <icon name="users"></icon> <span class="text-holder">Users</span>
+            </router-link>
+          </li>
+          <li>
+            <router-link to="/schemes">
+              <icon name="database"></icon><span class="text-holder">Schemes</span>
             </router-link>
           </li>
         </ul>
@@ -48,7 +53,7 @@
 <script>
 import {AUTH} from '@/helpers/auth-helper'
 import Icon from 'vue-awesome/components/Icon'
-import { flag, home, globe, sortAmountDesc, mapSigns ,users,userCircle, chevronLeft, arrowsAlt } from 'vue-awesome/icons'
+import { flag, home, globe, sortAmountDesc, mapSigns ,users,userCircle, chevronLeft, arrowsAlt, Database } from 'vue-awesome/icons'
 
 export default {
   name: 'navigation',

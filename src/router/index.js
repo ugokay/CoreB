@@ -6,6 +6,7 @@ import ReportList from '@/containers/ReportList'
 import Dashboard from '@/containers/Dashboard'
 import Users from '@/containers/Users'
 import ReportDesign from '@/containers/ReportDesign'
+import Schemes from '@/containers/Schemes'
 
 import Mappers from '@/containers/Mappers'
 import Mapper from '@/components/Mapper'
@@ -48,6 +49,11 @@ export default new Router({
       path: '/users',
       name: 'Users',
       component: Users
+    },
+    {
+      path: '/schemes',
+      name: 'Schemes',
+      component: Schemes
     }
   ]
 })
