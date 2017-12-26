@@ -8,7 +8,10 @@
         <ul class="nav nav-tabs pull-left">
             <li>
               <span class="button-holder title title_center">
-                <router-link to="/">Back to Dashboard</router-link>
+                <router-link to="/" class="headToBack">
+                  <icon name="chevron-left"></icon>
+                  Back to Dashboard
+                </router-link>
               </span>
             </li>
           </ul>
@@ -44,45 +47,47 @@
           <span @click="run" class="action--btn">RUN <i class="icon-arrow-right" style="color:#ffffff"> </i></span>
          </div>
       </div>
-      <div class="form-group selected-report-options row mb-0">
-        <div
-          v-for="filterDefinition in filterDefinitions"
-          v-if="!filterDefinition.static"
-          class="form-group col-sm-3 col-lg-2">
-          <label class="filterDefinitionLabel">
-            {{filterDefinition.label}}
-            <span
-              class="label label-default"
-              @click="openFilterPopup(filterDefinition)">
-              Edit
-            </span>
-          </label>
-          <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
+      <div class="report-element-details-wrapper">
+        <div class="form-group selected-report-options row mb-0">
+          <div
+            v-for="filterDefinition in filterDefinitions"
+            v-if="!filterDefinition.static"
+            class="form-group col-sm-3 col-lg-2">
+            <label class="filterDefinitionLabel">
+              {{filterDefinition.label}}
+              <span
+                class="label label-default"
+                @click="openFilterPopup(filterDefinition)">
+                Edit
+              </span>
+            </label>
+            <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
+          </div>
         </div>
+        <div class="clearfix"></div>
+
+        <report-element
+          v-if="filtersLoaded"
+          ref="reportElement"
+          :element="element"
+          :filters="filters"
+          @executed="executed">
+        </report-element>
+
+        <table class="table" v-if="queryResult"  v-on:click="tableSeen = !tableSeen">
+          <thead>
+            <th v-for="field in queryResult.schema.fields">{{field.name}}</th>
+            <th style="text-align: right;    position: relative;    padding-right: 20px;">
+              <i class="icon-query-hide"></i>
+            </th>
+          </thead>
+          <tbody>
+            <tr v-for="row in queryResult.data">
+              <td v-for="value in row">{{value}}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <div class="clearfix"></div>
-
-      <report-element
-        v-if="filtersLoaded"
-        ref="reportElement"
-        :element="element"
-        :filters="filters"
-        @executed="executed">
-      </report-element>
-
-      <table class="table" v-if="queryResult"  v-on:click="tableSeen = !tableSeen">
-        <thead>
-          <th v-for="field in queryResult.schema.fields">{{field.name}}</th>
-          <th style="text-align: right;    position: relative;    padding-right: 20px;">
-            <i class="icon-query-hide"></i>
-          </th>
-        </thead>
-        <tbody>
-          <tr v-for="row in queryResult.data">
-            <td v-for="value in row">{{value}}</td>
-          </tr>
-        </tbody>
-      </table>
     </div>
   </div>
 </template>
@@ -94,13 +99,15 @@
   import ReportFilter from '../components/ReportFilter'
   import {Util} from '@/helpers/helpers'
   import Editor from 'ace-vue2'
+  import Icon from 'vue-awesome/components/Icon'
+  import { chevronLeft } from 'vue-awesome/icons'
   import 'brace/mode/javascript'
   import 'brace/mode/sql'
   import 'brace/mode/html'
   import 'brace/theme/monokai'
 
   export default {
-    components: { ReportElement, Editor, Report, ReportFilter, FilterPopup },
+    components: { ReportElement, Editor, Report, ReportFilter, FilterPopup, Icon },
     name: 'report-design',
     data: function () {
       return {

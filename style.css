@@ -36,10 +36,14 @@ ICOMOON SET */
 .report--design .report-element-wrapper {
   position: relative;
   min-height: 130px;
-}
-.report--design .highcharts-container {
+  background: #fff;
+  margin-right: 30px;
   -webkit-box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.12);
   box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.12)
+}
+.report--design .highcharts-container {
+  /* -webkit-box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.12);
+   box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.12) */
 }
 .report--design .filterDefinitionLabel {
   margin-top: 25px;
@@ -48,11 +52,9 @@ ICOMOON SET */
   margin: 1em 26px;
   background: #fff;
   padding: 1.5em;
-  box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.12);
 }
 .report--design .report-element--title {
   width: calc(100% - 60px) !important;
-  margin-left: 26px;
   font-size: 20px;
   background: #fff!important;
   padding: 20px 0 20px 20px!important;
@@ -65,6 +67,9 @@ ICOMOON SET */
 }
 .is-pointer {
   cursor: pointer;
+}
+.report-element-details-wrapper {
+  padding-left: 50px
 }
 thead th {
   verical-align: bottom;
@@ -125,8 +130,16 @@ thead th {
 
 .report--design .selected-report-options {
   float: left;
-  margin-left: 30px;
   width: 100%;
+}
+
+.headToBack {
+  display: inline-flex;
+  align-items: center;
+  color: #3a3c46
+}
+.headToBack svg {
+  margin: 0 10px;
 }
 
 span.button-holder,
@@ -277,8 +290,6 @@ span.button-holder,
 .report--design .highcharts {
   position: inherit!important;
   width: calc(100% - 60px) !important;
-  height: 400px!important;
-  margin-left: 26px;
   margin-bottom: 30px;
 }
 .report--design {
