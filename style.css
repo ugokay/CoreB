@@ -69,7 +69,7 @@ ICOMOON SET */
   cursor: pointer;
 }
 .report-element-details-wrapper {
-  padding-left: 50px
+  padding-left: 25px
 }
 thead th {
   verical-align: bottom;
@@ -1652,6 +1652,12 @@ li.tab.active a,
 /* } */
 
 
+
+.report--design .table {
+  background: #fff;
+  max-width: calc(100% - 30px);
+  box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.12)
+}
 
 @media screen and (max-width: 760px) {
   .table {

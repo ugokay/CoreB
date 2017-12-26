@@ -1,5 +1,5 @@
 <template>
-  <div v-hotkey="keymap" class="row report--design">
+  <div v-hotkey="keymap" class="report--design">
     <filter-popup
       @updateFilter="updateFilter"
       ref="filterPopup" />
