@@ -22,11 +22,13 @@
 
 
 <script>
+import Vue from 'vue'
 import Navigation from '@/components/Navigation'
 import MobileNavigation from '@/components/MobileNavigation'
 import Login from '@/components/Login'
 import {AUTH} from '@/helpers/auth-helper.js'
 import {HTTP} from '@/helpers/http-helper.js'
+import VueNativeSock from 'vue-native-websocket'
 
 export default {
   name: 'app',
@@ -40,6 +42,7 @@ export default {
   methods: {
     onLoginSuccess: function (data) {
       this.isLogged = true
+      Vue.use(VueNativeSock, 'ws://localhost:8081/web-socket/v1/general/' + data.token)
     },
     onLoginError: function (res) {
       this.$swal('Unauthorized', res.data.message, 'error')
@@ -47,6 +50,15 @@ export default {
   },
   created: function () {
     this.isLogged = AUTH.isLogged()
+    if (this.isLogged) {
+      Vue.use(VueNativeSock, 'ws://localhost:8081/web-socket/v1/general/' + AUTH.token,
+        {
+          format: 'json',
+          reconnection: true,
+          reconnectionAttempts: 5,
+          reconnectionDelay: 3000
+        })
+    }
     var self = this
     HTTP.interceptors.response.use(function (response) {
       self.isLoadingRest = false

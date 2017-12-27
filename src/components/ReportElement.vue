@@ -97,19 +97,12 @@
         queryResult: {},
         loading: false,
         progress: 0,
-        elementData: this.element
+        elementData: this.element,
+        queryId: null,
+        isWSEnabled: false
       }
     },
     computed: {
-      formatNumber(decimals, dec_point, thousands_sep) {
-        dec_point = typeof dec_point !== 'undefined' ? dec_point : '.';
-        thousands_sep = typeof thousands_sep !== 'undefined' ? thousands_sep : ',';
-
-        let parts = this.toFixed(decimals).split('.');
-        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousands_sep);
-
-        return parts.join(dec_point);
-      },
       detailLink: function () {
         return `/report-element-detail/${this.element.id}`
       },
@@ -177,7 +170,12 @@
       },
       resolveExecution: function (res) {
         if (res.status === 202) {
-          this.checkExecution(res.data.queryId)
+          this.queryId = res.data.queryId
+          if (this.isWSEnabled) {
+            this.$socket.send('QUERY_PROGRESS:' + this.queryId)
+          } else {
+            this.checkExecution(this.queryId)
+          }
         } else {
           this.loading = false
           this.progress = 0
@@ -215,6 +213,7 @@
         })
       },
       catchExecutionError: function (error) {
+        console.log(error)
         if (error.response.data.message) {
           const msg = error.response.data.message
             .replace('com.facebook.presto.sql.parser.ParsingException: ', '')
@@ -243,6 +242,18 @@
       ClickOutside
     },
     created: function () {
+      if (this.$socket && this.$socket.readyState === this.$socket.OPEN) {
+        this.isWSEnabled = true
+        this.$options.sockets.onmessage = (res) => {
+          const msg = JSON.parse(res.data)
+          if (this.queryId === msg.id) {
+            this.progress = msg.percentage
+            if (msg.percentage === 100) {
+              this.executeElement()
+            }
+          }
+        }
+      }
       this.executeElement()
     }
   }
