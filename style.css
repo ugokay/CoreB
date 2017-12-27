@@ -1772,7 +1772,35 @@ li.tab.active a,
   background: #eee!important
 }
 
-.all--filters-area {
-  width: calc(100% - 60px);
-  margin: auto
+/* pull grid back */
+.vue-grid-layout{
+  margin-right: 0;
+}
+.vue-grid-layout.is-active {
+  width: calc(100% - 270px)!important;
+}
+.mt-30 {
+  margin-top: 30px;
+}
+.filter-sidebar {
+  position: fixed;
+  width: 260px;
+  right: 0;
+  height: calc(100vh - 40px);
+  top: 40px;
+  background: #e6dede;
+  padding: 2em 1em;
+  box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.12);
+  z-index: 99999999999;
+  transition: all 300ms;
+  transform: translateX(100%)
+}
+.filter-sidebar.is-active {
+  transform: translateX(0)
+}
+.filter-sidebar h3 {
+  display: block;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+  border-bottom: 1px dashed rgba(161, 160, 160, .6)
 }

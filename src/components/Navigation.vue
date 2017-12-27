@@ -59,7 +59,7 @@ export default {
   name: 'navigation',
   data() {
     return {
-      isSidebarActive: true
+      isSidebarActive: false
     }
   },
   components: {

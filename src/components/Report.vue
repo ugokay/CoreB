@@ -10,23 +10,7 @@
         <input style="border: none; background-color: #f1f1f1" type="input" v-model="reportData.title">
       </div>
       <div class="col-xs-8 form-group selected-report-options">
-        <div
-          v-for="filterDefinition in filterDefinitions"
-          :key="filterDefinition.name"
-          v-if="!filterDefinition.static"
-          class="form-group col-sm-3">
-          <label style="font-size: 12px;margin-bottom: 0;display: block">{{filterDefinition.label}}</label>
-          <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
-        </div>
-        <div
-          v-for="filterDefinition in filterDefinitions"
-          :key="filterDefinition.name"
-          v-if="!filterDefinition.static"
-          class="form-group col-sm-3">
-          <label style="font-size: 12px;margin-bottom: 0;display: block">{{filterDefinition.label}}</label>
-          <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
-        </div>
-        <div
+        <!-- <div
           v-for="filterDefinition in filterDefinitions"
           :key="filterDefinition.name"
           v-if="!filterDefinition.static"
@@ -49,60 +33,15 @@
               {{ allFilters ? 'Hide Filters' : 'All Filters' }}
             </button>
           </div>
-        </div>
-      </div>
-      <div class="all--filters-area" v-show="allFilters">
-        <div
-          v-for="filterDefinition in filterDefinitions"
-          :key="filterDefinition.name"
-          v-if="!filterDefinition.static"
-          class="form-group col-sm-3">
-          <label style="font-size: 12px;margin-bottom: 0;display: block">{{filterDefinition.label}}</label>
-          <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
-        </div>
-        <div
-          v-for="filterDefinition in filterDefinitions"
-          :key="filterDefinition.name"
-          v-if="!filterDefinition.static"
-          class="form-group col-sm-3">
-          <label style="font-size: 12px;margin-bottom: 0;display: block">{{filterDefinition.label}}</label>
-          <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
-        </div>
-        <div
-          v-for="filterDefinition in filterDefinitions"
-          :key="filterDefinition.name"
-          v-if="!filterDefinition.static"
-          class="form-group col-sm-3">
-          <label style="font-size: 12px;margin-bottom: 0;display: block">{{filterDefinition.label}}</label>
-          <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
-        </div>
-        <div
-          v-for="filterDefinition in filterDefinitions"
-          :key="filterDefinition.name"
-          v-if="!filterDefinition.static"
-          class="form-group col-sm-3">
-          <label style="font-size: 12px;margin-bottom: 0;display: block">{{filterDefinition.label}}</label>
-          <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
-        </div>
-        <div
-          v-for="filterDefinition in filterDefinitions"
-          :key="filterDefinition.name"
-          v-if="!filterDefinition.static"
-          class="form-group col-sm-3">
-          <label style="font-size: 12px;margin-bottom: 0;display: block">{{filterDefinition.label}}</label>
-          <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
-        </div>
-        <div
-          v-for="filterDefinition in filterDefinitions"
-          :key="filterDefinition.name"
-          v-if="!filterDefinition.static"
-          class="form-group col-sm-3">
-          <label style="font-size: 12px;margin-bottom: 0;display: block">{{filterDefinition.label}}</label>
-          <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
-        </div>
+        </div> -->
+        <filter-sidebar
+          ref="filterSidebar"
+          :filterDefinitions="filterDefinitions">
+        </filter-sidebar>
       </div>
     </div>
     <grid-layout
+      ref="gridLayout"
       id="grid"
       v-if="isSelected && filtersLoaded"
       :layout="layout"
@@ -113,7 +52,9 @@
       :margin="[10, 10]"
       :vertical-compact="false"
       :use-css-transforms="true">
-      <grid-item v-for="(item, elementIdx) in layout" :key="item.i"
+      <grid-item v-for="(item, elementIdx) in layout"
+                ref="gridItem"
+                :key="item.i"
                  :x="item.x"
                  :y="item.y"
                  :w="item.w"
@@ -130,6 +71,7 @@
   import ReportElement from '@/components/ReportElement'
   import VueGridLayout from 'vue-grid-layout'
   import AddButton from '@/components/AddButton'
+  import FilterSidebar from '@/components/FilterSidebar'
   import {HTTP} from '@/helpers/http-helper.js'
   import {Util} from '@/helpers/helpers.js'
   import ReportFilter from '@/components/ReportFilter'
@@ -146,7 +88,8 @@
       'grid-layout': VueGridLayout.GridLayout,
       'grid-item': VueGridLayout.GridItem,
       ElementPopup,
-      Icon
+      Icon,
+      FilterSidebar
     },
     data () {
       return {
@@ -181,7 +124,13 @@
     },
     methods: {
       toggleFilters: function () {
-        this.allFilters = !this.allFilters
+        this.$refs.filterSidebar.handleSidebar()
+        let gridLayout = this.$refs.gridLayout.$el
+        if (gridLayout.classList.contains('is-active')) {
+          gridLayout.classList.remove('is-active')
+        } else {
+          gridLayout.classList.add('is-active')
+        }
       },
       refresh: function () {
         this.$refs.reportElements.forEach(reportElement => {
