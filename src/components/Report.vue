@@ -19,13 +19,86 @@
           <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
         </div>
         <div
-          class="form-group col-sm-1">
+          v-for="filterDefinition in filterDefinitions"
+          :key="filterDefinition.name"
+          v-if="!filterDefinition.static"
+          class="form-group col-sm-3">
+          <label style="font-size: 12px;margin-bottom: 0;display: block">{{filterDefinition.label}}</label>
+          <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
+        </div>
+        <div
+          v-for="filterDefinition in filterDefinitions"
+          :key="filterDefinition.name"
+          v-if="!filterDefinition.static"
+          class="form-group col-sm-3">
+          <label style="font-size: 12px;margin-bottom: 0;display: block">{{filterDefinition.label}}</label>
+          <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
+        </div>
+        <div
+          class="form-group col-sm-3">
           <label style="font-size: 12px;margin-bottom: 0;display:block">&nbsp;</label>
-          <button
-            class="btn--add is-gray no-shadow"
-            @click="refresh">
-            <icon name="refresh"></icon>
-          </button>
+          <div class="flex">
+            <button
+              class="btn--add is-gray no-shadow mr-5"
+              @click="refresh">
+              <icon name="refresh"></icon>
+            </button>
+            <button
+              class="btn btn-primary"
+              @click="toggleFilters">
+              {{ allFilters ? 'Hide Filters' : 'All Filters' }}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="all--filters-area" v-show="allFilters">
+        <div
+          v-for="filterDefinition in filterDefinitions"
+          :key="filterDefinition.name"
+          v-if="!filterDefinition.static"
+          class="form-group col-sm-3">
+          <label style="font-size: 12px;margin-bottom: 0;display: block">{{filterDefinition.label}}</label>
+          <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
+        </div>
+        <div
+          v-for="filterDefinition in filterDefinitions"
+          :key="filterDefinition.name"
+          v-if="!filterDefinition.static"
+          class="form-group col-sm-3">
+          <label style="font-size: 12px;margin-bottom: 0;display: block">{{filterDefinition.label}}</label>
+          <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
+        </div>
+        <div
+          v-for="filterDefinition in filterDefinitions"
+          :key="filterDefinition.name"
+          v-if="!filterDefinition.static"
+          class="form-group col-sm-3">
+          <label style="font-size: 12px;margin-bottom: 0;display: block">{{filterDefinition.label}}</label>
+          <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
+        </div>
+        <div
+          v-for="filterDefinition in filterDefinitions"
+          :key="filterDefinition.name"
+          v-if="!filterDefinition.static"
+          class="form-group col-sm-3">
+          <label style="font-size: 12px;margin-bottom: 0;display: block">{{filterDefinition.label}}</label>
+          <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
+        </div>
+        <div
+          v-for="filterDefinition in filterDefinitions"
+          :key="filterDefinition.name"
+          v-if="!filterDefinition.static"
+          class="form-group col-sm-3">
+          <label style="font-size: 12px;margin-bottom: 0;display: block">{{filterDefinition.label}}</label>
+          <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
+        </div>
+        <div
+          v-for="filterDefinition in filterDefinitions"
+          :key="filterDefinition.name"
+          v-if="!filterDefinition.static"
+          class="form-group col-sm-3">
+          <label style="font-size: 12px;margin-bottom: 0;display: block">{{filterDefinition.label}}</label>
+          <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
         </div>
       </div>
     </div>
@@ -83,6 +156,7 @@
         popupSeen: false,
         filters: {},
         filtersLoaded: false,
+        allFilters: false,
         filterDefinitions: [],
         globalFilterDefinitions: []
       }
@@ -106,6 +180,9 @@
       }
     },
     methods: {
+      toggleFilters: function () {
+        this.allFilters = !this.allFilters
+      },
       refresh: function () {
         this.$refs.reportElements.forEach(reportElement => {
           reportElement.executeQuery()

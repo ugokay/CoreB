@@ -1,8 +1,11 @@
 <template>
   <div class="col-md-12">
-    <scheme-popup />
-    <a class="btn--add is-fixed" >
-      <i class="icon-plus" /> Add
+    <scheme-popup 
+      ref="schemePopup"
+      @newScheme="newScheme"
+      :schemes="schemes" />
+    <a class="btn--add is-fixed" @click="openPopup">
+      <i class="icon-plus mr-5" /> Add
     </a>
     <div class="row">
       <div class="nav-tabs-navigation">
@@ -35,7 +38,10 @@
                 <span class="text">Xope</span>
             </div>
           </li>
-          <scheme-item v-for="field in scheme.fields" :field="field" />
+          <scheme-item
+            v-for="field in scheme.fields"
+            :key="field.name"
+            :field="field" />
         </ul>
       </div>
     </div>
@@ -62,9 +68,26 @@
       SchemePopup,
       Icon
     },
+    methods: {
+      openPopup: function () {
+        this.$refs.schemePopup.open()
+      },
+      newScheme: function (scheme) {
+        const { scheme_title, scheme_table } = scheme
+        const schemeToPush = this.schemes.filter(scheme => scheme.name.table === scheme_table)
+        schemeToPush[0].fields.push({
+          name: scheme_title
+        })
+        this.closePopup()
+      },
+      closePopup: function () {
+        this.$refs.schemePopup.close()
+      }
+    },
     created() {
       HTTP.get('bi/analyze/schema')
         .then(res => this.schemes = res.data)
+        .then(() => console.log(this.schemes))
     }
   }
 </script>

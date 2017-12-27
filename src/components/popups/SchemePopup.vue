@@ -5,23 +5,25 @@
         <div class="icon-plus"></div>
       </div>
       <div class="input-row">
-        <label>Email</label>
+        <label>Field Name</label>
         <input
+          v-model="schemeTitle"
           type="text">
       </div>
       <div class="input-row row no-margin">
         <label
-          class="checkbox-item icon-before no-padding-right col-md-6">
-            <!-- <input
-              type="checkbox"
-              :value="group.id"
-              v-model="userData.roles" /> -->
-            <span class="text">Title<i></i></span>
+          v-for="scheme in schemes"
+          :key="scheme.name.table"
+          class="checkbox-item is-circled icon-before no-padding-right col-md-6">
+            <input
+              type="radio"
+              :value="scheme.name.table"
+              v-model="schemeTable" />
+           <span class="text capitalizeFirstLetter"> {{ scheme.name.table }} <i></i></span>
         </label>
       </div>
       <div class="input-row">
-        <button v-if="isCreate">Create Scheme</button>
-        <button v-else @click="updateFilter">Update</button>
+        <button @click="createScheme">Create Scheme</button>
       </div>
     </div>
   </div>
@@ -33,45 +35,31 @@
   export default {
     name: 'popup',
     props: {
-      user: {
-        type: Object,
-        default: function () {
-          return {
-            id: '',
-            full_name: '',
-            email: '',
-            roles: []
-          }
-        }
+      schemes: {
+        required: true
       }
     },
     data: function () {
       return {
+        schemeTitle: '',
+        schemeTable: '',
         hidden: true,
-        isCreate: true,
       }
     },
     methods: {
-      close: function () {
+      createScheme: function () {
+        this.$emit('newScheme', {
+          scheme_title: this.schemeTitle,
+          scheme_table: this.schemeTable
+        })
+      },
+      close: function (e) {
+        this.schemeTitle = ''
+        this.schemeTable = ''
         this.hidden = true
+        console.log(this)
       },
-      updateFilter: function () {
-        // this.$emit('updateFilter', this.userData)
-        // this.close()
-      },
-      open: function (user) {
-        if (user) {
-          this.userData = user
-          this.isCreate = false
-        } else {
-          this.userData = {
-            id: Math.round(Math.random() * 10000),
-            full_name: '',
-            email: '',
-            roles: []
-          }
-          this.isCreate = true
-        }
+      open: function () {
         this.hidden = false
       }
     }

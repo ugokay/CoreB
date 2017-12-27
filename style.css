@@ -1075,7 +1075,13 @@ li.tab.active a,
   font-size: 11px;
   transform: rotate(-40deg)
 }
-.checkbox-item.icon-before span.text::after{
+.checkbox-item.is-circled span.text::after {
+  border-radius: 50%
+}
+.mr-5 {
+  margin-right: 5px!important;
+}
+.checkbox-item.icon-before span.text::after {
   position: absolute;
   left: -40px;
   top: -2px;
@@ -1764,4 +1770,9 @@ li.tab.active a,
 }
 .is-list-item .dropdown-menu li a:hover {
   background: #eee!important
+}
+
+.all--filters-area {
+  width: calc(100% - 60px);
+  margin: auto
 }
