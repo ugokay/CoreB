@@ -10,11 +10,16 @@
         <input style="border: none; background-color: #f1f1f1" type="input" v-model="reportData.title">
       </div>
       <div class="col-sm-9">
-        <div
+        <!--<div
           v-for="filterDefinition in filterDefinitions"
           v-if="!filterDefinition.static">
           <label class="label label-default">{{ filterDefinition.label }}</label>
           {{ filters[filterDefinition.name] }}
+        </div>-->
+        <div
+          v-for="filterValue in filterValues">
+          <label class="label label-default">{{ filterValue.label }}</label>
+          {{ filterValue.value }}
         </div>
       </div>
       <div v-if="filterDefinitions.length > 0" class="col-xs-8 form-group selected-report-options">
@@ -23,7 +28,8 @@
           v-if="isFiltersLoaded"
           :filterDefinitions="filterDefinitions"
           :filters="filters"
-          @apply="refresh">
+          @apply="refresh"
+          @change="filtersChange">
         </filter-sidebar>
       </div>
     </div>
@@ -39,7 +45,7 @@
       :margin="[10, 10]"
       :vertical-compact="false"
       :use-css-transforms="true">
-      <grid-item 
+      <grid-item
         v-for="(item, elementIdx) in layout"
         ref="gridItem"
         :key="item.i"
@@ -98,7 +104,8 @@
         allFilters: false,
         filterDefinitions: [],
         globalFilterDefinitions: [],
-        isEditing: false
+        isEditing: false,
+        filterValues: []
       }
     },
     props: {
@@ -120,6 +127,9 @@
       }
     },
     methods: {
+      filtersChange: function (newFilterValues) {
+        this.filterValues = newFilterValues
+      },
       toggleEditMode: function() {
         this.isEditing = !this.isEditing
       },

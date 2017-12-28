@@ -21,6 +21,40 @@ Date.prototype.toJSON = function () {
 
 export const Util = {
   dayInMillis: 1000 * 60 * 60 * 24,
+  calculateFilterDefaultValue: function (definition) {
+    let initialValue
+    if (definition.type === 'datepicker') {
+      const fixedDates = this.calculateFixedDates()
+      switch (definition.defaultValue) {
+        case 'today':
+          initialValue = fixedDates.today
+          break
+        case 'yesterday':
+          initialValue = fixedDates.yesterday
+          break
+        case 'tomorrow':
+          initialValue = fixedDates.tomorrow
+          break
+        default:
+          initialValue = fixedDates.today
+      }
+    } else if (definition.type === 'daterangepicker') {
+      const fixedDates = this.calculateFixedDates()
+      switch (definition.defaultValue) {
+        case 'today':
+          initialValue = [fixedDates.today, fixedDates.tomorrow]
+          break
+        case 'yesterday':
+          initialValue = [fixedDates.yesterday, fixedDates.today]
+          break
+        default:
+          initialValue = [fixedDates.yesterday, fixedDates.today]
+      }
+    } else {
+      initialValue = definition.defaultValue
+    }
+    return initialValue
+  },
   calculateFilterValue: function (value, type) {
     if (type === 'daterangepicker') {
       return {

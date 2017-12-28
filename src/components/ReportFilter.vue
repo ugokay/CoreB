@@ -44,50 +44,26 @@
     },
     data: function () {
       return {
-        value: null
+        value: null,
+        initialValue: null
       }
     },
     methods: {
       confirm: function (value) {}
     },
     created: function () {
-      let initialValue
-      if (this.definition.type === 'datepicker') {
-        const fixedDates = Util.calculateFixedDates()
-        switch (this.definition.defaultValue) {
-          case 'today':
-            initialValue = fixedDates.today
-            break
-          case 'yesterday':
-            initialValue = fixedDates.yesterday
-            break
-          case 'tomorrow':
-            initialValue = fixedDates.tomorrow
-            break
-          default:
-            initialValue = fixedDates.today
-        }
-      } else if (this.definition.type === 'daterangepicker') {
-        const fixedDates = Util.calculateFixedDates()
-        switch (this.definition.defaultValue) {
-          case 'today':
-            initialValue = [fixedDates.today, fixedDates.tomorrow]
-            break
-          case 'yesterday':
-            initialValue = [fixedDates.yesterday, fixedDates.today]
-            break
-          default:
-            initialValue = [fixedDates.yesterday, fixedDates.today]
-        }
-      } else {
-        initialValue = this.definition.defaultValue
-      }
-      this.value = initialValue
-      this.filters[this.definition.name] = Util.calculateFilterValue(initialValue, this.definition.type)
+      this.initialValue = Util.calculateFilterDefaultValue(this.definition)
+      this.value = this.initialValue
+      this.filters[this.definition.name] = Util.calculateFilterValue(this.initialValue, this.definition.type)
     },
     watch: {
       value: function (newVal) {
-        this.filters[this.definition.name] = Util.calculateFilterValue(newVal, this.definition.type)
+        this.$set(this.filters, this.definition.name, Util.calculateFilterValue(newVal, this.definition.type))
+        if (newVal === this.initialValue) {
+          this.$emit('change', {name: this.definition.name, label: this.definition.label, value: null})
+        } else {
+          this.$emit('change', {name: this.definition.name, label: this.definition.label, value: newVal})
+        }
       }
     }
   }

@@ -13,7 +13,7 @@
       v-if="!filterDefinition.static"
       class="form-group">
       <label class="filterDefinitionLabel">{{filterDefinition.label}}</label>
-      <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
+      <report-filter @change="filterChange" :definition="filterDefinition" :filters="filters"></report-filter>
     </div>
     <button class="btn btn-primary btn-block mt-30" @click="apply">APPLY CHANGES</button>
     <button class="btn btn-default btn-block" @click="toggleSidebar">CANCEL</button>
@@ -29,7 +29,8 @@ export default {
     name: 'FilterSidebar',
     data() {
       return {
-        isSidebarActive: false
+        isSidebarActive: false,
+        filterValues: []
       }
     },
     components: {
@@ -37,6 +38,19 @@ export default {
       Icon
     },
     methods: {
+      filterChange: function (filterValue) {
+        if (this.filterValues.filter(item => item.name === filterValue.name).length === 0){
+          this.filterValues.push(filterValue)
+        }else {
+          this.filterValues = this.filterValues.map(item => {
+            if (item.name === filterValue.name) {
+              return filterValue
+            }
+            return item
+          })
+        }
+        this.$emit('change', this.filterValues)
+      },
       toggleSidebar () {
         this.isSidebarActive = !this.isSidebarActive
       },
