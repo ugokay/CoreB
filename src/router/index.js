@@ -6,7 +6,7 @@ import ReportList from '@/containers/ReportList'
 import Dashboard from '@/containers/Dashboard'
 import Users from '@/containers/Users'
 import ReportDesign from '@/containers/ReportDesign'
-import Schemes from '@/containers/Schemes'
+import Schemas from '@/containers/Schemas'
 
 import Mappers from '@/containers/Mappers'
 import Mapper from '@/components/Mapper'
@@ -51,9 +51,9 @@ export default new Router({
       component: Users
     },
     {
-      path: '/schemes',
-      name: 'Schemes',
-      component: Schemes
+      path: '/schemas',
+      name: 'Schemas',
+      component: Schemas
     }
   ]
 })

@@ -1,10 +1,10 @@
 <template>
   <div :class="filterSidebar">
-    <div class="barStatus" v-if="!isSidebarActive"  @click="handleSidebar">
+    <div class="barStatus" v-if="!isSidebarActive"  @click="toggleSidebar">
       <icon name="chevron-left" />
       <span class="text">Filters</span>
     </div>
-    <div class="barStatus" v-else @click="handleSidebar">
+    <div class="barStatus" v-else @click="toggleSidebar">
       <icon name="chevron-right" />
     </div>
     <div
@@ -15,24 +15,8 @@
       <label style="font-size: 12px;margin-bottom: 0;display: block">{{filterDefinition.label}}</label>
       <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
     </div>
-    <div
-      v-for="filterDefinition in filterDefinitions"
-      :key="filterDefinition.name"
-      v-if="!filterDefinition.static"
-      class="form-group">
-      <label style="font-size: 12px;margin-bottom: 0;display: block">{{filterDefinition.label}}</label>
-      <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
-    </div>
-    <div
-      v-for="filterDefinition in filterDefinitions"
-      :key="filterDefinition.name"
-      v-if="!filterDefinition.static"
-      class="form-group">
-      <label style="font-size: 12px;margin-bottom: 0;display: block">{{filterDefinition.label}}</label>
-      <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
-    </div>
-    <button class="btn btn-primary btn-block mt-30">APPLY CHANGES</button>
-    <button class="btn btn-default btn-block" @click="handleSidebar">CANCEL</button>
+    <button class="btn btn-primary btn-block mt-30" @click="apply">APPLY CHANGES</button>
+    <button class="btn btn-default btn-block" @click="toggleSidebar">CANCEL</button>
   </div>
 </template>
 
@@ -40,7 +24,7 @@
 import Icon from 'vue-awesome/components/Icon'
 import { chevronLeft, chevronRight } from 'vue-awesome/icons'
 import ReportFilter from '@/components/ReportFilter'
-  
+
 export default {
     name: 'FilterSidebar',
     data() {
@@ -53,8 +37,11 @@ export default {
       Icon
     },
     methods: {
-      handleSidebar () {
+      toggleSidebar () {
         this.isSidebarActive = !this.isSidebarActive
+      },
+      apply: function () {
+        this.$emit("apply")
       }
     },
     computed: {
@@ -64,6 +51,11 @@ export default {
     },
     props: {
       filterDefinitions: {
+        type: Array,
+        required: true
+      },
+      filters: {
+        type: Object,
         required: true
       }
     }

@@ -1,9 +1,9 @@
 <template>
   <div class="col-md-12">
-    <scheme-popup 
-      ref="schemePopup"
+    <schema-popup
+      ref="schemaPopup"
       @newScheme="newScheme"
-      :schemes="schemes" />
+      :schemes="schemas" />
     <a class="btn--add is-fixed" @click="openPopup">
       <i class="icon-plus mr-5" /> Add
     </a>
@@ -23,7 +23,7 @@
         </div>
       </div>
       <div
-        v-for="scheme in schemes"
+        v-for="scheme in schemas"
         :key="scheme.name.table"
         class="col-md-6 col-xs-12 mb-3">
         <ul class="global-filters">
@@ -38,7 +38,7 @@
                 <span class="text">Xope</span>
             </div>
           </li>
-          <scheme-item
+          <schema-item
             v-for="field in scheme.fields"
             :key="field.name"
             :field="field" />
@@ -53,28 +53,28 @@
   import { Database } from 'vue-awesome/icons'
   import {HTTP} from '@/helpers/http-helper'
 
-  import SchemeItem from '@/components/SchemeItem'
-  import SchemePopup from '@/components/Popups/SchemePopup'
+  import SchemaItem from '@/components/SchemaItem'
+  import SchemaPopup from '@/components/popups/SchemaPopup'
 
   export default {
     name: 'Schemes',
     data() {
       return {
-        schemes: ''
+        schemas: ''
       }
     },
     components: {
-      SchemeItem,
-      SchemePopup,
+      SchemaItem,
+      SchemaPopup,
       Icon
     },
     methods: {
       openPopup: function () {
-        this.$refs.schemePopup.open()
+        this.$refs.schemaPopup.open()
       },
       newScheme: function (scheme) {
         const { scheme_title, scheme_table } = scheme
-        const schemeToPush = this.schemes.filter(scheme => scheme.name.table === scheme_table)
+        const schemeToPush = this.schemas.filter(scheme => scheme.name.table === scheme_table)
         schemeToPush[0].fields.push({
           name: scheme_title
         })
@@ -86,8 +86,8 @@
     },
     created() {
       HTTP.get('bi/analyze/schema')
-        .then(res => this.schemes = res.data)
-        .then(() => console.log(this.schemes))
+        .then(res => this.schemas = res.data)
+        .then(() => console.log(this.schemas))
     }
   }
 </script>

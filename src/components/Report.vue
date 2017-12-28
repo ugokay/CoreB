@@ -10,40 +10,19 @@
         <input style="border: none; background-color: #f1f1f1" type="input" v-model="reportData.title">
       </div>
       <div class="col-xs-8 form-group selected-report-options">
-        <!-- <div
-          v-for="filterDefinition in filterDefinitions"
-          :key="filterDefinition.name"
-          v-if="!filterDefinition.static"
-          class="form-group col-sm-3">
-          <label style="font-size: 12px;margin-bottom: 0;display: block">{{filterDefinition.label}}</label>
-          <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
-        </div>
-        <div
-          class="form-group col-sm-3">
-          <label style="font-size: 12px;margin-bottom: 0;display:block">&nbsp;</label>
-          <div class="flex">
-            <button
-              class="btn--add is-gray no-shadow mr-5"
-              @click="refresh">
-              <icon name="refresh"></icon>
-            </button>
-            <button
-              class="btn btn-primary"
-              @click="toggleFilters">
-              {{ allFilters ? 'Hide Filters' : 'All Filters' }}
-            </button>
-          </div>
-        </div> -->
         <filter-sidebar
           ref="filterSidebar"
-          :filterDefinitions="filterDefinitions">
+          v-if="isFiltersLoaded"
+          :filterDefinitions="filterDefinitions"
+          :filters="filters"
+          @apply="refresh">
         </filter-sidebar>
       </div>
     </div>
     <grid-layout
       ref="gridLayout"
       id="grid"
-      v-if="isSelected && filtersLoaded"
+      v-if="isSelected && isFiltersLoaded"
       :layout="layout"
       :col-num="12"
       :row-height="30"
@@ -98,7 +77,7 @@
         layout: [],
         popupSeen: false,
         filters: {},
-        filtersLoaded: false,
+        isFiltersLoaded: false,
         allFilters: false,
         filterDefinitions: [],
         globalFilterDefinitions: []
@@ -139,18 +118,21 @@
       },
       calculateFilterDefinitions: function () {
         let queries = []
+        let filterDefinitions = []
         this.reportData.elements.forEach(element => {
           queries.push(element.query)
         })
         let filterTokens = Util.getUnifiedMustacheTokens(queries)
         if (filterTokens.length > 0) {
-          this.filterDefinitions = Util.calculateFilterDefinitions(filterTokens, this.globalFilterDefinitions)
+          filterDefinitions = Util.calculateFilterDefinitions(filterTokens, this.globalFilterDefinitions)
         }
-        this.filterDefinitions.forEach(filterDefinition => {
+        filterDefinitions.forEach(filterDefinition => {
           if (filterDefinition.static) {
             this.filters[filterDefinition.name] = filterDefinition.defaultValue
           }
         })
+        this.filterDefinitions = filterDefinitions
+        this.isFiltersLoaded = true
       },
       removeElement: function (id) {
         console.log(id)
@@ -235,7 +217,6 @@
     created: function () {
       this.layout = JSON.parse(this.reportData.layout)
       HTTP.get('bi/report/filter/list').then(res => {
-        this.filtersLoaded = true
         this.globalFilterDefinitions = res.data
         this.calculateFilterDefinitions()
       })

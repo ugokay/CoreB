@@ -34,7 +34,7 @@
             </router-link>
           </li>
           <li>
-            <router-link to="/schemes">
+            <router-link to="/schemas">
               <icon name="database"></icon><span class="text-holder">Schemes</span>
             </router-link>
           </li>
