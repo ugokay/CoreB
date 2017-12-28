@@ -9,7 +9,7 @@
       <div class="tabChores col-xs-3">
         <input style="border: none; background-color: #f1f1f1" type="input" v-model="reportData.title">
       </div>
-      <div class="col-xs-8 form-group selected-report-options">
+      <div v-if="filterDefinitions.length > 0" class="col-xs-8 form-group selected-report-options">
         <filter-sidebar
           ref="filterSidebar"
           v-if="isFiltersLoaded"
@@ -102,15 +102,6 @@
       }
     },
     methods: {
-      toggleFilters: function () {
-        this.$refs.filterSidebar.handleSidebar()
-        let gridLayout = this.$refs.gridLayout.$el
-        if (gridLayout.classList.contains('is-active')) {
-          gridLayout.classList.remove('is-active')
-        } else {
-          gridLayout.classList.add('is-active')
-        }
-      },
       refresh: function () {
         this.$refs.reportElements.forEach(reportElement => {
           reportElement.executeQuery()
@@ -135,9 +126,7 @@
         this.isFiltersLoaded = true
       },
       removeElement: function (id) {
-        console.log(id)
         for (let i = 0; i < this.reportData.elements.length; i++) {
-          console.log(this.reportData.elements[i].id)
           if (this.reportData.elements[i].id === id) {
             this.reportData.elements.splice(i, 1)
             break
@@ -151,7 +140,6 @@
         }
       },
       addExistingElement: function (newElement) {
-        console.log(newElement)
         let maxY = 0
         let maxI = 0
         this.layout.forEach(lay => {
