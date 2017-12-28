@@ -71,6 +71,7 @@
           ref="reportElement"
           :element="element"
           :filters="filters"
+          :isDesignMode="true"
           @executed="executed">
         </report-element>
 
@@ -123,7 +124,7 @@
         htmlContent: '<html>',
         sqlContent: 'sql',
         editorOptions: {
-          fontSize: '11pt'
+          fontSize: '12pt'
         }
       }
     },
@@ -178,10 +179,10 @@
       handleTabs (type) {
         if (type === 'html') {
           this.seenQuery = false
-          this.showHtml = true
+          this.showHtml = this.showHtml ? !this.showHtml : true
         } else if (type === 'query') {
           this.showHtml = false
-          this.seenQuery = true
+          this.seenQuery = this.seenQuery ? !this.seenQuery : true
         }
       }
     },

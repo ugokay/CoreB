@@ -14,13 +14,13 @@
     <div class="col-sm-12 report__element">
       <div class="row">
           <input
-            v-if="isEditingMode"
+            v-if="isEditing"
             type="input"
             class="report-element--title no-border col-xs-9"
             v-model="element.title"/>  
           <p v-else class="report--element-title"> {{element.title}} </p>
         <div class="col-xs-3 btn-group btn-group-xs align-right no-padding toggleTriggerBox hidden-xs">
-          <template v-if="isEditingMode">
+          <template v-if="isEditing">
             <a class="dropdown-toggle"
                v-click-outside="hideDropdown"
                @click="openDropdown"
@@ -28,29 +28,29 @@
               <i class="icon-more"></i>
             </a>
             <ul :class="isVisible">
-              <li><a>Save</a></li>
-              <li><a @click.prevent="executeQuery">Execute</a></li>
-              <li><router-link :to="designLink">Design</router-link></li>
-              <li class="divider"></li>
+              <li v-if="!isDesignMode"><a>Save</a></li>
+              <li v-if="!isDesignMode"><a @click.prevent="executeQuery">Execute</a></li>
+              <li v-if="!isDesignMode"><router-link :to="designLink">Design</router-link></li>
+              <li v-if="!isDesignMode" class="divider"></li>
               <li><a @click.prevent="setChartType('table')">Table</a></li>
               <li><a @click.prevent="setChartType('line')">Line Chart</a></li>
               <li><a @click.prevent="setChartType('column')">Bar Chart</a></li>
               <li><a @click.prevent="setChartType('bar')">Bar Chart (Horizontal)</a></li>
               <li><a @click.prevent="setChartType('pie')">Pie Chart</a></li>
               <li><a @click.prevent="setChartType('custom')">Custom Html</a></li>
-              <li class="divider"></li>
-              <li><a @click.prevent="remove">Remove</a></li>
+              <li class="divider" v-if="!isDesignMode"></li>
+              <li v-if="!isDesignMode"><a @click.prevent="remove">Remove</a></li>
             </ul>
           </template>
         </div>
       </div>
     </div>
-    <div v-if="queryResult.schema">
-      <div v-if="element.chartType === 6">
+    <div class="full-height" v-if="queryResult.schema">
+      <div class="full-height" v-if="element.chartType === 6">
         <div v-html="customHtml"></div>
       </div>
-      <div v-else-if="element.chartType === 0">
-        <table class="table" v-if="queryResult"  v-on:click="tableSeen = !tableSeen">
+      <div class="full-height" v-else-if="element.chartType === 0">
+        <table class="table table-scrollable" v-if="queryResult"  v-on:click="tableSeen = !tableSeen">
           <thead>
             <th v-for="field in queryResult.schema.fields">{{field.name}}</th>
             <th style="text-align: right;    position: relative;    padding-right: 20px;">
@@ -95,6 +95,10 @@
       },
       isEditingMode: {
         type: Boolean
+      },
+      isDesignMode: {
+        type: Boolean,
+        required: false
       }
     },
     data: function () {
@@ -109,6 +113,9 @@
       }
     },
     computed: {
+      isEditing () {
+        return this.isDesignMode ? true : this.isEditingMode
+      },
       designLink: function () {
         return `/report-design/${this.element.id}`
       },
