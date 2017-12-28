@@ -53,11 +53,10 @@
           scheme_table: this.schemeTable
         })
       },
-      close: function (e) {
+      close: function () {
         this.schemeTitle = ''
         this.schemeTable = ''
         this.hidden = true
-        console.log(this)
       },
       open: function () {
         this.hidden = false

@@ -33,6 +33,10 @@ ICOMOON SET */
 .mb-0 {
   margin-bottom: 0px!important;
 }
+.report--element-title {
+  padding: 0 10px 10px!important;
+  margin: 0!important
+}
 .report--design .report-element-wrapper {
   position: relative;
   min-height: 130px;
@@ -74,6 +78,9 @@ ICOMOON SET */
 }
 .btn--add {
   cursor: pointer
+}
+.dropdown-menu li {
+  cursor: pointer;
 }
 .is-pointer {
   cursor: pointer;

@@ -12,7 +12,7 @@
       :key="filterDefinition.name"
       v-if="!filterDefinition.static"
       class="form-group">
-      <label style="font-size: 12px;margin-bottom: 0;display: block">{{filterDefinition.label}}</label>
+      <label class="filterDefinitionLabel">{{filterDefinition.label}}</label>
       <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
     </div>
     <button class="btn btn-primary btn-block mt-30" @click="apply">APPLY CHANGES</button>
@@ -42,6 +42,7 @@ export default {
       },
       apply: function () {
         this.$emit("apply")
+        this.isSidebarActive = false
       }
     },
     computed: {

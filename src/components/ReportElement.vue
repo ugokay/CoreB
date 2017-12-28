@@ -13,32 +13,35 @@
     </div>
     <div class="col-sm-12 report__element">
       <div class="row">
-        <input
-          type="input"
-          class="report-element--title no-border col-xs-9"
-          v-model="element.title"/>
+          <input
+            v-if="isEditingMode"
+            type="input"
+            class="report-element--title no-border col-xs-9"
+            v-model="element.title"/>  
+          <p v-else class="report--element-title"> {{element.title}} </p>
         <div class="col-xs-3 btn-group btn-group-xs align-right no-padding toggleTriggerBox hidden-xs">
-          <a class="dropdown-toggle"
-             v-click-outside="hideDropdown"
-             @click="openDropdown"
-             data-toggle="dropdown">
-            <i class="icon-more"></i>
-          </a>
-          <ul :class="isVisible">
-            <li><a>Save</a></li>
-            <li><a @click.prevent="executeQuery">Execute</a></li>
-            <li><router-link :to="detailLink">Detail</router-link></li>
-            <li><router-link :to="designLink">Design</router-link></li>
-            <li class="divider"></li>
-            <li><a @click.prevent="setChartType('table')">Table</a></li>
-            <li><a @click.prevent="setChartType('line')">Line Chart</a></li>
-            <li><a @click.prevent="setChartType('column')">Bar Chart</a></li>
-            <li><a @click.prevent="setChartType('bar')">Bar Chart (Horizontal)</a></li>
-            <li><a @click.prevent="setChartType('pie')">Pie Chart</a></li>
-            <li><a @click.prevent="setChartType('custom')">Custom Html</a></li>
-            <li class="divider"></li>
-            <li><a @click.prevent="remove">Remove</a></li>
-          </ul>
+          <template v-if="isEditingMode">
+            <a class="dropdown-toggle"
+               v-click-outside="hideDropdown"
+               @click="openDropdown"
+               data-toggle="dropdown">
+              <i class="icon-more"></i>
+            </a>
+            <ul :class="isVisible">
+              <li><a>Save</a></li>
+              <li><a @click.prevent="executeQuery">Execute</a></li>
+              <li><router-link :to="designLink">Design</router-link></li>
+              <li class="divider"></li>
+              <li><a @click.prevent="setChartType('table')">Table</a></li>
+              <li><a @click.prevent="setChartType('line')">Line Chart</a></li>
+              <li><a @click.prevent="setChartType('column')">Bar Chart</a></li>
+              <li><a @click.prevent="setChartType('bar')">Bar Chart (Horizontal)</a></li>
+              <li><a @click.prevent="setChartType('pie')">Pie Chart</a></li>
+              <li><a @click.prevent="setChartType('custom')">Custom Html</a></li>
+              <li class="divider"></li>
+              <li><a @click.prevent="remove">Remove</a></li>
+            </ul>
+          </template>
         </div>
       </div>
     </div>
@@ -89,6 +92,9 @@
       filters: {
         type: Object,
         required: true
+      },
+      isEditingMode: {
+        type: Boolean
       }
     },
     data: function () {
@@ -103,9 +109,6 @@
       }
     },
     computed: {
-      detailLink: function () {
-        return `/report-element-detail/${this.element.id}`
-      },
       designLink: function () {
         return `/report-design/${this.element.id}`
       },
@@ -161,7 +164,7 @@
       openDropdown: function () {
         this.clickedDropDown = true
         document.querySelectorAll('.vue-grid-item').forEach(item => { item.style.zIndex = '1' })
-        this.$el.parentNode.style.zIndex = '99999999'
+        this.$el.parentNode.style.zIndex = '10'
       },
       redrawChart: function () {
         if (this.elementData.chartType !== 6) {

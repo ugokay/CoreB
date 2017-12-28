@@ -41,7 +41,13 @@
                  :i="item.i"
                  @resized="resizeEnd(elementIdx)"
                  @resize="resize(elementIdx)">
-        <report-element ref="reportElements" :element="getElement(item.id)" :filters="filters" @remove="removeElement"></report-element>
+        <report-element
+          ref="reportElements"
+          :element="getElement(item.id)"
+          :filters="filters"
+          :isEditingMode="isEditing"
+          @remove="removeElement">
+        </report-element>
       </grid-item>
     </grid-layout>
   </div>
@@ -80,7 +86,8 @@
         isFiltersLoaded: false,
         allFilters: false,
         filterDefinitions: [],
-        globalFilterDefinitions: []
+        globalFilterDefinitions: [],
+        isEditing: false
       }
     },
     props: {
@@ -102,6 +109,9 @@
       }
     },
     methods: {
+      toggleEditMode: function() {
+        this.isEditing = !this.isEditing
+      },
       refresh: function () {
         this.$refs.reportElements.forEach(reportElement => {
           reportElement.executeQuery()

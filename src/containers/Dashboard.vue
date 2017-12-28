@@ -7,7 +7,7 @@
         </li>
         <li @click="toggleEditable">
           <span class="icon">
-            <icon name="arrows" v-if="!editable"></icon>
+            <icon name="pencil-square-o" v-if="!editable"></icon>
             <icon name="eye" v-else></icon>
           </span>
           <span class="text"> {{editable ? 'View' : 'Edit'}} Mode</span>
@@ -65,7 +65,7 @@
   import ReportElement from '@/components/ReportElement'
   import VueGridLayout from 'vue-grid-layout'
   import Icon from 'vue-awesome/components/Icon'
-  import { arrows, expand, play, upload, floppyO, plus, eye, pause } from 'vue-awesome/icons'
+  import { arrows, expand, play, upload, floppyO, plus, eye, pause, pencilSquareO } from 'vue-awesome/icons'
   import {VueTabs, VTab} from 'vue-nav-tabs'
   import 'vue-nav-tabs/themes/vue-tabs.css'
 
@@ -102,6 +102,7 @@
       },
       toggleEditable: function () {
         this.editable = !this.editable
+        this.$refs.reports.forEach(report => report.toggleEditMode())
       },
       getReports: function () {
         HTTP.get('bi/report/list')
