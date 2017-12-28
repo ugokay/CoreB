@@ -5,9 +5,17 @@
       <a @click.prevent="addElement"><i class="icon-plus" /> Add</a>
       <a @click.prevent="selectElement">Select</a>
     </div>
-    <div class="row mt20">
-      <div class="tabChores col-xs-3">
+    <div class="row flex align-center mt20">
+      <div class="tabChores col-sm-3">
         <input style="border: none; background-color: #f1f1f1" type="input" v-model="reportData.title">
+      </div>
+      <div class="col-sm-9">
+        <div
+          v-for="filterDefinition in filterDefinitions"
+          v-if="!filterDefinition.static">
+          <label class="label label-default">{{ filterDefinition.label }}</label>
+          {{ filters[filterDefinition.name] }}
+        </div>
       </div>
       <div v-if="filterDefinitions.length > 0" class="col-xs-8 form-group selected-report-options">
         <filter-sidebar
@@ -31,16 +39,18 @@
       :margin="[10, 10]"
       :vertical-compact="false"
       :use-css-transforms="true">
-      <grid-item v-for="(item, elementIdx) in layout"
-                ref="gridItem"
-                :key="item.i"
-                 :x="item.x"
-                 :y="item.y"
-                 :w="item.w"
-                 :h="item.h"
-                 :i="item.i"
-                 @resized="resizeEnd(elementIdx)"
-                 @resize="resize(elementIdx)">
+      <grid-item 
+        v-for="(item, elementIdx) in layout"
+        ref="gridItem"
+        :key="item.i"
+        :x="item.x"
+        :y="item.y"
+        :w="item.w"
+        :h="item.h"
+        :i="item.i"
+        @resized="resizeEnd(elementIdx)"
+        @resize="resize(elementIdx)">
+
         <report-element
           ref="reportElements"
           :element="getElement(item.id)"
@@ -48,6 +58,7 @@
           :isEditingMode="isEditing"
           @remove="removeElement">
         </report-element>
+
       </grid-item>
     </grid-layout>
   </div>
@@ -113,9 +124,7 @@
         this.isEditing = !this.isEditing
       },
       refresh: function () {
-        this.$refs.reportElements.forEach(reportElement => {
-          reportElement.executeQuery()
-        })
+        this.$refs.reportElements.forEach(reportElement => reportElement.executeQuery())
       },
       calculateFilterDefinitions: function () {
         let queries = []
@@ -230,7 +239,7 @@
   margin-top: 20px;
 }
 .tabChores {
-  margin: 20px;
+  padding: 20px 0 20px 40px;
   font-size: 20px;
   font-weight: bold;
 }

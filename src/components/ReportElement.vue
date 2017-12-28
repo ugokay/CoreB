@@ -12,14 +12,20 @@
       </div>
     </div>
     <div class="col-sm-12 report__element">
-      <div class="row">
+      <div class="report-element--header">
           <input
             v-if="isEditing"
             type="input"
-            class="report-element--title no-border col-xs-9"
+            style="padding: 0 10px 0"
+            class="report-element--title no-border"
             v-model="element.title"/>  
-          <p v-else class="report--element-title"> {{element.title}} </p>
-        <div class="col-xs-3 btn-group btn-group-xs align-right no-padding toggleTriggerBox hidden-xs">
+          <router-link
+            v-else
+            :to="designLink"
+            class="report--element-title element-title btn-block">
+            {{element.title}}
+          </router-link>
+        <div class="btn-group btn-group-xs align-right no-padding toggleTriggerBox hidden-xs">
           <template v-if="isEditing">
             <a class="dropdown-toggle"
                v-click-outside="hideDropdown"
