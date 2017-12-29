@@ -20,6 +20,7 @@ Date.prototype.toJSON = function () {
     'Z'
 }
 
+
 export const Util = {
   dayInMillis: 1000 * 60 * 60 * 24,
   dateFormat: '',
@@ -221,7 +222,7 @@ export const MOCK_MAPPERS = [
 
 export const MOCK_USERS = [
   { id: 148, full_name: 'Ali Korkmaz', email: 'ali@gmail.com', roles: [1] },
-  { id: 74182, full_name: 'Veli Korkmaz', email: 'veli@gmail.com', roles: [3] },
+  { id: 74182, full_name: 'Veli Korkmaz', email: 'veli@gmail.com', roles: [1,3] },
   { id: 9158, full_name: 'Ahmet Korkmaz', email: 'ahmet@gmail.com', roles: [2] },
   { id: 3875, full_name: 'Mehmet Korkmaz', email: 'mehmet@gmail.com', roles: [1] }
 ]

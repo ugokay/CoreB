@@ -99,6 +99,7 @@
       },
       tabChange: function (tabIdx) {
         this.selectedReportIdx = tabIdx
+        this.$refs.tabs.$el.childNodes[0].classList.remove('is-open')
       },
       toggleEditable: function () {
         this.editable = !this.editable

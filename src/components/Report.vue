@@ -1,38 +1,38 @@
 <template>
   <div>
+    <!-- outer elements -->
     <element-popup ref="elementPopup" @addElement="addExistingElement"/>
     <div class="btn--add has-multiple is-fixed">
       <a @click.prevent="addElement"><i class="icon-plus" /> Add</a>
       <a @click.prevent="selectElement">Select</a>
     </div>
-    <div class="row flex align-center mt20">
-      <div class="tabChores col-sm-3">
-        <input style="border: none; background-color: #f1f1f1" type="input" v-model="reportData.title">
+    <div v-if="filterDefinitions.length > 0">
+      <filter-sidebar
+        ref="filterSidebar"
+        v-if="isFiltersLoaded"
+        :filterDefinitions="filterDefinitions"
+        :filters="filters"
+        @apply="refresh"
+        @change="filtersChange">
+      </filter-sidebar>
+    </div>
+
+    <!-- report header -->
+    <div class="report-header">
+      <div class="title-area">
+        <input v-if="isEditing" v-model="reportData.title">
+        <p v-else v-html="reportData.title" />
       </div>
-      <div class="col-sm-9">
-        <!--<div
-          v-for="filterDefinition in filterDefinitions"
-          v-if="!filterDefinition.static">
-          <label class="label label-default">{{ filterDefinition.label }}</label>
-          {{ filters[filterDefinition.name] }}
-        </div>-->
+      <div class="filterValues">
         <div
+          class="filterValue"
           v-for="filterValue in filterValues">
           <label class="label label-default">{{ filterValue.label }}</label>
-          {{ filterValue.value }}
+          <span>{{ filterValue.value }}</span>
         </div>
       </div>
-      <div v-if="filterDefinitions.length > 0" class="col-xs-8 form-group selected-report-options">
-        <filter-sidebar
-          ref="filterSidebar"
-          v-if="isFiltersLoaded"
-          :filterDefinitions="filterDefinitions"
-          :filters="filters"
-          @apply="refresh"
-          @change="filtersChange">
-        </filter-sidebar>
-      </div>
     </div>
+    
     <grid-layout
       ref="gridLayout"
       id="grid"

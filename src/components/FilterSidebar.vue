@@ -1,6 +1,6 @@
 <template>
   <div :class="filterSidebar">
-    <div class="barStatus" v-if="!isSidebarActive"  @click="toggleSidebar">
+    <div class="barStatus first-item" v-if="!isSidebarActive"  @click="toggleSidebar">
       <icon name="chevron-left" />
       <span class="text">Filters</span>
     </div>
@@ -76,23 +76,3 @@ export default {
     }
   }
 </script>
-
-<style>
-  .barStatus {
-    position: absolute;
-    left: 0;
-    cursor: pointer;
-    top: 10px;
-    background: red;
-    transform: translateX(-100%);
-    display: flex;
-    align-items: center;
-    padding: .5em 1em;
-    background: #e6dede;
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
-  }
-  .barStatus .text {
-    margin-left: 7px;
-  }
-</style>
