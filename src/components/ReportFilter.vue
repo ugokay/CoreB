@@ -59,11 +59,13 @@
     watch: {
       value: function (newVal) {
         this.$set(this.filters, this.definition.name, Util.calculateFilterValue(newVal, this.definition.type))
-        if (newVal === this.initialValue) {
-          this.$emit('change', {name: this.definition.name, label: this.definition.label, value: null})
-        } else {
-          this.$emit('change', {name: this.definition.name, label: this.definition.label, value: newVal})
-        }
+        this.$emit('change',
+          {
+            name: this.definition.name,
+            label: this.definition.label,
+            value: Util.parseFilterValue(this.definition, newVal)
+          }
+        )
       }
     }
   }

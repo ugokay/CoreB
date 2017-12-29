@@ -1,5 +1,6 @@
 /* eslint-disable no-extend-native */
 import Mustache from 'mustache'
+import moment from 'moment'
 
 Date.prototype.toJSON = function () {
   function pad (number) {
@@ -21,6 +22,14 @@ Date.prototype.toJSON = function () {
 
 export const Util = {
   dayInMillis: 1000 * 60 * 60 * 24,
+  dateFormat: '',
+  parseFilterValue: function (definition, value) {
+    if (definition.type === 'daterangepicker') {
+      console.log(moment)
+      return moment(value[0]).format('YYYY-MM-DD') + ' ~ ' + moment(value[1]).format('YYYY-MM-DD')
+    }
+    return value
+  },
   calculateFilterDefaultValue: function (definition) {
     let initialValue
     if (definition.type === 'datepicker') {
