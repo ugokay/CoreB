@@ -16,6 +16,7 @@
     "axios": "^0.17.1",
     "bootstrap": "^3.3.7",
     "highcharts": "^6.0.3",
+    "html2canvas": "^1.0.0-alpha.6",
     "mustache": "^2.3.0",
     "v-hotkey": "^0.2.0",
     "vue": "^2.5.2",
