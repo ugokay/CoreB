@@ -11,6 +11,7 @@
           <option value="text">Text</option>
           <option value="datepicker">Datepicker</option>
           <option value="daterangepicker">DateRangePicker</option>
+          <option value="query">Query</option>
         </select>
         <span class="caret"></span>
       </div>
