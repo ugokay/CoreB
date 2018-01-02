@@ -27,7 +27,7 @@ import Navigation from '@/components/Navigation'
 import MobileNavigation from '@/components/MobileNavigation'
 import Login from '@/components/Login'
 import {AUTH} from '@/helpers/auth-helper.js'
-import {HTTP} from '@/helpers/http-helper.js'
+import {HTTP, WS_ENDPOINT} from '@/helpers/http-helper.js'
 import VueNativeSock from 'vue-native-websocket'
 
 export default {
@@ -42,7 +42,7 @@ export default {
   methods: {
     onLoginSuccess: function (data) {
       this.isLogged = true
-      Vue.use(VueNativeSock, 'ws://localhost:8081/web-socket/v1/general/' + data.token)
+      Vue.use(VueNativeSock, WS_ENDPOINT + data.token)
     },
     onLoginError: function (res) {
       this.$swal('Unauthorized', res.data.message, 'error')
@@ -51,7 +51,7 @@ export default {
   created: function () {
     this.isLogged = AUTH.isLogged()
     if (this.isLogged) {
-      Vue.use(VueNativeSock, 'ws://localhost:8081/web-socket/v1/general/' + AUTH.token,
+      Vue.use(VueNativeSock, WS_ENDPOINT + AUTH.token,
         {
           format: 'json',
           reconnection: true,
