@@ -14,6 +14,11 @@
       v-else-if="definition.type === 'text'"
       v-model="value"
       class="main--input" />
+    <template v-else-if="definition.type === 'query'">
+      <select v-model="value">
+        <option v-for="row in initialValue" :value="row.value">{{row.label ? row.label : row.value}}</option>
+      </select>
+    </template>
     <span
       v-else="definition.type === 'text'"
       v-model="value">
@@ -25,6 +30,7 @@
   import Datepicker from 'vuejs-datepicker'
   import DatePicker from 'vue2-datepicker'
   import {Util} from '@/helpers/helpers.js'
+  import {HTTP} from '@/helpers/http-helper.js'
 
   export default{
     components: {
@@ -52,7 +58,30 @@
       confirm: function (value) {}
     },
     created: function () {
-      this.initialValue = Util.calculateFilterDefaultValue(this.definition)
+      if (this.definition.type === 'query'){
+        HTTP.post('bi/analyze/execute', {query: this.definition.defaultValue}, {
+          params: {
+            filterParamsJson: JSON.stringify(this.filters)
+          }
+        }).then((res) => {
+          const options = []
+          res.data.data.forEach(row => {
+            const value = row[0]
+            const label = row[1]
+            if (value) {
+              options.push({
+                value: value,
+                label : label
+              })
+            }
+          })
+          this.initialValue = options
+        }).catch((error) => {
+          console.log(error)
+        })
+      } else {
+        this.initialValue = Util.calculateFilterDefaultValue(this.definition)
+      }
       this.value = this.initialValue
       this.filters[this.definition.name] = Util.calculateFilterValue(this.initialValue, this.definition.type)
     },

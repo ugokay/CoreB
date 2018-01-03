@@ -1,17 +1,17 @@
 <template>
-  <div class="report-element-wrapper" :id="elementId">
-    <image-download-popup ref="imageDownPopup" />
-    <div v-if="loading">
+  <div>
+    <div v-if="true">
       <div
         class="progress-bar"
-        v-bind:style="{width: progress + '%'}"
-        v-if="progress > 0">
-        {{progress}}
+        v-bind:style="{width: '90%'}"
+        v-if="true">
+        10
       </div>
       <div v-else class="loading-nice">
         <span></span>
       </div>
     </div>
+  <div class="report-element-wrapper">
     <div class="col-sm-12 report__element">
       <div class="report-element--header">
           <input
@@ -19,7 +19,7 @@
             type="input"
             style="padding: 0 10px 0"
             class="report-element--title no-border"
-            v-model="element.title"/>  
+            v-model="element.title"/>
           <router-link
             v-else
             :to="designLink"
@@ -78,6 +78,7 @@
         ref="chart">
       </vue-highcharts>
     </div>
+  </div>
   </div>
 </template>
 
@@ -276,6 +277,7 @@
       if (this.$socket && this.$socket.readyState === this.$socket.OPEN) {
         this.isWSEnabled = true
         this.$options.sockets.onmessage = (res) => {
+          console.log(res)
           const msg = JSON.parse(res.data)
           if (this.queryId === msg.id) {
             this.progress = msg.percentage

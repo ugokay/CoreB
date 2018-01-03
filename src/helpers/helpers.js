@@ -10,7 +10,7 @@ Date.prototype.toJSON = function () {
     return number
   }
 
-  return this.getUTCFullYear() +
+  return this.getFullYear() +
     '-' + pad(this.getMonth() + 1) +
     '-' + pad(this.getDate()) +
     'T' + pad(this.getHours()) +
@@ -26,7 +26,6 @@ export const Util = {
   dateFormat: '',
   parseFilterValue: function (definition, value) {
     if (definition.type === 'daterangepicker') {
-      console.log(moment)
       return moment(value[0]).format('YYYY-MM-DD') + ' ~ ' + moment(value[1]).format('YYYY-MM-DD')
     }
     return value
