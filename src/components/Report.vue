@@ -1,7 +1,9 @@
 <template>
   <div>
     <!-- outer elements -->
-    <element-popup ref="elementPopup" @addElement="addExistingElement"/>
+    <element-popup 
+      ref="elementPopup"
+      @addElement="addExistingElement" />
     <div class="btn--add has-multiple is-fixed">
       <a @click.prevent="addElement"><i class="icon-plus" /> Add</a>
       <a @click.prevent="selectElement">Select</a>
@@ -192,7 +194,6 @@
           query: 'SELECT COUNT(*) FROM events'
         }).then(res => {
           const newElement = res.data
-          console.log(newElement)
           let maxY = 0
           let maxI = 0
           this.layout.forEach(lay => {

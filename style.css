@@ -412,15 +412,14 @@ span.button-holder,
 }
 
 .report--design .dropdown-menu {
-  top: 50px!important;
+  top: 35px!important;
+  right: 5px;
 }
-
 .report--design .dropdown-toggle {
   position: absolute;
-  top: 10px;
+  top: 4px;
   right: 0;
 }
-
 .report--design .vdp-datepicker__calendar {
   left: 0!important;
   right: auto!important;

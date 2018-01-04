@@ -1,6 +1,7 @@
 <template>
-  <div>
-    <div v-if="true">
+  <div class="report-element-wrapper" :id="elementId">
+    <image-download-popup ref="imageDownPopup" />
+    <div v-if="loading">
       <div
         class="progress-bar"
         v-bind:style="{width: '90%'}"
@@ -46,6 +47,7 @@
               <li><a @click.prevent="setChartType('pie')">Pie Chart</a></li>
               <li><a @click.prevent="setChartType('custom')">Custom Html</a></li>
               <li class="divider" v-if="!isDesignMode"></li>
+              <li v-if="!isDesignMode"><a @click.prevent="exportItem">Export as PNG</a></li>
               <li v-if="!isDesignMode"><a @click.prevent="remove">Remove</a></li>
             </ul>
           </template>
@@ -88,10 +90,14 @@
   import VueHighcharts from 'vue2-highcharts'
   import Mustache from 'mustache'
   import ClickOutside from 'vue-click-outside'
+  import html2canvas from 'html2canvas';
+  import ImageDownloadPopup from '@/components/popups/ImageDownloadPopup'
+
+
 
   export default{
     name: 'report-element',
-    components: { VueHighcharts },
+    components: { VueHighcharts, ImageDownloadPopup },
     props: {
       element: {
         type: Object,
@@ -121,6 +127,9 @@
       }
     },
     computed: {
+      elementId () {
+        return 'element__' + this.element.id
+      },
       isEditing () {
         return this.isDesignMode ? true : this.isEditingMode
       },
@@ -167,6 +176,12 @@
       }
     },
     methods: {
+      exportItem: function () {
+        let self = this
+        let element = document.querySelector('#' + this.elementId)
+        html2canvas(element)
+          .then(canvas => self.$refs.imageDownPopup.drawCanvas(canvas))
+      },
       remove: function () {
         this.$emit('remove', this.elementData.id)
       },
