@@ -4,9 +4,9 @@
     <div v-if="loading">
       <div
         class="progress-bar"
-        v-bind:style="{width: '90%'}"
+        v-bind:style="{width: progress + '%'}"
         v-if="true">
-        10
+        {{progress}}
       </div>
       <div v-else class="loading-nice">
         <span></span>
@@ -49,6 +49,15 @@
               <li class="divider" v-if="!isDesignMode"></li>
               <li v-if="!isDesignMode"><a @click.prevent="exportItem">Export as PNG</a></li>
               <li v-if="!isDesignMode"><a @click.prevent="remove">Remove</a></li>
+              <li class="divider" v-if="!isDesignMode"></li>
+              <excel-button
+                tag = "li"
+                class   = "btn btn-default"
+                :data   = "excelData"
+                :fields = "excelFields"
+                name    = "filename.xls">
+                Download Excel
+              </excel-button>
             </ul>
           </template>
         </div>
@@ -92,12 +101,11 @@
   import ClickOutside from 'vue-click-outside'
   import html2canvas from 'html2canvas';
   import ImageDownloadPopup from '@/components/popups/ImageDownloadPopup'
-
-
+  import JsonExcel from 'vue-json-excel'
 
   export default{
     name: 'report-element',
-    components: { VueHighcharts, ImageDownloadPopup },
+    components: { VueHighcharts, ImageDownloadPopup, 'excel-button': JsonExcel },
     props: {
       element: {
         type: Object,
@@ -127,6 +135,26 @@
       }
     },
     computed: {
+      excelFields: function () {
+        const excelFields = {}
+        this.queryResult.schema.fields.forEach(field => {
+          excelFields[field.name] = 'String'
+        })
+        console.log(excelFields)
+        return excelFields
+      },
+      excelData: function () {
+        const excelData = []
+        this.queryResult.data.forEach(row => {
+          const rowData = {}
+          this.queryResult.schema.fields.forEach((field, idx) => {
+            rowData[field.name] = row[idx]
+          })
+          excelData.push(rowData)
+        })
+        console.log(excelData)
+        return excelData
+      },
       elementId () {
         return 'element__' + this.element.id
       },
