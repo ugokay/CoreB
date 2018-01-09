@@ -1186,6 +1186,7 @@ li.tab.active a,
 .report-element--header .toggleTriggerBox {
   position: absolute;
   right: -5px;
+  top: 40px
 }
 
 .report-element--header a.dropdown-toggle,
@@ -1212,7 +1213,6 @@ li.tab.active a,
 p {
   font-style: italic;
   width: 100%;
-  padding-right: 40px!important
 }
 
 .report-element-wrapper {
