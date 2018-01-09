@@ -1,84 +1,92 @@
 <template>
   <div>
-    <div v-if="true">
+    <div class="deneme"
+         v-if="isLoading">
       <div
         class="progress-bar"
-        v-bind:style="{width: '90%'}"
-        v-if="true">
-        10
+        v-bind:style="{ width: progress + '%' }">
+        {{progress}}
       </div>
-      <div v-else class="loading-nice">
+      <div class="loading-nice">
         <span></span>
       </div>
     </div>
-  <div class="report-element-wrapper">
-    <div class="col-sm-12 report__element">
-      <div class="report-element--header">
-          <input
-            v-if="isEditing"
-            type="input"
-            style="padding: 0 10px 0"
-            class="report-element--title no-border"
-            v-model="element.title"/>
-          <router-link
-            v-else
-            :to="designLink"
-            class="report--element-title element-title btn-block">
-            {{element.title}}
-          </router-link>
-        <div class="btn-group btn-group-xs align-right no-padding toggleTriggerBox hidden-xs">
-          <template v-if="isEditing">
-            <a class="dropdown-toggle"
-               v-click-outside="hideDropdown"
-               @click="openDropdown"
-               data-toggle="dropdown">
-              <i class="icon-more"></i>
-            </a>
-            <ul :class="isVisible">
-              <li v-if="!isDesignMode"><a>Save</a></li>
-              <li v-if="!isDesignMode"><a @click.prevent="executeQuery">Execute</a></li>
-              <li v-if="!isDesignMode"><router-link :to="designLink">Design</router-link></li>
-              <li v-if="!isDesignMode" class="divider"></li>
-              <li v-if="!isDesignMode"><a @click.prevent="setChartType('table')">Table</a></li>
-              <li><a @click.prevent="setChartType('line')">Line Chart</a></li>
-              <li><a @click.prevent="setChartType('column')">Bar Chart</a></li>
-              <li><a @click.prevent="setChartType('bar')">Bar Chart (Horizontal)</a></li>
-              <li><a @click.prevent="setChartType('pie')">Pie Chart</a></li>
-              <li><a @click.prevent="setChartType('custom')">Custom Html</a></li>
-              <li class="divider" v-if="!isDesignMode"></li>
-              <li v-if="!isDesignMode"><a @click.prevent="exportItem">Export as PNG</a></li>
-              <li v-if="!isDesignMode"><a @click.prevent="remove">Remove</a></li>
-            </ul>
-          </template>
+    <div class="report-element-wrapper">
+      <div class="col-sm-12 report__element">
+        <div class="report-element--header">
+            <input
+              v-if="isEditing"
+              type="input"
+              style="padding: 0 10px 0"
+              class="report-element--title no-border"
+              v-model="element.title"/>
+            <router-link
+              v-else
+              :to="designLink"
+              class="report--element-title element-title btn-block">
+              {{element.title}}
+            </router-link>
+          <div class="btn-group btn-group-xs align-right no-padding toggleTriggerBox hidden-xs">
+            <template v-if="isEditing">
+              <a class="dropdown-toggle"
+                v-click-outside="hideDropdown"
+                @click="openDropdown"
+                data-toggle="dropdown">
+                <i class="icon-more"></i>
+              </a>
+              <ul :class="isVisible">
+                <li v-if="!isDesignMode"><a>Save</a></li>
+                <li v-if="!isDesignMode"><a @click.prevent="executeQuery">Execute</a></li>
+                <li v-if="!isDesignMode"><router-link :to="designLink">Design</router-link></li>
+                <li v-if="!isDesignMode" class="divider"></li>
+                <li v-if="!isDesignMode"><a @click.prevent="setChartType('table')">Table</a></li>
+                <li><a @click.prevent="setChartType('line')">Line Chart</a></li>
+                <li><a @click.prevent="setChartType('column')">Bar Chart</a></li>
+                <li><a @click.prevent="setChartType('bar')">Bar Chart (Horizontal)</a></li>
+                <li><a @click.prevent="setChartType('pie')">Pie Chart</a></li>
+                <li><a @click.prevent="setChartType('custom')">Custom Html</a></li>
+                <li class="divider" v-if="!isDesignMode"></li>
+                <li v-if="!isDesignMode"><a @click.prevent="remove">Remove</a></li>
+                <li class="divider" v-if="!isDesignMode"></li>
+                <excel-button
+                  tag="li"
+                  class="btn btn-default"
+                  :data="excelData"
+                  :fields="excelFields"
+                  name="filename.xls">
+                  Download Excel
+                </excel-button>
+              </ul>
+            </template>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="full-height" v-if="queryResult.schema">
-      <div class="full-height" v-if="element.chartType === 6">
-        <div v-html="customHtml"></div>
+      <div class="full-height" v-if="queryResult.schema">
+        <div class="full-height" v-if="element.chartType === 6">
+          <div v-html="customHtml"></div>
+        </div>
+        <div class="full-height" v-else-if="element.chartType === 0">
+          <table class="table table-scrollable" v-if="queryResult"  v-on:click="tableSeen = !tableSeen">
+            <thead>
+              <th v-for="field in queryResult.schema.fields">{{field.name}}</th>
+              <th style="text-align: right;    position: relative;    padding-right: 20px;">
+                <i class="icon-query-hide"></i>
+              </th>
+            </thead>
+            <tbody>
+            <tr v-for="row in queryResult.data">
+              <td v-for="value in row">{{value}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <vue-highcharts
+          v-else
+          :options="chartOptions"
+          ref="chart">
+        </vue-highcharts>
       </div>
-      <div class="full-height" v-else-if="element.chartType === 0">
-        <table class="table table-scrollable" v-if="queryResult"  v-on:click="tableSeen = !tableSeen">
-          <thead>
-            <th v-for="field in queryResult.schema.fields">{{field.name}}</th>
-            <th style="text-align: right;    position: relative;    padding-right: 20px;">
-              <i class="icon-query-hide"></i>
-            </th>
-          </thead>
-          <tbody>
-          <tr v-for="row in queryResult.data">
-            <td v-for="value in row">{{value}}</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-      <vue-highcharts
-        v-else
-        :options="chartOptions"
-        ref="chart">
-      </vue-highcharts>
     </div>
-  </div>
   </div>
 </template>
 
@@ -89,14 +97,22 @@
   import VueHighcharts from 'vue2-highcharts'
   import Mustache from 'mustache'
   import ClickOutside from 'vue-click-outside'
-  import html2canvas from 'html2canvas';
-  import ImageDownloadPopup from '@/components/popups/ImageDownloadPopup'
-
-
+  import JsonExcel from 'vue-json-excel'
 
   export default{
     name: 'report-element',
-    components: { VueHighcharts, ImageDownloadPopup },
+    components: { VueHighcharts, 'excel-button': JsonExcel },
+    data: function () {
+      return {
+        clickedDropDown: false,
+        queryResult: {},
+        loading: false,
+        progress: 0,
+        elementData: this.element,
+        queryId: null,
+        isWSEnabled: false
+      }
+    },
     props: {
       element: {
         type: Object,
@@ -114,18 +130,27 @@
         required: false
       }
     },
-    data: function () {
-      return {
-        clickedDropDown: false,
-        queryResult: {},
-        loading: false,
-        progress: 0,
-        elementData: this.element,
-        queryId: null,
-        isWSEnabled: false
-      }
-    },
     computed: {
+      excelFields: function () {
+        const excelFields = {}
+        this.queryResult.schema.fields.forEach(field => {
+          excelFields[field.name] = 'String'
+        })
+        console.log(excelFields)
+        return excelFields
+      },
+      excelData: function () {
+        const excelData = []
+        this.queryResult.data.forEach(row => {
+          const rowData = {}
+          this.queryResult.schema.fields.forEach((field, idx) => {
+            rowData[field.name] = row[idx]
+          })
+          excelData.push(rowData)
+        })
+        console.log(excelData)
+        return excelData
+      },
       elementId () {
         return 'element__' + this.element.id
       },
@@ -175,12 +200,6 @@
       }
     },
     methods: {
-      exportItem: function () {
-        let self = this
-        let element = document.querySelector('#' + this.elementId)
-        html2canvas(element)
-          .then(canvas => self.$refs.imageDownPopup.drawCanvas(canvas))
-      },
       remove: function () {
         this.$emit('remove', this.elementData.id)
       },
