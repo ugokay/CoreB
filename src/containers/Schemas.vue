@@ -10,7 +10,7 @@
     <div class="row">
       <div class="nav-tabs-navigation">
         <div class="nav-tabs-wrapper">
-          <ul class="nav nav-tabs pull-left">
+          <ul class="nav nav-tabs">
             <li>
               <span class="button-holder title title_center">
                 <router-link to="/" class="headToBack">

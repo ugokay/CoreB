@@ -4,8 +4,8 @@
       @updateFilter="updateFilter"
       ref="filterPopup" />
     <div class="nav-tabs-navigation">
-      <div class="nav-tabs-wrapper">
-        <ul class="nav nav-tabs pull-left">
+      <div class="nav-tabs-wrapper is-design-nav-wrapper">
+        <ul class="nav nav-tabs">
             <li>
               <span class="button-holder title title_center">
                 <router-link to="/" class="headToBack">
@@ -15,7 +15,8 @@
               </span>
             </li>
           </ul>
-          <ul class="top-related-actions pull-right" style="position:absolute; top:0; right:0">
+          <span class="flex-spacer"></span>
+          <ul class="top-related-actions">
             <li @click="handleTabs('html')"> <i class="icon-query"></i> HTML</li>
             <li @click="handleTabs('query')"> <i class="icon-query"></i> Query</li>
             <li> <i  class="icon-refresh"></i> Refresh</li>

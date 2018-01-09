@@ -1,6 +1,7 @@
 <template>
   <div class="dashboard">
-      <ul class="dash-actions col-xs-2 pull-right hidden-xs">
+    <div class="dash-actions-wrapper is-in-tab-area ">
+      <ul class="dash-actions hidden-xs">
         <li @click="addReport">
           <span class="icon"><icon name="plus"></icon></span>
           <span class="text">Add Report</span>
@@ -38,6 +39,7 @@
           <span class="text"><i class="icon-export"></i><span>Save</span></span>
         </li>
       </ul>
+    </div>
      <fullscreen ref="fullscreen" :fullscreen.sync="fullscreen">
         <vue-tabs @tab-change="tabChange" id="tabs" ref="tabs">
           <v-tab

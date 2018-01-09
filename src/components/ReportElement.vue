@@ -47,6 +47,7 @@
                 <li class="divider" v-if="!isDesignMode"></li>
                 <li v-if="!isDesignMode"><a @click.prevent="remove">Remove</a></li>
                 <li class="divider" v-if="!isDesignMode"></li>
+                <li><a @click.prevent="saveAsPng">Save as Png</a></li>
                 <li>
                   <excel-button
                     class="excel-btn"
@@ -98,6 +99,7 @@
   import Mustache from 'mustache'
   import ClickOutside from 'vue-click-outside'
   import JsonExcel from 'vue-json-excel'
+  import html2canvas from 'html2canvas';
 
   export default{
     name: 'report-element',
@@ -197,6 +199,13 @@
       }
     },
     methods: {
+      saveAsPng() {
+        html2canvas(document.body, {
+          onrendered: function(canvas) {
+            this.saveAs(canvas.toDataURL(), 'canvas.png');
+          }
+        });
+      },
       remove: function () {
         this.$emit('remove', this.elementData.id)
       },
@@ -214,6 +223,24 @@
       redrawChart: function () {
         if (this.elementData.chartType !== 6) {
           this.$refs.chart.getChart().reflow()
+        }
+      },
+      saveAs: function (uri, filename) {
+        const link = document.createElement('a');
+        if (typeof link.download === 'string') {
+          link.href = uri;
+          link.download = filename;
+
+          //Firefox requires the link to be in the body
+          document.body.appendChild(link);
+
+          //simulate click
+          link.click();
+
+          //remove the link when done
+          document.body.removeChild(link);
+        } else {
+          window.open(uri);
         }
       },
       resolveExecution: function (res) {

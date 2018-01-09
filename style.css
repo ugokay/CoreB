@@ -809,7 +809,6 @@ li.nav-item {
   font-size: 13px;
   font-weight: 600;
   padding: 0;
-  position: fixed;
   right: 0;
   top: 0;
   display: inline-block;
@@ -991,7 +990,6 @@ li.nav-item {
 }
 
 .nav-tabs {
-  width: 100%;
   /*GORKEM position: fixed;*/
   z-index: 999;
   background: #fff
@@ -1209,8 +1207,7 @@ li.tab.active a,
   background: #f2f2f2 !important
 }
 
-.report-element--header input,
-p {
+.report-element--header input,.report-element--header input p {
   font-style: italic;
   width: 100%;
 }
@@ -2141,4 +2138,21 @@ p {
 
 .excel-btn {
   padding: 4px 20px 10px
+}
+
+.is-design-nav-wrapper {
+  display: flex;
+  background: #fff;
+}
+
+.flex-spacer {
+  flex: 1
+}
+
+.dash-actions-wrapper.is-in-tab-area {
+  margin-bottom: -41px;
+}
+.dash-actions-wrapper {
+  display: flex;
+  justify-content: flex-end;
 }
