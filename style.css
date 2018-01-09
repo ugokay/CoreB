@@ -2138,3 +2138,7 @@ p {
   margin-bottom: 15px;
   border-bottom: 1px dashed rgba(161, 160, 160, .6)
 }
+
+.excel-btn {
+  padding: 4px 20px 10px
+}

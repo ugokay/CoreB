@@ -1,7 +1,6 @@
 <template>
   <div>
-    <div class="deneme"
-         v-if="isLoading">
+    <div v-if="loading">
       <div
         class="progress-bar"
         v-bind:style="{ width: progress + '%' }">
@@ -48,14 +47,15 @@
                 <li class="divider" v-if="!isDesignMode"></li>
                 <li v-if="!isDesignMode"><a @click.prevent="remove">Remove</a></li>
                 <li class="divider" v-if="!isDesignMode"></li>
-                <excel-button
-                  tag="li"
-                  class="btn btn-default"
-                  :data="excelData"
-                  :fields="excelFields"
-                  name="filename.xls">
-                  Download Excel
-                </excel-button>
+                <li>
+                  <excel-button
+                    class="excel-btn"
+                    :data="excelData"
+                    :fields="excelFields"
+                    name="filename.xls">
+                    Download Excel
+                  </excel-button>
+                </li>
               </ul>
             </template>
           </div>
@@ -150,9 +150,6 @@
         })
         console.log(excelData)
         return excelData
-      },
-      elementId () {
-        return 'element__' + this.element.id
       },
       isEditing () {
         return this.isDesignMode ? true : this.isEditingMode
