@@ -17,9 +17,10 @@
           v-if="!mapper.isEnabled"
           tag="li">
           <span class="name">{{ mapper.name }}</span>
-          <span class="pull-right">
+          <span class="flex-spacer"></span>
+          <label class="label label-default">
             Edit
-          </span>
+          </label>
         </router-link>
         <span class="title">Disabled Mappers</span>
         <router-link
@@ -31,9 +32,10 @@
           class="is-passive"
           tag="li">
           <span class="name">{{ mapper.name }}</span>
-          <span class="pull-right">
+          <span class="flex-spacer"></span>
+          <label class="label label-default">
             Edit
-          </span>
+          </label>
         </router-link>
       </ul>
     </div>

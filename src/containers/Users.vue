@@ -16,7 +16,8 @@
           <span class="name">
             {{ user_group.name }} ({{ userCounts(user_group.id) }})
           </span>
-          <span class="pull-right">
+          <span class="flex-spacer"></span>
+          <span>
             <span class="label label-danger">Delete</span>
             <span 
               class="label label-primary is-pointer"

@@ -7,16 +7,20 @@
     </a>
     <div class="col-sm-12">
       <h2>Global Filters</h2>
-      <ul class="global-filters">
+      <ul class="global-filters is-table-view">
         <li
           v-for="(filterDefinition, index) in reportElements"
           :key="filterDefinition.name">
           <span class="name">{{ filterDefinition.name }}</span>
-          <span class="label label-default">{{ filterDefinition.defaultValue }}</span>
           <span class="_label">{{ filterDefinition.label }}</span>
-          <span class="label label-default">{{ filterDefinition.type }}</span>
-          <span class="pull-right">
-            <span @click="openEditFilterPopup(index)" class="label label-default">Edit</span>
+          <span>
+            <label class="label label-default">{{ filterDefinition.type }}</label>
+          </span>
+          <span>
+            <label class="label label-default">{{ filterDefinition.defaultValue }}</label>
+          </span>
+          <span class="justify-content-end">
+            <label @click="openEditFilterPopup(index)" class="label label-primary">Edit</label>
           </span>
         </li>
       </ul>
@@ -58,7 +62,7 @@ export default {
         })
         .then(() => this.$swal(
           'Success!',
-          'Filter has been added global filters successfully!', 'success')
+          'Filter has been added to global filters successfully!', 'success')
         )
     },
     openEditFilterPopup: function (index) {

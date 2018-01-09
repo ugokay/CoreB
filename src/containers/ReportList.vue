@@ -6,9 +6,12 @@
         <li
           v-for="(reportElement, index) in reportElements"
           :key="reportElement.id">
-          <span class="label label-default">{{ reportElement.id }}</span>
-          <span class="name">{{ reportElement.title }}</span>
-          <span class="pull-right">
+          <span>
+            <label class="label label-default">{{ reportElement.id }}</label>
+            <span class="name">{{ reportElement.title }}</span>
+          </span>
+          <span class="flex-spacer"></span>
+          <span>
             <span @click="deleteElement(reportElement.id)" class="label label-danger" >Delete</span>
             <span @click="openDesign(reportElement.id)" class="label label-primary" >Design</span>
           </span>

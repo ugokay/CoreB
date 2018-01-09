@@ -18,10 +18,13 @@
     </div>
     <div class="nav-tabs-navigation">
       <div class="nav-tabs-wrapper">
-        <ul class="nav nav-tabs pull-left">
+        <ul class="nav nav-tabs">
           <li>
             <span class="button-holder title title_center">
-              <router-link to="/mappers">Back to Mapper List</router-link>
+              <router-link to="/" class="headToBack">
+                <icon name="chevron-left"></icon>
+                Back to Dashboard
+              </router-link>
             </span>
           </li>
         </ul>
@@ -64,12 +67,14 @@
   import 'brace/mode/sql'
   import 'brace/mode/html'
   import 'brace/theme/monokai'
+  import Icon from 'vue-awesome/components/Icon'
 
   export default {
     name: 'Mapper',
     components: {
       FilterPopup,
-      Editor
+      Editor,
+      Icon
     },
     data () {
       return {
