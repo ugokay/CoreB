@@ -87,7 +87,6 @@
     created() {
       HTTP.get('bi/analyze/schema')
         .then(res => this.schemas = res.data)
-        .then(() => console.log(this.schemas))
     }
   }
 </script>

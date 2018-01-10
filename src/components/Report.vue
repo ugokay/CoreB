@@ -4,10 +4,12 @@
     <element-popup 
       ref="elementPopup"
       @addElement="addExistingElement" />
+
     <div class="btn--add has-multiple is-fixed">
       <a @click.prevent="addElement"><i class="icon-plus" /> Add</a>
       <a @click.prevent="selectElement">Select</a>
     </div>
+
     <div v-if="filterDefinitions.length > 0">
       <filter-sidebar
         ref="filterSidebar"
@@ -18,6 +20,7 @@
         @change="filtersChange">
       </filter-sidebar>
     </div>
+    <!-- outer elements end -->
 
     <!-- report header -->
     <div class="report-header">
@@ -242,26 +245,3 @@
     }
   }
 </script>
-
-<style>
-.vue-grid-layout {
-  margin-left: 20px
-}
-.mt20 {
-  margin-top: 20px;
-}
-.tabChores {
-  padding: 20px 0 20px 40px;
-  font-size: 20px;
-  font-weight: bold;
-}
-.label.label-primary {
-  cursor: pointer
-}
-.filterDefinitionLabel {
-  font-size: 12px;
-  margin-bottom: 0;
-  display: block;
-  margin-top: 20px;
-}
-</style>

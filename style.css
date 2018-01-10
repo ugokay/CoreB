@@ -3,7 +3,6 @@ body {
   background: #f1f1f1;
 }
 
-
 /*****************************************
 ICOMOON SET */
 
@@ -412,7 +411,7 @@ span.button-holder,
 }
 
 .report--design .dropdown-menu {
-  top: 35px!important;
+  top: 5px!important;
   right: 5px;
 }
 .report--design .dropdown-toggle {
@@ -2164,4 +2163,24 @@ li.tab.active a,
 .dash-actions-wrapper {
   display: flex;
   justify-content: flex-end;
+}
+.vue-grid-layout {
+  margin-left: 20px
+}
+.mt20 {
+  margin-top: 20px;
+}
+.tabChores {
+  padding: 20px 0 20px 40px;
+  font-size: 20px;
+  font-weight: bold;
+}
+.label.label-primary {
+  cursor: pointer
+}
+.filterDefinitionLabel {
+  font-size: 12px;
+  margin-bottom: 0;
+  display: block;
+  margin-top: 20px;
 }
