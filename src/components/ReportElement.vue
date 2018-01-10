@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="full-height">
     <div v-if="loading">
       <div
         class="progress-bar"

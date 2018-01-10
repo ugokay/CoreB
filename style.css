@@ -394,8 +394,8 @@ span.button-holder,
 
 .table-scrollable {
   overflow-y: scroll;
-  display: block;
-  height: calc(100% - 50px);
+  display: list-item;
+  height: 100%;
   width: 100%;
 }
 
@@ -412,12 +412,12 @@ span.button-holder,
 }
 
 .report--design .dropdown-menu {
-  top: 5px!important;
+  top: -10px!important;
   right: 5px;
 }
 .report--design .dropdown-toggle {
   position: absolute;
-  top: 4px;
+  top: -39px;
   right: 0;
 }
 .report--design .vdp-datepicker__calendar {
@@ -2009,10 +2009,15 @@ span._title {
 
 /* } */
 
-.report--design .table {
+.report--design table {
   background: #fff;
-  max-width: calc(100% - 30px);
+  display: table!important;
+  width: calc(100% - 30px);
   box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.12)
+}
+
+.report--design .full-height table {
+  width: 100%;
 }
 
 @media screen and (max-width: 768px) {
