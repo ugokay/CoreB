@@ -17,10 +17,10 @@
           </ul>
           <span class="flex-spacer"></span>
           <ul class="top-related-actions">
-            <li @click="handleTabs('html')"> <i class="icon-query"></i> HTML</li>
-            <li @click="handleTabs('query')"> <i class="icon-query"></i> Query</li>
-            <li> <i  class="icon-refresh"></i> Refresh</li>
-            <li> <i  class="icon-export"></i> Export</li>
+            <li @click="handleTabs('html')" :class="isActiveHtml"> <i class="icon-query"></i> HTML</li>
+            <li @click="handleTabs('query')" :class="isActiveQuery"> <i class="icon-query"></i> Query</li>
+            <li> <i class="icon-refresh"></i> Refresh</li>
+            <li> <i class="icon-export"></i> Export</li>
             <li> <a @click.prevent="save"><i  class="icon-export"></i> Save</a></li>
           </ul>
         </div>
@@ -118,8 +118,8 @@
         filterDefinitions: [],
         filters: {},
         filtersLoaded: false,
-        showHtml: false,
-        seenQuery: true,
+        showHtml: JSON.parse(window.localStorage.getItem('UI_Options')).showHTML,
+        seenQuery: JSON.parse(window.localStorage.getItem('UI_Options')).showQUERY,
         tableSeen: false,
         queryResult: null,
         htmlContent: '<html>',
@@ -132,9 +132,14 @@
     computed: {
       keymap () {
         return {
-          // 'esc+ctrl' is OK.
           'ctrl+shift+s': this.save
         }
+      },
+      isActiveHtml() {
+        return this.showHtml ? 'active' : ''
+      },
+      isActiveQuery() {
+        return this.seenQuery ? 'active' : ''
       }
     },
     methods: {
@@ -185,6 +190,20 @@
           this.showHtml = false
           this.seenQuery = this.seenQuery ? !this.seenQuery : true
         }
+        // save changes to localstorage
+        if (window.localStorage.getItem('UI_Options')) {
+          const tempStorage = JSON.parse(window.localStorage.getItem('UI_Options'))
+          tempStorage.showHTML = this.showHtml
+          tempStorage.showQUERY = this.seenQuery
+          window.localStorage.setItem('UI_Options', JSON.stringify(tempStorage))
+        } else {
+          const uiOptions = {
+            showHTML: this.showHtml,
+            showQUERY: this.seenQuery
+          }
+          window.localStorage.setItem('UI_Options', JSON.stringify(uiOptions))
+        }
+
       }
     },
     created: function () {

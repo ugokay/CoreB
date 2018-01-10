@@ -59,7 +59,7 @@ export default {
   name: 'navigation',
   data() {
     return {
-      isSidebarActive: false
+      isSidebarActive: null
     }
   },
   components: {
@@ -82,6 +82,9 @@ export default {
     },
     toggleSidebar() {
       this.isSidebarActive = !this.isSidebarActive
+      const tempStorage = JSON.parse(window.localStorage.getItem('UI_Options'))
+      tempStorage.isSidebarActive = this.isSidebarActive
+      window.localStorage.setItem('UI_Options', JSON.stringify(tempStorage))
     }
   },
   computed: {
@@ -90,6 +93,14 @@ export default {
         ? 'navbar navbar-bundle col-xs-12'
         : 'navbar navbar-bundle col-xs-12 is-scaled'
     }
+  },
+  created () {
+    if (!window.localStorage.getItem('UI_Options')) {
+      window.localStorage.setItem('UI_Options', JSON.stringify({
+        isSidebarActive: true
+      }))
+    }
+    this.isSidebarActive = JSON.parse(window.localStorage.getItem('UI_Options')).isSidebarActive
   }
 }
 </script>

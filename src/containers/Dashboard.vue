@@ -24,12 +24,6 @@
           </span>
           <span class="text"> {{isSliding ? 'Stop' : 'Start'}} Slide</span>
         </li>
-        <!-- <li>
-          <a @click.prevent="refresh">
-            <span class="icon"><icon name="refresh"></icon></span>
-            <span class="text"><i class="icon-refresh"></i><span>Refresh</span></span>
-          </a>
-        </li> -->
         <li>
           <span class="icon"><icon name="upload"></icon></span>
           <span class="text"><i class="icon-export"></i><span>Export</span></span>
