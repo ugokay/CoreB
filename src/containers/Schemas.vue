@@ -26,8 +26,8 @@
         v-for="scheme in schemas"
         :key="scheme.name.table"
         class="col-md-6 col-xs-12 mb-3">
-        <ul class="global-filters">
-          <span class="title capitalizeFirstLetter"> {{ scheme.name.table }} </span>
+        <span class="_title capitalizeFirstLetter"> {{ scheme.name.table }} </span>
+        <ul class="global-filters has-after-bg">
           <li class="is-list-item item-header">
             <h6>
               <span class="title"> Name </span>
@@ -38,10 +38,12 @@
                 <span class="text">Xope</span>
             </div>
           </li>
+          <div class="scrollable-item-box">
           <schema-item
             v-for="field in scheme.fields"
             :key="field.name"
             :field="field" />
+          </div>
         </ul>
       </div>
     </div>
