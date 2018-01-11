@@ -1135,7 +1135,7 @@ aside.navbar {
 .navbar.is-scaled .nav-head {
   width: calc(100% + 30px);
   overflow: hidden;
-  margin-left: -17px;
+  margin-left: -20px;
 }
 
 

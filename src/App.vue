@@ -68,7 +68,7 @@ export default {
       if (error.response.status === 401) {
         console.log('Unauthorized attept!')
         AUTH.setToken('')
-        self.$router.push('/')
+        window.location.replace('/')
       }
       return Promise.reject(error)
     })
