@@ -975,7 +975,7 @@ li.nav-item {
   display: flex;
   align-items: center;
   padding: .5em 1em;
-  background: #e6dede;
+  background: #ececec;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
 }
@@ -2140,7 +2140,7 @@ span._title {
   right: 0;
   height: calc(100vh - 40px);
   top: 40px;
-  background: #e6dede;
+  background: #ececec;
   padding: 2em 1em;
   box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.12);
   z-index: 99999999999;
@@ -2250,4 +2250,60 @@ span._title {
   top: -22px;
   color: #5b64fc;
   bottom: -2px;
+}
+
+.User-settings {
+  max-width: 500px;
+  margin: 80px auto;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 3px 5px 0 rgba(3, 3, 3, .1);
+  padding: 35px 25px;
+}
+
+.User-settings .user-icon {
+  margin: auto;
+  width: 80px;
+}
+.input-area span {
+  width: 120px;
+  font-size: 13px;
+  opacity: .8;
+  margin-bottom: 0;
+  cursor: pointer;
+}
+.input-area {
+  display: flex;
+  align-items:  center;
+  border-bottom: 1px solid #ddd;
+  margin: 0;
+}
+.settings-input {
+  background: transparent;
+  border: 0;
+  width: 100%;
+  padding: .8em 0;
+  font-size: 16px;
+  flex: 1;
+  font-weight: normal;
+  font-size: 16px;
+}
+
+.mt-35 {
+  margin-top: 35px;
+}
+
+.user-nav a {
+  color: #000;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.user-nav {
+  position: relative;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  opacity: .2;
 }

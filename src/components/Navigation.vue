@@ -42,7 +42,7 @@
       </div>
       <div class="nav-settings">
         <a @click.prevent="logout"><icon name="power-off"></icon></a>
-        <a href="#"><icon name="user-circle"></icon></a>
+        <router-link to="/user-settings"><icon name="user-circle"></icon></router-link>
         <a href="#"><icon name="arrows-alt"></icon></a>
         <a class="hidden-xs" @click="toggleSidebar"><icon name="chevron-left"></icon></a>
       </div>

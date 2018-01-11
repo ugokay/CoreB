@@ -7,9 +7,10 @@ import Dashboard from '@/containers/Dashboard'
 import Users from '@/containers/Users'
 import ReportDesign from '@/containers/ReportDesign'
 import Schemas from '@/containers/Schemas'
-
 import Mappers from '@/containers/Mappers'
+
 import Mapper from '@/components/Mapper'
+import UserSettings from '@/components/UserSettings'
 
 Vue.use(Router)
 
@@ -54,6 +55,11 @@ export default new Router({
       path: '/schemas',
       name: 'Schemas',
       component: Schemas
+    },
+    {
+      path: '/user-settings',
+      name: 'UserSettings',
+      component: UserSettings
     }
   ]
 })
