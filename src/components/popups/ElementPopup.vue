@@ -56,20 +56,16 @@
       },
       open: function (user) {
         this.hidden = false
+        HTTP.get('bi/report/element/list').then(res => {
+          this.elementList = res.data
+        })
       },
       addElement: function (element) {
         this.$emit('addElement', element)
         this.close()
-      },
-      filterList () {
-
       }
     },
-    created () {
-      HTTP.get('bi/report/element/list').then(res => {
-        this.elementList = res.data
-      })
-    }
+    created () {}
   }
 </script>
 
