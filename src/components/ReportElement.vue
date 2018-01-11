@@ -4,7 +4,7 @@
       <div
         class="progress-bar"
         v-bind:style="{ width: progress + '%' }">
-        {{progress}}
+        <span>{{progress}}%</span>
       </div>
       <div class="loading-nice">
         <span></span>

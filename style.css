@@ -2227,3 +2227,27 @@ span._title {
   left: 0;
   z-index: 99
 }
+
+.progress-bar {
+  width: 0;
+  height: 5px;
+  font-size: 12px;
+  color: #fff;
+  text-align: center;
+  background-color: #5b64fc;
+  -webkit-box-shadow: none!important;
+  box-shadow: none!important;
+  -webkit-transition: width .6s;
+  transition: width .6s;
+  position: absolute;
+  z-index: 9999;
+  border-radius: 30px!important;
+  bottom: -2px;
+}
+
+.progress-bar span {
+  position: relative;
+  top: -22px;
+  color: #5b64fc;
+  bottom: -2px;
+}
