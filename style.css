@@ -1184,11 +1184,14 @@ li.tab.active a,
   z-index: 999;
   display: flex;
 }
+.report--design .report-element--header .toggleTriggerBox  {
+  top: 43px;
+}
 
 .report-element--header .toggleTriggerBox {
   position: absolute;
   right: -5px;
-  top: 40px
+  top: 0
 }
 
 .report-element--header a.dropdown-toggle,
