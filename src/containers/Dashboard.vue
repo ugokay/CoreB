@@ -152,6 +152,10 @@
     },
     created: function () {
       this.getReports()
+      console.log(this.$route.hash)
+      if (this.$route.hash) {
+        this.changeTab(this.$route.hash.split('#')[1])
+      }
     }
   }
 </script>
