@@ -15,6 +15,7 @@
     "ace-vue2": "^0.3.0",
     "axios": "^0.17.1",
     "bootstrap": "^3.3.7",
+    "download": "^6.2.5",
     "highcharts": "^6.0.3",
     "html2canvas": "^1.0.0-alpha.9",
     "mustache": "^2.3.0",

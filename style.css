@@ -1412,6 +1412,13 @@ span._title {
   font-size: 18px;
 }
 
+.download-img {
+  text-align: center;
+}
+.download-img img {
+  border: 1px solid #ddd!important;
+  border-radius: 2px
+}
 .popup-area {
   position: fixed;
   top: 0;
@@ -1435,7 +1442,10 @@ span._title {
   width: 95%;
   position: relative;
 }
-
+.popup-area.is-flexible .popup {
+  max-width: initial!important;
+  width: auto!important;
+}
 .close-icon {
   position: absolute;
   right: 0;

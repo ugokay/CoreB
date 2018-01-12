@@ -62,7 +62,7 @@
           </div>
         </div>
       </div>
-      <div class="full-height" v-if="queryResult.schema">
+      <div class="full-height" ref="elementWrapper" v-if="queryResult.schema">
         <div class="full-height" v-if="element.chartType === 6">
           <div v-html="customHtml"></div>
         </div>
@@ -193,18 +193,19 @@
         } else {
           chartData = CHART.chartify(this.queryResult, valueIdxs, 0)
         }
-
         var chartOptions = CHART.createChartOptions(chartData, reportType)
         return chartOptions
       }
     },
     methods: {
       saveAsPng() {
-        html2canvas(document.body, {
-          onrendered: function(canvas) {
-            this.saveAs(canvas.toDataURL(), 'canvas.png');
-          }
-        });
+        this.clickedDropDown = false
+        html2canvas(this.$refs.elementWrapper)
+          .then(canvas => {
+            const imgData = canvas.toDataURL('image/png')
+            this.$emit('getCanvas', imgData)
+            console.log(this.$refs.elementWrapper)
+          })
       },
       remove: function () {
         this.$emit('remove', this.elementData.id)

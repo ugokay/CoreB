@@ -5,6 +5,8 @@
       ref="elementPopup"
       @addElement="addExistingElement" />
 
+    <image-popup ref="imagePopup" />
+
     <div class="btn--add has-multiple is-fixed">
       <a @click.prevent="addElement"><i class="icon-plus" /> Add</a>
       <a @click.prevent="selectElement">Select</a>
@@ -67,7 +69,8 @@
           :element="getElement(item.id)"
           :filters="filters"
           :isEditingMode="isEditing"
-          @remove="removeElement">
+          @remove="removeElement"
+          @getCanvas="getCanvas">
         </report-element>
 
       </grid-item>
@@ -83,6 +86,7 @@
   import {Util} from '@/helpers/helpers.js'
   import ReportFilter from '@/components/ReportFilter'
   import ElementPopup from '@/components/popups/ElementPopup'
+  import ImagePopup from '@/components/popups/ImagePopup'
   import Icon from 'vue-awesome/components/Icon'
   import { refresh } from 'vue-awesome/icons'
 
@@ -95,8 +99,9 @@
       'grid-layout': VueGridLayout.GridLayout,
       'grid-item': VueGridLayout.GridItem,
       ElementPopup,
+      ImagePopup,
       Icon,
-      FilterSidebar
+      FilterSidebar,
     },
     data () {
       return {
@@ -133,6 +138,9 @@
       }
     },
     methods: {
+      getCanvas: function (canvas) {
+        this.$refs.imagePopup.open(canvas)
+      },
       filtersChange: function (newFilterValues) {
         this.filterValues = newFilterValues
       },
