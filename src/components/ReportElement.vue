@@ -204,7 +204,6 @@
           .then(canvas => {
             const imgData = canvas.toDataURL('image/png')
             this.$emit('getCanvas', imgData)
-            console.log(this.$refs.elementWrapper)
           })
       },
       remove: function () {

@@ -152,9 +152,9 @@
     },
     created: function () {
       this.getReports()
-      console.log(this.$route.hash)
       if (this.$route.hash) {
-        this.changeTab(this.$route.hash.split('#')[1])
+        const tabIdx = parseInt(this.$route.hash.split('#')[1])
+        this.tabChange(tabIdx)
       }
     }
   }

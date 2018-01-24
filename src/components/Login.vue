@@ -25,6 +25,7 @@
     </div>
   </div>
 </template>
+
 <script>
   import {AUTH} from '@/helpers/auth-helper.js'
   export default {

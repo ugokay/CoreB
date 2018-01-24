@@ -15,8 +15,12 @@
       v-model="value"
       class="main--input" />
     <template v-else-if="definition.type === 'query'">
-      <select v-model="value">
-        <option v-for="row in initialValue" :value="row.value">{{row.label ? row.label : row.value}}</option>
+      <select v-model="value" class="form-control">
+        <option
+          v-for="row in initialValue"
+          :value="row.value">
+          {{row.label ? row.label : row.value}}
+        </option>
       </select>
     </template>
     <span
