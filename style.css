@@ -1608,12 +1608,6 @@ span._title {
 }
 
 .loading-nice {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #fff;
   z-index: 999;
   display: flex;
   align-items: center;
@@ -2293,10 +2287,9 @@ span._title {
   box-shadow: none!important;
   -webkit-transition: width .6s;
   transition: width .6s;
-  position: absolute;
   z-index: 9999;
   border-radius: 30px!important;
-  bottom: -2px;
+  transform: translateY(40px) ;
 }
 
 .progress-bar span {
@@ -2364,4 +2357,19 @@ span._title {
   display: flex;
   align-items: center;
   opacity: .2;
+}
+
+
+.progress-bar-area {
+  background: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center
 }

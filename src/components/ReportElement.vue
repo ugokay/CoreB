@@ -1,13 +1,14 @@
 <template>
   <div class="full-height is-relative">
-    <div v-if="loading">
+    <div v-if="loading" class="progress-bar-area">
+      <div class="loading-nice">
+        <span></span>
+      </div>
       <div
+        v-if="progress"
         class="progress-bar"
         v-bind:style="{ width: progress + '%' }">
         <span>{{progress}}%</span>
-      </div>
-      <div class="loading-nice">
-        <span></span>
       </div>
     </div>
     <div class="report-element-wrapper">
