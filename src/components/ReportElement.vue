@@ -1,5 +1,5 @@
 <template>
-  <div class="full-height">
+  <div class="full-height is-relative">
     <div v-if="loading">
       <div
         class="progress-bar"
@@ -38,7 +38,7 @@
                 <li v-if="!isDesignMode"><a @click.prevent="executeQuery">Execute</a></li>
                 <li v-if="!isDesignMode"><router-link :to="designLink">Design</router-link></li>
                 <li v-if="!isDesignMode" class="divider"></li>
-                <li v-if="!isDesignMode"><a @click.prevent="setChartType('table')">Table</a></li>
+                <li><a @click.prevent="setChartType('table')">Table</a></li>
                 <li><a @click.prevent="setChartType('line')">Line Chart</a></li>
                 <li><a @click.prevent="setChartType('column')">Bar Chart</a></li>
                 <li><a @click.prevent="setChartType('bar')">Bar Chart (Horizontal)</a></li>
