@@ -1,11 +1,11 @@
 <template>
   <div>
     <!-- outer elements -->
-    <element-popup 
-      ref="elementPopup"
-      @addElement="addExistingElement" />
-
+    <element-popup ref="elementPopup" @addElement="addExistingElement" />
     <image-popup ref="imagePopup" />
+    <chart-helper-popup
+      ref="chartPopup"
+      @chartEditingFinished="chartEditingFinished" />
 
     <div class="btn--add has-multiple is-fixed">
       <a @click.prevent="addElement"><i class="icon-plus" /> Add</a>
@@ -70,7 +70,8 @@
           :filters="filters"
           :isEditingMode="isEditing"
           @remove="removeElement"
-          @getCanvas="getCanvas">
+          @getCanvas="getCanvas"
+          @editChart="editChart">
         </report-element>
 
       </grid-item>
@@ -82,13 +83,14 @@
   import VueGridLayout from 'vue-grid-layout'
   import AddButton from '@/components/AddButton'
   import FilterSidebar from '@/components/FilterSidebar'
-  import {HTTP} from '@/helpers/http-helper.js'
-  import {Util} from '@/helpers/helpers.js'
+  import { HTTP } from '@/helpers/http-helper.js'
+  import { Util } from '@/helpers/helpers.js'
+  import { refresh } from 'vue-awesome/icons'
   import ReportFilter from '@/components/ReportFilter'
   import ElementPopup from '@/components/popups/ElementPopup'
   import ImagePopup from '@/components/popups/ImagePopup'
+  import ChartHelperPopup from '@/components/popups/ChartHelperPopup'
   import Icon from 'vue-awesome/components/Icon'
-  import { refresh } from 'vue-awesome/icons'
 
   export default {
     name: 'report',
@@ -102,6 +104,7 @@
       ImagePopup,
       Icon,
       FilterSidebar,
+      ChartHelperPopup
     },
     data () {
       return {
@@ -138,6 +141,19 @@
       }
     },
     methods: {
+      chartEditingFinished(updates) {
+        const { elementId } = updates
+        this.$refs.reportElements.forEach(reportElement => {
+          if (reportElement.elementData.id === elementId) {
+            reportElement.setUpdates(updates)
+          } else {
+            return false
+          }
+        })
+      },
+      editChart(chartOptions) {
+        this.$refs.chartPopup.open(chartOptions)
+      },
       getCanvas: function (canvas) {
         this.$refs.imagePopup.open(canvas)
       },

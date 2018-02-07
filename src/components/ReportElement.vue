@@ -2,7 +2,7 @@
   <div class="full-height is-relative">
     <div v-if="loading" class="progress-bar-area">
       <div class="loading-nice">
-        <span></span>
+        <span></span> 
       </div>
       <div
         v-if="progress"
@@ -48,6 +48,7 @@
                 <li class="divider" v-if="!isDesignMode"></li>
                 <li v-if="!isDesignMode"><a @click.prevent="remove">Remove</a></li>
                 <li class="divider" v-if="!isDesignMode"></li>
+                <li><a @click.prevent="editChart">Edit Chart</a></li>
                 <li><a @click.prevent="saveAsPng">Save as Png</a></li>
                 <li>
                   <excel-button
@@ -71,7 +72,7 @@
           <table class="table table-scrollable" v-if="queryResult"  v-on:click="tableSeen = !tableSeen">
             <thead>
               <th v-for="field in queryResult.schema.fields">{{field.name}}</th>
-              <th style="text-align: right;    position: relative;    padding-right: 20px;">
+              <th style="text-align: right; position: relative; padding-right: 20px;">
                 <i class="icon-query-hide"></i>
               </th>
             </thead>
@@ -95,12 +96,12 @@
 <script>
   import { CHART } from '@/helpers/chart-helper.js'
   import { HTTP } from '@/helpers/http-helper.js'
-  import {Util} from '@/helpers/helpers.js'
+  import { Util } from '@/helpers/helpers.js'
   import VueHighcharts from 'vue2-highcharts'
   import Mustache from 'mustache'
   import ClickOutside from 'vue-click-outside'
   import JsonExcel from 'vue-json-excel'
-  import html2canvas from 'html2canvas';
+  import html2canvas from 'html2canvas'
 
   export default{
     name: 'report-element',
@@ -113,7 +114,8 @@
         progress: 0,
         elementData: this.element,
         queryId: null,
-        isWSEnabled: false
+        isWSEnabled: false,
+        chartColors: ['#000', '#1ea075']
       }
     },
     props: {
@@ -180,6 +182,7 @@
       },
       chartOptions: function () {
         var valueIdxs = []
+        const colors = this.chartColors
         for (var i = 0; i < this.queryResult.schema.fields.length; i++) {
           var field = this.queryResult.schema.fields[i]
           if (field.type.sqlTypeName === 'INTEGER' || field.type.sqlTypeName === 'LONG' || field.type.sqlTypeName === 'DOUBLE') {
@@ -194,11 +197,25 @@
         } else {
           chartData = CHART.chartify(this.queryResult, valueIdxs, 0)
         }
-        var chartOptions = CHART.createChartOptions(chartData, reportType)
+        var chartOptions = CHART.createChartOptions(chartData, reportType, colors)
         return chartOptions
       }
     },
     methods: {
+      setUpdates(updates) {
+        const { colors } = updates
+        this.chartColors = colors
+      },
+      editChart() {
+        const colors = this.chartColors
+        const {series} = this.chartOptions
+        const elementId = this.elementData.id
+        this.$emit('editChart', {
+          colors,
+          series,
+          elementId
+        })
+      },
       saveAsPng() {
         this.clickedDropDown = false
         html2canvas(this.$refs.elementWrapper)

@@ -59,7 +59,7 @@ export const CHART = {
     })
     return {seriesList, xAxis, schema: queryResult.schema}
   },
-  createChartOptions: function (chartData, reportElementType = 'line') {
+  createChartOptions: function (chartData, reportElementType = 'line', colors) {
     if (reportElementType === 'pie') {
       let pieData = {
         name: chartData.seriesList[0]['name'],
@@ -77,6 +77,15 @@ export const CHART = {
         title: '',
         reflow: true,
         chart: {type: 'pie'},
+        tooltip: { // TODO::
+          pointFormat: '{series.name}: <b>{point.value}</b> <br>Percentage: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer'
+          }
+        },
         series: [pieData],
         yAxis: {title: {text: chartData.schema.fields[chartData.schema.fields.length - 1].name}}
       }
@@ -84,8 +93,13 @@ export const CHART = {
     return {
       title: '',
       reflow: true,
-      plotOptions: {line: {marker: {enabled: false}}},
-      chart: {type: 'line'},
+      plotOptions: {
+        line: {
+          marker: { enabled: false }
+        }
+      },
+      colors,
+      chart: {type: reportElementType},
       xAxis: {categories: chartData.xAxis},
       series: chartData.seriesList,
       yAxis: {title: {text: chartData.schema.fields[chartData.schema.fields.length - 1].name}}

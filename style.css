@@ -2038,12 +2038,9 @@ span._title {
 .dash-actions li span.icon {
   display: inline-block
 }
-
-
-
 /* } */
 
-.report--design table {
+.report--design table:not(.mx-calendar-table) {
   background: #fff;
   display: table!important;
   width: calc(100% - 30px);
@@ -2372,4 +2369,51 @@ span._title {
   justify-content: center;
   flex-direction: column;
   align-items: center
+}
+
+.line-color-set {
+  display: flex;
+  align-items: flex-start;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+.line-color-set input {
+  /*display: none*/
+}
+.line-color-set .color-picker-area {
+  position: absolute;
+  right: 0;
+  bottom: 50px;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0);
+  transform-origin: bottom right;
+  transition: all 300ms
+}
+.line-color-set a {
+  text-align: center;
+  width: 100px;
+  display: block;
+  border-radius: 3px;
+  padding: .8em 0;
+  color:#fff;
+  text-shadow: 1px 1px rgba(0,0,0,.2);
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0,0,0,.3);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+   -khtml-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.line-color-set .picker-area input[type="checkbox"]:checked ~ .picker .color-picker-area {
+  opacity: 1!important;
+  transform: scale(1);
+  visibility: visible;
+}
+.line-color-set .picker-area input[type="checkbox"] {
+  display: none
 }

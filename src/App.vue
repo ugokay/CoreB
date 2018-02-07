@@ -25,8 +25,8 @@ import Vue from 'vue'
 import Navigation from '@/components/Navigation'
 import MobileNavigation from '@/components/MobileNavigation'
 import Login from '@/components/Login'
-import {AUTH} from '@/helpers/auth-helper.js'
-import {HTTP, WS_ENDPOINT} from '@/helpers/http-helper.js'
+import { AUTH } from '@/helpers/auth-helper.js'
+import { HTTP, WS_ENDPOINT } from '@/helpers/http-helper.js'
 import VueNativeSock from 'vue-native-websocket'
 
 export default {
@@ -56,7 +56,8 @@ export default {
           reconnection: true,
           reconnectionAttempts: 5,
           reconnectionDelay: 3000
-        })
+        }
+      )
     }
     var self = this
     HTTP.interceptors.response.use(function (response) {

@@ -8,15 +8,15 @@
         </div>
         <div class="panel-body">
           <form class="form-horizontal">
-            <div class="form-group col-md-10">
+            <div class="form-group col-md-12">
               <label for="username">Username</label>
               <input name="username" v-model="userName"  class="form-control" />
             </div>
-            <div class="form-group col-md-10">
+            <div class="form-group col-md-12">
               <label for="password">Password</label>
               <input name="password" v-model="password"  class="form-control"  type="password"/>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-12">
               <button @click.prevent="login" style="background:#24262c" class="btn btn-primary">Login</button>
             </div>
           </form>
