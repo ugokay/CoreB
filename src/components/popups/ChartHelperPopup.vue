@@ -36,35 +36,50 @@
         hidden: true,
         fileName: 'untitled',
         series: [],
-        _colors: [],
-        elementId: null
+        colors: [],
+        elementId: null,
+        chartType: null
       }
     },
     components: {
       'color-picker': Chrome
     },
     methods: {
-      close: function () {
+      close() {
         this.hidden = true
       },
       updateValue({hex}, idx) {
         this.colors[idx] = hex
       },
       open: function (chartSettings) {
-        const { colors, series, elementId } = chartSettings
-        this.hidden = false
-        this.series = series
-        this.colors = colors
+        const { colors, elementId, chartOptions } = chartSettings
+        this.chartType = chartOptions.chart.type
+
+        let _colors
+        let _series
+        if (this.chartType == 'pie') {
+          _colors = chartOptions.plotOptions.pie.colors
+          _series = chartOptions.series[0].data
+        } else {
+          const { series } = chartOptions
+          _colors = colors
+          _series = series
+        }
+
         this.elementId = elementId
+        this.colors = _colors
+        this.series = _series
+        this.hidden = false
       },
-      finishEditing: function() {
+      finishEditing() {
         const _colors = []
         for (let i = 0; i < this.colors.length; i++) {
           _colors.push(this.colors[i])
         }
         this.$emit('chartEditingFinished', {
           colors: _colors,
-          elementId: this.elementId
+          elementId: this.elementId,
+          type: this.chartType
         })
         this.close()
       }

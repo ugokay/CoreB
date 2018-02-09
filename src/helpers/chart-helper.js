@@ -2,7 +2,7 @@
  * Created by gorkem on 27.11.2017.
  */
 export const CHART = {
-  cubify: function (queryResult, valueIdx = 2, xAxisIdx = 0, legendIdx = 1) {
+  cubify(queryResult, valueIdx = 2, xAxisIdx = 0, legendIdx = 1) {
     let xAxisData = []
     let legendData = []
     queryResult.data.forEach((row) => {
@@ -39,7 +39,7 @@ export const CHART = {
     }
     return {seriesList, xAxisData, schema: queryResult.schema}
   },
-  chartify: function (queryResult, valueIdxs, xAxisIdx) {
+  chartify(queryResult, valueIdxs, xAxisIdx) {
     let xAxis = []
     let seriesDataList = []
     for (let i = 0; i < valueIdxs.length; i++) {
@@ -59,7 +59,7 @@ export const CHART = {
     })
     return {seriesList, xAxis, schema: queryResult.schema}
   },
-  createChartOptions: function (chartData, reportElementType = 'line', colors) {
+  createChartOptions(chartData, reportElementType = 'line', colors) {
     if (reportElementType === 'pie') {
       let pieData = {
         name: chartData.seriesList[0]['name'],
@@ -72,22 +72,23 @@ export const CHART = {
           name: chartData.xAxis[idx]
         })
         idx++
-      })
+      })  
       return {
         title: '',
         reflow: true,
-        chart: {type: 'pie'},
-        tooltip: { // TODO::
+        chart: { type: 'pie' },
+        tooltip: { // ::TODO:: //
           pointFormat: '{series.name}: <b>{point.value}</b> <br>Percentage: <b>{point.percentage:.1f}%</b>'
         },
         plotOptions: {
           pie: {
             allowPointSelect: true,
-            cursor: 'pointer'
+            cursor: 'pointer',
+            colors
           }
         },
         series: [pieData],
-        yAxis: {title: {text: chartData.schema.fields[chartData.schema.fields.length - 1].name}}
+        yAxis: { title: { text: chartData.schema.fields[chartData.schema.fields.length - 1].name } }
       }
     }
     return {

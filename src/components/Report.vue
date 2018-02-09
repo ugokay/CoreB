@@ -1,17 +1,18 @@
 <template>
   <div>
     <!-- outer elements -->
-    <element-popup ref="elementPopup" @addElement="addExistingElement" />
-    <image-popup ref="imagePopup" />
+    <element-popup
+      ref="elementPopup"
+      @addElement="addExistingElement" />
+    <image-popup
+      ref="imagePopup" />
     <chart-helper-popup
       ref="chartPopup"
       @chartEditingFinished="chartEditingFinished" />
-
     <div class="btn--add has-multiple is-fixed">
       <a @click.prevent="addElement"><i class="icon-plus" /> Add</a>
       <a @click.prevent="selectElement">Select</a>
     </div>
-
     <div v-if="filterDefinitions.length > 0">
       <filter-sidebar
         ref="filterSidebar"
@@ -22,8 +23,7 @@
         @change="filtersChange">
       </filter-sidebar>
     </div>
-    <!-- outer elements end -->
-
+    <!-- #outer elements end -->
     <!-- report header -->
     <div class="report-header">
       <div class="title-area">
@@ -39,7 +39,6 @@
         </div>
       </div>
     </div>
-    
     <grid-layout
       ref="gridLayout"
       id="grid"
@@ -63,7 +62,6 @@
         :i="item.i"
         @resized="resizeEnd(elementIdx)"
         @resize="resize(elementIdx)">
-
         <report-element
           ref="reportElements"
           :element="getElement(item.id)"
@@ -73,7 +71,6 @@
           @getCanvas="getCanvas"
           @editChart="editChart">
         </report-element>
-
       </grid-item>
     </grid-layout>
   </div>
@@ -154,19 +151,19 @@
       editChart(chartOptions) {
         this.$refs.chartPopup.open(chartOptions)
       },
-      getCanvas: function (canvas) {
+      getCanvas(canvas) {
         this.$refs.imagePopup.open(canvas)
       },
-      filtersChange: function (newFilterValues) {
+      filtersChange(newFilterValues) {
         this.filterValues = newFilterValues
       },
       toggleEditMode: function() {
         this.isEditing = !this.isEditing
       },
-      refresh: function () {
+      refresh() {
         this.$refs.reportElements.forEach(reportElement => reportElement.executeQuery())
       },
-      calculateFilterDefinitions: function () {
+      calculateFilterDefinitions() {
         let queries = []
         let filterDefinitions = []
         this.reportData.elements.forEach(element => {
@@ -184,7 +181,7 @@
         this.filterDefinitions = filterDefinitions
         this.isFiltersLoaded = true
       },
-      removeElement: function (id) {
+      removeElement(id) {
         for (let i = 0; i < this.reportData.elements.length; i++) {
           if (this.reportData.elements[i].id === id) {
             this.reportData.elements.splice(i, 1)
@@ -198,7 +195,7 @@
           }
         }
       },
-      addExistingElement: function (newElement) {
+      addExistingElement(newElement) {
         let maxY = 0
         let maxI = 0
         this.layout.forEach(lay => {
@@ -211,10 +208,10 @@
         this.reportData.elements.push(newElement)
         this.calculateFilterDefinitions()
       },
-      selectElement: function () {
+      selectElement() {
         this.$refs.elementPopup.open()
       },
-      addElement: function () {
+      addElement() {
         HTTP.post('bi/report/element', {
           title: 'Untitled',
           filterDefinitions: [],
@@ -233,14 +230,14 @@
           this.reportData.elements.push(newElement)
         })
       },
-      getElement: function (id) {
+      getElement(id) {
         for (let i = 0; i < this.reportData.elements.length; i++) {
           if (this.reportData.elements[i].id === id) {
             return this.reportData.elements[i]
           }
         }
       },
-      save: function () {
+      save() {
         this.reportData.layout = JSON.stringify(this.layout)
         HTTP.post('bi/report', this.reportData)
           .then((res) => {
@@ -248,10 +245,10 @@
           })
           .then(() => this.$swal('Success!', 'Changes has been saved!', 'success'))
       },
-      resize: function (idx) {
+      resize(idx) {
         this.$refs.reportElements[idx].redrawChart()
       },
-      resizeEnd: function (idx) {
+      resizeEnd(idx) {
         setTimeout(() => {
           this.$refs.reportElements[idx].redrawChart()
         }, 0)
@@ -260,7 +257,7 @@
         }, 0)
       }
     },
-    created: function () {
+    created() {
       this.layout = JSON.parse(this.reportData.layout)
       HTTP.get('bi/report/filter/list').then(res => {
         this.globalFilterDefinitions = res.data
