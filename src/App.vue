@@ -1,22 +1,19 @@
 <template>
   <div id="app">
-    <template v-if="isLogged">
-      <div class="App-container">
-        <navigation />
-        <mobile-navigation />
-        <div class="main-content scrollable">
-          <div class="rest-loading" v-if="isLoadingRest"></div>
-          <transition name="fade">
-            <router-view />
-          </transition>
-        </div>
+    <div class="App-container" v-if="isLogged">
+      <navigation />
+      <mobile-navigation />
+      <div class="main-content scrollable">
+        <div class="rest-loading" v-if="isLoadingRest"></div>
+        <transition name="fade">
+          <router-view />
+        </transition>
       </div>
-    </template>
-    <template v-else>
-      <login
-        @success="onLoginSuccess"
-        @error="onLoginError" />
-    </template>
+    </div>
+    <login
+      v-else
+      @success="onLoginSuccess"
+      @error="onLoginError" />
   </div>
 </template>
 
@@ -25,8 +22,8 @@ import Vue from 'vue'
 import Navigation from '@/components/Navigation'
 import MobileNavigation from '@/components/MobileNavigation'
 import Login from '@/components/Login'
-import {AUTH} from '@/helpers/auth-helper.js'
-import {HTTP, WS_ENDPOINT} from '@/helpers/http-helper.js'
+import { AUTH } from '@/helpers/auth-helper.js'
+import { HTTP, WS_ENDPOINT } from '@/helpers/http-helper.js'
 import VueNativeSock from 'vue-native-websocket'
 
 export default {
@@ -56,7 +53,8 @@ export default {
           reconnection: true,
           reconnectionAttempts: 5,
           reconnectionDelay: 3000
-        })
+        }
+      )
     }
     var self = this
     HTTP.interceptors.response.use(function (response) {

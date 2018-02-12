@@ -13,7 +13,7 @@
       <div class="input-row">
         <label>Your Image</label>
         <div class="download-img">
-          <img ref="image" :src="canvas">  
+          <img ref="image" :src="canvas">
         </div>
       </div>
       <div class="input-row">

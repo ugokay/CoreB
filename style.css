@@ -3,6 +3,8 @@ body {
   background: #f1f1f1;
 }
 
+
+
 /*****************************************
 ICOMOON SET */
 
@@ -115,6 +117,10 @@ thead th {
   border-bottom: 2px solid #ddd;
   font-size: 10px;
   padding: 8px;
+}
+
+.is-relative {
+  position: relative;
 }
 
 .toggle-checkbox {
@@ -415,15 +421,19 @@ span.button-holder,
   top: -10px!important;
   right: 5px;
 }
+
 .report--design .dropdown-toggle {
   position: absolute;
   top: -39px;
   right: 0;
 }
+
 .report--design .vdp-datepicker__calendar {
   left: 0!important;
   right: auto!important;
 }
+
+
 
 /*.report--design .toggleTriggerBox {
   display: none
@@ -547,6 +557,8 @@ span.button-holder,
 
 
 
+
+
 /*Scrollbar*/
 
 ::-webkit-scrollbar {
@@ -664,6 +676,8 @@ ol {
 
 
 
+
+
 /*GORKEM*/
 
 .tab-content {
@@ -691,6 +705,8 @@ li.nav-item {
 
 
 
+
+
 /* dashboards specified */
 
 
@@ -704,6 +720,8 @@ li.nav-item {
   box-shadow: inset 0 3px 0 0 #5b64fc !important;
   color: #5b64fc !important;
 }
+
+
 
 
 
@@ -759,6 +777,8 @@ li.nav-item {
 
 
 
+
+
 /* will be fixed */
 
 .top-related-actions {
@@ -778,6 +798,7 @@ li.nav-item {
   position: relative;
   border-top: 3px solid transparent
 }
+
 .navlink.active,
 .top-related-actions li.active {
   border-top: 3px solid #5b64fc !important;
@@ -863,6 +884,8 @@ li.nav-item {
 }
 
 
+
+
 /* page transitions */
 
 .fade-enter-active,
@@ -880,6 +903,8 @@ li.nav-item {
   opacity: 0;
   transform: translateY(12px);
 }
+
+
 
 
 /* page transitions end */
@@ -1096,6 +1121,8 @@ li.nav-item {
 }
 
 
+
+
 /* .wg-grid-overlay .wg-preview-item.wg-preview-highlight { background-color: inherit !important } */
 
 .wg-widget-content {
@@ -1184,7 +1211,8 @@ li.tab.active a,
   z-index: 999;
   display: flex;
 }
-.report--design .report-element--header .toggleTriggerBox  {
+
+.report--design .report-element--header .toggleTriggerBox {
   top: 43px;
 }
 
@@ -1214,7 +1242,8 @@ li.tab.active a,
   background: #f2f2f2 !important
 }
 
-.report-element--header input,.report-element--header input p {
+.report-element--header input,
+.report-element--header input p {
   font-style: italic;
   width: 100%;
 }
@@ -1248,10 +1277,12 @@ li.tab.active a,
   margin-bottom: 1px;
   display: flex
 }
-.global-filters.is-table-view li > * {
+
+.global-filters.is-table-view li>* {
   width: 20%!important;
   display: block
 }
+
 .global-filters li .name {
   font-size: 15px;
   color: #000;
@@ -1415,10 +1446,12 @@ span._title {
 .download-img {
   text-align: center;
 }
+
 .download-img img {
   border: 1px solid #ddd!important;
   border-radius: 2px
 }
+
 .popup-area {
   position: fixed;
   top: 0;
@@ -1442,10 +1475,12 @@ span._title {
   width: 95%;
   position: relative;
 }
+
 .popup-area.is-flexible .popup {
   max-width: initial!important;
   width: auto!important;
 }
+
 .close-icon {
   position: absolute;
   right: 0;
@@ -1583,12 +1618,6 @@ span._title {
 }
 
 .loading-nice {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #fff;
   z-index: 999;
   display: flex;
   align-items: center;
@@ -1829,6 +1858,8 @@ span._title {
 }
 
 
+
+
 /* .navbar {
   transition: all 300ms
 } */
@@ -1980,6 +2011,8 @@ span._title {
 }
 
 
+
+
 /* @media screen and (max-width: 1440px) and (min-width: 1101px) { */
 
 .dash-actions li {
@@ -2021,7 +2054,7 @@ span._title {
 
 /* } */
 
-.report--design table {
+.report--design table:not(.mx-calendar-table) {
   background: #fff;
   display: table!important;
   width: calc(100% - 30px);
@@ -2133,6 +2166,8 @@ span._title {
 }
 
 
+
+
 /* pull grid back */
 
 .vue-grid-layout {
@@ -2188,24 +2223,30 @@ span._title {
 .dash-actions-wrapper.is-in-tab-area {
   margin-bottom: -41px;
 }
+
 .dash-actions-wrapper {
   display: flex;
   justify-content: flex-end;
 }
+
 .vue-grid-layout {
   margin-left: 20px
 }
+
 .mt20 {
   margin-top: 20px;
 }
+
 .tabChores {
   padding: 20px 0 20px 40px;
   font-size: 20px;
   font-weight: bold;
 }
+
 .label.label-primary {
   cursor: pointer
 }
+
 .filterDefinitionLabel {
   font-size: 12px;
   margin-bottom: 0;
@@ -2218,6 +2259,7 @@ span._title {
   overflow-y: scroll;
   position: relative;
 }
+
 .has-after-bg {
   position: relative;
 }
@@ -2226,16 +2268,21 @@ span._title {
   position: relative;
   z-index: 999
 }
+
 .has-after-bg::after {
   content: '';
   display: block;
   position: absolute;
   width: calc(100% - 15px);
   height: 70px;
-  background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+  background: -moz-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff', GradientType=0);
+  /* IE6-9 */
   bottom: 0px;
   left: 0;
   z-index: 99
@@ -2252,10 +2299,9 @@ span._title {
   box-shadow: none!important;
   -webkit-transition: width .6s;
   transition: width .6s;
-  position: absolute;
   z-index: 9999;
   border-radius: 30px!important;
-  bottom: -2px;
+  transform: translateY(40px);
 }
 
 .progress-bar span {
@@ -2278,6 +2324,7 @@ span._title {
   margin: auto;
   width: 80px;
 }
+
 .input-area span {
   width: 120px;
   font-size: 13px;
@@ -2285,12 +2332,14 @@ span._title {
   margin-bottom: 0;
   cursor: pointer;
 }
+
 .input-area {
   display: flex;
-  align-items:  center;
+  align-items: center;
   border-bottom: 1px solid #ddd;
   margin: 0;
 }
+
 .settings-input {
   background: transparent;
   border: 0;
@@ -2313,10 +2362,78 @@ span._title {
   top: 50%;
   transform: translateY(-50%);
 }
+
 .user-nav {
   position: relative;
   margin-bottom: 20px;
   display: flex;
   align-items: center;
   opacity: .2;
+}
+
+
+.progress-bar-area {
+  background: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center
+}
+
+.line-color-set {
+  display: flex;
+  align-items: flex-start;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.line-color-set input {
+  /*display: none*/
+}
+
+.line-color-set .color-picker-area {
+  position: absolute;
+  right: 0;
+  bottom: 50px;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0);
+  transform-origin: bottom right;
+  transition: all 300ms
+}
+
+.line-color-set a {
+  text-align: center;
+  width: 100px;
+  display: block;
+  border-radius: 3px;
+  padding: .8em 0;
+  color: #fff;
+  text-shadow: 1px 1px rgba(0, 0, 0, .2);
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.line-color-set .picker-area input[type="checkbox"]:checked~.picker .color-picker-area {
+  opacity: 1!important;
+  transform: scale(1);
+  visibility: visible;
+}
+
+.line-color-set .picker-area input[type="checkbox"] {
+  display: none
 }
