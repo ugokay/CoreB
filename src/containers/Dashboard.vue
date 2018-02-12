@@ -46,6 +46,7 @@
                 ref="reports"
                 :editable="editable"
                 :report="report"
+                :globalFilterDefinitions="globalFilterDefinitions"
                 :index="reportIdx"
                 :isSelected="selectedReportIdx === reportIdx">
               </report>
@@ -82,6 +83,7 @@
     },
     data: function () {
       return {
+        globalFilterDefinitions: [],
         selectedReportIdx: 0,
         reports: [],
         fullscreen: false,
@@ -151,11 +153,14 @@
       }
     },
     created: function () {
-      this.getReports()
-      if (this.$route.hash) {
-        const tabIdx = parseInt(this.$route.hash.split('#')[1])
-        this.tabChange(tabIdx)
-      }
+      HTTP.get('bi/report/filter/list').then(res => {
+        this.globalFilterDefinitions = res.data
+        this.getReports()
+        if (this.$route.hash) {
+          const tabIdx = parseInt(this.$route.hash.split('#')[1])
+          this.tabChange(tabIdx)
+        }
+      })
     }
   }
 </script>

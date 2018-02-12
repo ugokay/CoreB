@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- outer elements -->
-    <element-popup 
+    <element-popup
       ref="elementPopup"
       @addElement="addExistingElement" />
 
@@ -39,7 +39,7 @@
         </div>
       </div>
     </div>
-    
+
     <grid-layout
       ref="gridLayout"
       id="grid"
@@ -114,12 +114,15 @@
         allFilters: false,
         filters: {},
         filterDefinitions: [],
-        globalFilterDefinitions: [],
         isEditing: false,
         filterValues: []
       }
     },
     props: {
+      globalFilterDefinitions: {
+        type: Array,
+        required: true
+      },
       report: {
         type: Object,
         required: true
@@ -246,10 +249,7 @@
     },
     created: function () {
       this.layout = JSON.parse(this.reportData.layout)
-      HTTP.get('bi/report/filter/list').then(res => {
-        this.globalFilterDefinitions = res.data
-        this.calculateFilterDefinitions()
-      })
+      this.calculateFilterDefinitions()
     }
   }
 </script>
