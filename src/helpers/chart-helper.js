@@ -77,14 +77,14 @@ export const CHART = {
         title: '',
         reflow: true,
         chart: { type: 'pie' },
-        tooltip: { // ::TODO:: //
-          pointFormat: '{series.name}: <b>{point.value}</b> <br>Percentage: <b>{point.percentage:.1f}%</b>'
-        },
         plotOptions: {
           pie: {
             allowPointSelect: true,
             cursor: 'pointer',
-            colors
+            colors,
+            dataLabels: {
+              format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+            }
           }
         },
         series: [pieData],

@@ -103,10 +103,11 @@
         this.editable = !this.editable
         this.$refs.reports.forEach(report => report.toggleEditMode())
       },
-      getReports: function () {
+      getReports: function (initialTabIdx) {
         HTTP.get('bi/report/list')
           .then((res) => {
             this.reports = res.data
+            setTimeout(() => this.$refs.tabs.navigateToTab(initialTabIdx), 0)
           })
           .catch((error) => {
             console.log(error)
@@ -152,15 +153,17 @@
         }
       }
     },
-    created: function () {
-      HTTP.get('bi/report/filter/list').then(res => {
-        this.globalFilterDefinitions = res.data
-        this.getReports()
-        if (this.$route.hash) {
-          const tabIdx = parseInt(this.$route.hash.split('#')[1])
-          this.tabChange(tabIdx)
-        }
-      })
+    created() {
+      HTTP.get('bi/report/filter/list')
+        .then(res => {
+          this.globalFilterDefinitions = res.data
+        })
+      if (this.$route.hash) {
+        const hashIdx = this.$route.hash.split('#')[1]
+        this.getReports(Number(hashIdx))
+      } else {
+        this.getReports(0)
+      }
     }
   }
 </script>

@@ -27,24 +27,24 @@ import { HTTP, WS_ENDPOINT } from '@/helpers/http-helper.js'
 import VueNativeSock from 'vue-native-websocket'
 
 export default {
-  name: 'app',
+  name: 'App',
   components: { Navigation, Login, MobileNavigation },
-  data: function () {
+  data() {
     return {
       isLogged: false,
       isLoadingRest: false
     }
   },
   methods: {
-    onLoginSuccess: function (data) {
+    onLoginSuccess(data) {
       this.isLogged = true
       Vue.use(VueNativeSock, WS_ENDPOINT + data.token)
     },
-    onLoginError: function (res) {
+    onLoginError(res) {
       this.$swal('Unauthorized', res.data.message, 'error')
     }
   },
-  created: function () {
+  created() {
     this.isLogged = AUTH.isLogged()
     if (this.isLogged) {
       Vue.use(VueNativeSock, WS_ENDPOINT + AUTH.token,
