@@ -9,7 +9,9 @@
         placeholder="Filter elements.."
         v-model="searchTerm"
         class="filterElement">
-      <ul class="elementList">
+
+      <i class="default-loading-circle" v-if="filteredElements.length < 1"></i> 
+      <ul class="elementList" v-else>
         <li
           v-for="element in filteredElements">
           {{element.title}} - {{chartTypeText(element)}}

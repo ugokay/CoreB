@@ -45,9 +45,7 @@
                 <li><a @click.prevent="setChartType('bar')">Bar Chart (Horizontal)</a></li>
                 <li><a @click.prevent="setChartType('pie')">Pie Chart</a></li>
                 <li><a @click.prevent="setChartType('custom')">Custom Html</a></li>
-                <li class="divider" v-if="!isDesignMode"></li>
-                <li v-if="!isDesignMode"><a @click.prevent="remove">Remove</a></li>
-                <li class="divider" v-if="!isDesignMode"></li>
+                <li class="divider"></li>
                 <li><a @click.prevent="editChart">Edit Chart</a></li>
                 <li><a @click.prevent="saveAsPng">Save as Png</a></li>
                 <li>
@@ -59,6 +57,8 @@
                     Download Excel
                   </excel-button>
                 </li>
+                <li v-if="!isDesignMode" class="divider"></li>
+                <li v-if="!isDesignMode"><a @click.prevent="remove">Remove</a></li>
               </ul>
             </template>
           </div>

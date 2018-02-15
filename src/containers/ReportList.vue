@@ -4,7 +4,7 @@
       <h2>Reports</h2>
       <ul class="global-filters">
         <li
-          v-for="(reportElement, index) in reportElements"
+          v-for="reportElement in reportElements"
           :key="reportElement.id">
           <span>
             <label class="label label-default">{{ reportElement.id }}</label>

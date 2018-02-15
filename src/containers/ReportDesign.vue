@@ -1,8 +1,13 @@
 <template>
   <div v-hotkey="keymap" class="report--design">
+    <image-popup
+      ref="imagePopup" />
     <filter-popup
       @updateFilter="updateFilter"
       ref="filterPopup" />
+    <chart-helper-popup
+      ref="chartPopup"
+      @chartEditingFinished="chartEditingFinished" />
     <div class="nav-tabs-navigation">
       <div class="nav-tabs-wrapper is-design-nav-wrapper">
         <ul class="nav nav-tabs">
@@ -21,7 +26,7 @@
             <li @click="handleTabs('query')" :class="isActiveQuery"> <i class="icon-query"></i> Query</li>
             <li> <i class="icon-refresh"></i> Refresh</li>
             <li> <i class="icon-export"></i> Export</li>
-            <li> <a @click.prevent="save"><i  class="icon-export"></i> Save</a></li>
+            <li @click.prevent="save"><i class="icon-export"></i> Save</a></li>
           </ul>
         </div>
     </div>
@@ -73,7 +78,9 @@
           :element="element"
           :filters="filters"
           :isDesignMode="true"
-          @executed="executed">
+          @executed="executed"
+          @editChart="editChart"
+          @getCanvas="getCanvas">
         </report-element>
 
         <table class="table" v-if="queryResult"  v-on:click="tableSeen = !tableSeen">
@@ -94,11 +101,13 @@
   </div>
 </template>
 <script>
-  import {HTTP} from '@/helpers/http-helper'
+  import { HTTP } from '@/helpers/http-helper'
   import FilterPopup from '@/components/popups/FilterPopup'
-  import Report from '../components/Report'
-  import ReportElement from '../components/ReportElement'
-  import ReportFilter from '../components/ReportFilter'
+  import Report from '@/components/Report'
+  import ReportElement from '@/components/ReportElement'
+  import ReportFilter from '@/components/ReportFilter'
+  import ChartHelperPopup from '@/components/popups/ChartHelperPopup'
+  import ImagePopup from '@/components/popups/ImagePopup'
   import {Util} from '@/helpers/helpers'
   import Editor from 'ace-vue2'
   import Icon from 'vue-awesome/components/Icon'
@@ -109,7 +118,7 @@
   import 'brace/theme/monokai'
 
   export default {
-    components: { ReportElement, Editor, Report, ReportFilter, FilterPopup, Icon },
+    components: { ReportElement, Editor, Report, ReportFilter, FilterPopup, Icon, ImagePopup, ChartHelperPopup  },
     name: 'report-design',
     data: function () {
       return {
@@ -143,6 +152,22 @@
       }
     },
     methods: {
+      chartEditingFinished(updates) {
+        const { elementId } = updates
+        this.$refs.reportElements.forEach(reportElement => {
+          if (reportElement.elementData.id === elementId) {
+            reportElement.setUpdates(updates)
+          } else {
+            return false
+          }
+        })
+      },
+      editChart(chartOptions) {
+        this.$refs.chartPopup.open(chartOptions)
+      },
+      getCanvas(canvas) {
+        this.$refs.imagePopup.open(canvas)
+      },
       executed: function (queryResult) {
         this.queryResult = queryResult
       },
