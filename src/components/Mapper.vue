@@ -55,7 +55,10 @@
       :options="editorOptions">
     </editor>
     <div class="col-xs-12 action--area">
-      <span class="action--btn">RUN <i class="icon-arrow-right" style="color:#ffffff"> </i></span>
+      <span class="action--btn">
+        RUN
+        <i class="icon-arrow-right" style="color:#ffffff"></i>
+      </span>
     </div>
   </div>
 </template>

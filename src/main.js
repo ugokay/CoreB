@@ -12,7 +12,7 @@ Vue.use(VueSweetalert2)
 
 Vue.config.productionTip = false
 
-new Vue({
+const app = new Vue({
   el: '#app',
   template: '<App/>',
   components: {App},

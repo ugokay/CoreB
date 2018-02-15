@@ -46,6 +46,7 @@
                 ref="reports"
                 :editable="editable"
                 :report="report"
+                :globalFilterDefinitions="globalFilterDefinitions"
                 :index="reportIdx"
                 :isSelected="selectedReportIdx === reportIdx">
               </report>
@@ -82,6 +83,7 @@
     },
     data: function () {
       return {
+        globalFilterDefinitions: [],
         selectedReportIdx: 0,
         reports: [],
         fullscreen: false,
@@ -101,10 +103,11 @@
         this.editable = !this.editable
         this.$refs.reports.forEach(report => report.toggleEditMode())
       },
-      getReports: function () {
+      getReports: function (initialTabIdx) {
         HTTP.get('bi/report/list')
           .then((res) => {
             this.reports = res.data
+            setTimeout(() => this.$refs.tabs.navigateToTab(initialTabIdx), 0)
           })
           .catch((error) => {
             console.log(error)
@@ -150,11 +153,16 @@
         }
       }
     },
-    created: function () {
-      this.getReports()
+    created() {
+      HTTP.get('bi/report/filter/list')
+        .then(res => {
+          this.globalFilterDefinitions = res.data
+        })
       if (this.$route.hash) {
-        const tabIdx = parseInt(this.$route.hash.split('#')[1])
-        this.tabChange(tabIdx)
+        const hashIdx = this.$route.hash.split('#')[1]
+        this.getReports(Number(hashIdx))
+      } else {
+        this.getReports(0)
       }
     }
   }
