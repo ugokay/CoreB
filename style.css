@@ -1453,7 +1453,8 @@ span._title {
 
 .download-img img {
   border: 1px solid #ddd!important;
-  border-radius: 2px
+  border-radius: 2px;
+  max-width: 100%
 }
 
 .popup-area {
@@ -1481,8 +1482,8 @@ span._title {
 }
 
 .popup-area.is-flexible .popup {
-  max-width: initial!important;
-  width: auto!important;
+  width: initial!important;
+  max-width: 90%!important;
 }
 
 .close-icon {

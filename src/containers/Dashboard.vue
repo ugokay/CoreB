@@ -22,9 +22,9 @@
             <icon name="play" v-if="!isSliding"></icon>
             <icon name="pause" v-else></icon>
           </span>
-          <span class="text"> {{isSliding ? 'Stop' : 'Start'}} Slide</span>
+          <span class="text"> {{ isSliding ? 'Stop' : 'Start' }} Slide</span>
         </li>
-        <li>
+        <li @click="exportReportAsPng">
           <span class="icon"><icon name="upload"></icon></span>
           <span class="text"><i class="icon-export"></i><span>Export</span></span>
         </li>
@@ -57,17 +57,17 @@
 </template>
 
 <script>
-  import {HTTP} from '@/helpers/http-helper.js'
+  import Vue from 'vue'
   import Report from '@/components/Report'
   import ReportElement from '@/components/ReportElement'
   import VueGridLayout from 'vue-grid-layout'
   import Icon from 'vue-awesome/components/Icon'
+  import { VueTabs, VTab } from 'vue-nav-tabs'
+  import fullscreen from 'vue-fullscreen'
+  import { HTTP } from '@/helpers/http-helper.js'
   import { arrows, expand, play, upload, floppyO, plus, eye, pause, pencilSquareO } from 'vue-awesome/icons'
-  import {VueTabs, VTab} from 'vue-nav-tabs'
   import 'vue-nav-tabs/themes/vue-tabs.css'
 
-  import fullscreen from 'vue-fullscreen'
-  import Vue from 'vue'
   Vue.use(fullscreen)
 
   export default {
@@ -92,10 +92,16 @@
       }
     },
     methods: {
+      exportReportAsPng: function() {
+        this.$refs.reports[this.selectedReportIdx].exportReportAsPng()
+      },
       refresh: function () {
         this.$refs.reports[this.selectedReportIdx].refresh()
       },
       tabChange: function (tabIdx) {
+        this.$nextTick(() => {
+          window.location.href = '#/#' + tabIdx
+        })
         this.selectedReportIdx = tabIdx
         this.$refs.tabs.$el.childNodes[0].classList.remove('is-open')
       },

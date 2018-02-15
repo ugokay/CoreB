@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div ref="report">
     <!-- outer elements -->
     <element-popup
       ref="elementPopup"
@@ -83,6 +83,7 @@
   import { HTTP } from '@/helpers/http-helper.js'
   import { Util } from '@/helpers/helpers.js'
   import { refresh } from 'vue-awesome/icons'
+  import html2canvas from 'html2canvas'
   import ReportFilter from '@/components/ReportFilter'
   import ElementPopup from '@/components/popups/ElementPopup'
   import ImagePopup from '@/components/popups/ImagePopup'
@@ -141,6 +142,13 @@
       }
     },
     methods: {
+      exportReportAsPng(){
+        html2canvas(this.$refs.report)
+          .then(canvas => {
+            const imgData = canvas.toDataURL('image/png')
+            this.getCanvas(imgData)
+          })
+      },
       chartEditingFinished(updates) {
         const { elementId } = updates
         this.$refs.reportElements.forEach(reportElement => {
