@@ -81,7 +81,7 @@
       'grid-layout': VueGridLayout.GridLayout,
       'grid-item': VueGridLayout.GridItem
     },
-    data: function () {
+    data() {
       return {
         globalFilterDefinitions: [],
         selectedReportIdx: 0,
@@ -95,21 +95,19 @@
       exportReportAsPng: function() {
         this.$refs.reports[this.selectedReportIdx].exportReportAsPng()
       },
-      refresh: function () {
+      refresh() {
         this.$refs.reports[this.selectedReportIdx].refresh()
       },
-      tabChange: function (tabIdx) {
-        this.$nextTick(() => {
-          window.location.href = '#/#' + tabIdx
-        })
+      tabChange(tabIdx) {
         this.selectedReportIdx = tabIdx
         this.$refs.tabs.$el.childNodes[0].classList.remove('is-open')
+        setTimeout(() => window.location.hash = '#/#' + tabIdx, 200)
       },
-      toggleEditable: function () {
+      toggleEditable() {
         this.editable = !this.editable
         this.$refs.reports.forEach(report => report.toggleEditMode())
       },
-      getReports: function (initialTabIdx) {
+      getReports(initialTabIdx) {
         HTTP.get('bi/report/list')
           .then((res) => {
             this.reports = res.data
@@ -119,13 +117,13 @@
             console.log(error)
           })
       },
-      addReport: function () {
+      addReport() {
         this.reports.push({
           title: 'Untitled',
           elements: []
         })
       },
-      saveReport: function () {
+      saveReport() {
         this.$refs.reports[this.selectedReportIdx].save()
       },
       removeTab (index) {
@@ -134,10 +132,10 @@
       addTab () {
         this.tabs.push('New Tab')
       },
-      toggleFullscreen: function () {
+      toggleFullscreen() {
         this.$refs['fullscreen'].toggle()
       },
-      toggleSlide: function () {
+      toggleSlide() {
         if (!this.isSliding) {
           this.isSliding = true
           const self = this

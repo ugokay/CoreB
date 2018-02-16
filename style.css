@@ -41,6 +41,11 @@ ICOMOON SET */
   margin: 0!important
 }
 
+
+.report--design .report-element--header {
+  position: relative;
+  z-index: 20;
+}
 .report--design .report-element-wrapper {
   position: relative;
   min-height: 130px;
@@ -1284,7 +1289,8 @@ li.tab.active a,
 
 .global-filters.is-table-view li>* {
   width: 20%!important;
-  display: block
+  display: block;
+  overflow: hidden
 }
 
 .global-filters li .name {

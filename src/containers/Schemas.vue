@@ -11,14 +11,14 @@
       <div class="nav-tabs-navigation">
         <div class="nav-tabs-wrapper">
           <ul class="nav nav-tabs">
-            <li>
+            <router-link tag="li" to="/">
               <span class="button-holder title title_center">
-                <router-link to="/" class="headToBack">
+                <a class="headToBack">
                   <icon name="chevron-left"></icon>
                   Back to Dashboard
-                </router-link>
+                </a>
               </span>
-            </li>
+            </router-link>
           </ul>
         </div>
       </div>

@@ -214,7 +214,7 @@
             return this._chartColors
           } else {
             if (type == 'pie') {
-              this._chartColors = ['pink', 'navy', 'tomato']
+              this._chartColors = ['pink', 'navy', 'tomato', 'red', 'blue', 'green']
             } else {
               this._chartColors = ['pink', 'navy']
             }

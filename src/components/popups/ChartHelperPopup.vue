@@ -28,7 +28,7 @@
 
 <script>
   import { Chrome } from 'vue-color'
-
+  
   export default {
     name: 'ChartHelperPopup',
     data() {
@@ -49,14 +49,14 @@
         this.hidden = true
       },
       updateValue({hex}, idx) {
-        this.colors[idx] = hex
+        this.$set(this.colors, idx, hex)
       },
       open: function (chartSettings) {
         const { colors, elementId, chartOptions } = chartSettings
         this.chartType = chartOptions.chart.type
 
-        let _colors
-        let _series
+        let _colors,
+            _series
         if (this.chartType == 'pie') {
           _colors = chartOptions.plotOptions.pie.colors
           _series = chartOptions.series[0].data
@@ -76,7 +76,7 @@
         for (let i = 0; i < this.colors.length; i++) {
           _colors.push(this.colors[i])
         }
-        this.$emit('chartEditingFinished', {
+        this.$emit('done', {
           colors: _colors,
           elementId: this.elementId,
           type: this.chartType

@@ -11,12 +11,12 @@
     <div class="nav-tabs-navigation">
       <div class="nav-tabs-wrapper is-design-nav-wrapper">
         <ul class="nav nav-tabs">
-            <li>
+            <li @click="goBack">
               <span class="button-holder title title_center">
-                <router-link to="/" class="headToBack">
+                <a class="headToBack">
                   <icon name="chevron-left"></icon>
-                  Back to Dashboard
-                </router-link>
+                  Back
+                </a>
               </span>
             </li>
           </ul>
@@ -100,6 +100,7 @@
     </div>
   </div>
 </template>
+
 <script>
   import { HTTP } from '@/helpers/http-helper'
   import FilterPopup from '@/components/popups/FilterPopup'
@@ -152,6 +153,9 @@
       }
     },
     methods: {
+      goBack() {
+        this.$router.back()
+      },
       chartEditingFinished(updates) {
         const { elementId } = updates
         this.$refs.reportElements.forEach(reportElement => {

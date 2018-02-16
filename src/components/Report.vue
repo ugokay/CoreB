@@ -8,7 +8,7 @@
       ref="imagePopup" />
     <chart-helper-popup
       ref="chartPopup"
-      @chartEditingFinished="chartEditingFinished" />
+      @done="chartEditingFinished" />
     <div class="btn--add has-multiple is-fixed">
       <a @click.prevent="addElement"><i class="icon-plus" /> Add</a>
       <a @click.prevent="selectElement">Select</a>
@@ -20,8 +20,7 @@
         :filterDefinitions="filterDefinitions"
         :filters="filters"
         @apply="refresh"
-        @change="filtersChange">
-      </filter-sidebar>
+        @change="filtersChange" />
     </div>
     <!-- #outer elements end -->
     <!-- report header -->
@@ -69,12 +68,12 @@
           :isEditingMode="isEditing"
           @remove="removeElement"
           @getCanvas="getCanvas"
-          @editChart="editChart">
-        </report-element>
+          @editChart="editChart" />
       </grid-item>
     </grid-layout>
   </div>
 </template>
+
 <script>
   import ReportElement from '@/components/ReportElement'
   import VueGridLayout from 'vue-grid-layout'
@@ -236,7 +235,7 @@
             maxI = Math.max(maxI, lay.i)
           })
           this.layout.push({
-             id: newElement.id, x: 0, y: maxY, w: 2, h: 6, i: (maxI + 1).toString()
+              id: newElement.id, x: 0, y: maxY, w: 2, h: 6, i: (maxI + 1).toString()
           })
           this.reportData.elements.push(newElement)
         })

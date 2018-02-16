@@ -20,8 +20,6 @@ Date.prototype.toJSON = function () {
     'Z'
 }
 
-
-
 export const Util = {
   dayInMillis: 1000 * 60 * 60 * 24,
   dateFormat: '',
