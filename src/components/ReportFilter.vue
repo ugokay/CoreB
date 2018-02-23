@@ -62,7 +62,6 @@
       confirm: function (value) {}
     },
     created: function () {
-      console.log(this.definition.type)
       if (this.definition.type === 'query'){
         HTTP.post('bi/analyze/execute', {query: this.definition.defaultValue}, {
           params: {
@@ -70,11 +69,13 @@
             block: true
           }
         }).then((res) => {
-          console.log(res)
           const options = []
-          res.data.data.forEach(row => {
+          res.data.data.forEach((row, idx) => {
             const value = row[0]
             const label = row[1]
+            if (idx == 0) {
+              this.value = value
+            }
             if (value) {
               options.push({
                 value: value,

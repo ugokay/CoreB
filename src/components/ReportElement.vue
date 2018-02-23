@@ -84,7 +84,7 @@
           </table>
         </div>
         <vue-highcharts
-          v-else
+          v-else-if="!loading"
           :options="chartOptions"
           ref="chart">
         </vue-highcharts>

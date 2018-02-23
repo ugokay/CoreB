@@ -34,7 +34,7 @@
         </li>
       </ul>
     </div>
-     <fullscreen ref="fullscreen" :fullscreen.sync="fullscreen">
+     <fullscreen v-if="globalFilterDefinitions" ref="fullscreen" :fullscreen.sync="fullscreen">
         <vue-tabs @tab-change="tabChange" id="tabs" ref="tabs">
           <v-tab
             v-for="(report, reportIdx) in reports"
@@ -83,7 +83,7 @@
     },
     data: function () {
       return {
-        globalFilterDefinitions: [],
+        globalFilterDefinitions: null,
         selectedReportIdx: 0,
         reports: [],
         fullscreen: false,
