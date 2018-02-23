@@ -18,13 +18,13 @@
             v-if="isEditing"
             type="input"
             style="padding: 0 10px 0"
-            class="report-element--title no-border"
+            class="report-element--title no-0border"
             v-model="element.title"/>
           <router-link
             v-else
             :to="designLink"
             class="report--element-title element-title btn-block">
-            {{element.title}}
+            {{ element.title }}
           </router-link>
           <div class="btn-group btn-group-xs align-right no-padding toggleTriggerBox hidden-xs">
             <template v-if="isEditing">
@@ -84,7 +84,7 @@
           </table>
         </div>
         <vue-highcharts
-          v-else
+          v-else-if="!loading"
           :options="chartOptions"
           ref="chart">
         </vue-highcharts>

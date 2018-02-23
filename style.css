@@ -41,7 +41,6 @@ ICOMOON SET */
   margin: 0!important
 }
 
-
 .report--design .report-element--header {
   position: relative;
   z-index: 20;
@@ -56,8 +55,6 @@ ICOMOON SET */
   -webkit-box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.12);
   box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.12)
 }
-
-
 
 .is-saved {
   color: #1ea075;

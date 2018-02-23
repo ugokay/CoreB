@@ -92,7 +92,6 @@ export default {
       })
       return users.length + ' User' + (users.length > 1 ? 's' : '')
     },
-    // user stuff
     addNewUser(user) {
       this.users.push(user)
     },
@@ -102,7 +101,6 @@ export default {
     editUser(index) {
       this.$refs.userPopup.open(this.users[index])
     },
-    // group stuff
     addGroup() {
       this.$refs.groupPopup.open()
     },

@@ -16,6 +16,9 @@
           <span>
             <label class="label label-default">{{ filterDefinition.type }}</label>
           </span>
+          <div class="slider">
+            <router-link></router-link>
+          </div>
           <span>
             <label class="label label-default">{{ filterDefinition.defaultValue }}</label>
           </span>
@@ -30,7 +33,7 @@
 
 <script>
 import FilterPopup from '@/components/popups/FilterPopup'
-import {HTTP} from '@/helpers/http-helper'
+import { HTTP } from '@/helpers/http-helper'
 
 export default {
   name: 'GlobalFilters',
@@ -61,8 +64,10 @@ export default {
           this.reportElements.push(res.data)
         })
         .then(() => this.$swal(
-          'Success!',
-          'Filter has been added to global filters successfully!', 'success')
+            'Success!',
+            'Filter has been added to global filters successfully!',
+            'success'
+          )
         )
     },
     openEditFilterPopup: function (index) {

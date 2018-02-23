@@ -18,9 +18,7 @@
           tag="li">
           <span class="name">{{ mapper.name }}</span>
           <span class="flex-spacer"></span>
-          <label class="label label-default">
-            Edit
-          </label>
+          <label class="label label-default">Edit</label>
         </router-link>
         <span class="title">Disabled Mappers</span>
         <router-link
@@ -33,9 +31,7 @@
           tag="li">
           <span class="name">{{ mapper.name }}</span>
           <span class="flex-spacer"></span>
-          <label class="label label-default">
-            Edit
-          </label>
+          <label class="label label-default">Edit</label>
         </router-link>
       </ul>
     </div>
@@ -63,11 +59,6 @@ export default {
   },
   computed: {
     isDisabled () {
-
-    }
-  }
-}
-</script>
 
     }
   }
