@@ -1,6 +1,5 @@
 <template>
-  <div class="full-height is-relative">
-    <div v-if="loading" class="progress-bar-area">
+  <!-- <div v-if="loading" class="progress-bar-area">
       <div class="loading-nice">
         <span></span>
       </div>
@@ -10,87 +9,70 @@
         v-bind:style="{ width: progress + '%' }">
         <span>{{progress}}%</span>
       </div>
-    </div>
-    <div class="report-element-wrapper">
-      <div class="col-sm-12 report__element">
-        <div class="report-element--header">
-          <input
-            v-if="isEditing"
-            type="input"
-            style="padding: 0 10px 0"
-            class="report-element--title no-0border"
-            v-model="element.title"/>
-          <router-link
-            v-else
-            :to="designLink"
-            class="report--element-title element-title btn-block">
-            {{ element.title }}
-          </router-link>
-          <div class="btn-group btn-group-xs align-right no-padding toggleTriggerBox hidden-xs">
-            <template v-if="isEditing">
-              <a class="dropdown-toggle"
-                v-click-outside="hideDropdown"
-                @click="openDropdown"
-                data-toggle="dropdown">
-                <i class="icon-more"></i>
-              </a>
-              <ul :class="isVisible">
-                <li v-if="!isDesignMode"><a>Save</a></li>
-                <li v-if="!isDesignMode"><a @click.prevent="executeQuery">Execute</a></li>
-                <li v-if="!isDesignMode"><router-link :to="designLink">Design</router-link></li>
-                <li v-if="!isDesignMode" class="divider"></li>
-                <li><a @click.prevent="setChartType('table')">Table</a></li>
-                <li><a @click.prevent="setChartType('line')">Line Chart</a></li>
-                <li><a @click.prevent="setChartType('column')">Bar Chart</a></li>
-                <li><a @click.prevent="setChartType('bar')">Bar Chart (Horizontal)</a></li>
-                <li><a @click.prevent="setChartType('pie')">Pie Chart</a></li>
-                <li><a @click.prevent="setChartType('custom')">Custom Html</a></li>
-                <li class="divider"></li>
-                <li><a @click.prevent="editChart">Edit Chart</a></li>
-                <li><a @click.prevent="saveAsPng">Save as Png</a></li>
-                <li>
-                  <excel-button
-                    class="excel-btn"
-                    :data="excelData"
-                    :fields="excelFields"
-                    name="filename.xls">
-                    Download Excel
-                  </excel-button>
-                </li>
-                <li v-if="!isDesignMode" class="divider"></li>
-                <li v-if="!isDesignMode"><a @click.prevent="remove">Remove</a></li>
-              </ul>
-            </template>
+    </div> -->
+  <v-layout wrap>
+    <v-flex xs12 md12 lg12 wrap>
+      <v-layout class="pl-3 pt-2" v-if="isEditing">
+        <v-text-field type="input" class="pt-0" v-model="element.title"/>
+        <v-menu offset-y>
+          <v-btn icon slot="activator" class="mr-1">
+            <v-icon class="color-grey">more_vert</v-icon>
+          </v-btn>
+          <v-list class="report-element-dropdown">
+            <v-list-tile v-if="!isDesignMode" @click=""><v-list-tile-title>Save</v-list-tile-title></v-list-tile>
+            <v-list-tile v-if="!isDesignMode" @click.prevent="executeQuery"><v-list-tile-title>Execute</v-list-tile-title></v-list-tile>
+            <v-list-tile v-if="!isDesignMode" @click='$router.push(designLink)'>
+              <v-list-tile-title>Design</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile v-if="!isDesignMode" class="divider"></v-list-tile>
+            <v-list-tile @click.prevent="setChartType('table')"><v-list-tile-title>Table</v-list-tile-title></v-list-tile>
+            <v-list-tile @click.prevent="setChartType('line')"><v-list-tile-title>Line Chart</v-list-tile-title></v-list-tile>
+            <v-list-tile @click.prevent="setChartType('column')"><v-list-tile-title>Bar Chart</v-list-tile-title></v-list-tile>
+            <v-list-tile @click.prevent="setChartType('bar')"><v-list-tile-title>Bar Chart (Horizontal)</v-list-tile-title></v-list-tile>
+            <v-list-tile @click.prevent="setChartType('pie')"><v-list-tile-title>Pie Chart</v-list-tile-title></v-list-tile>
+            <v-list-tile @click.prevent="setChartType('custom')"><v-list-tile-title>Custom Html</v-list-tile-title></v-list-tile>
+            <v-list-tile class="divider"></v-list-tile>
+            <v-list-tile @click.prevent="editChart"><v-list-tile-title>Edit Chart</v-list-tile-title></v-list-tile>
+            <v-list-tile @click.prevent="saveAsPng"><v-list-tile-title>Save as Png</v-list-tile-title></v-list-tile>
+            <v-list-tile>
+              <v-list-title-title><excel-button data="excelData" :fields="excelFields" name="filename.xls">Download Excel</excel-button></v-list-title-title>
+            </v-list-tile>
+            <v-list-tile v-if="!isDesignMode" class="divider"></v-list-tile>
+            <v-list-tile v-if="!isDesignMode" @click.prevent="remove"><v-list-tile-title>Remove</v-list-tile-title></v-list-tile>
+          </v-list>
+        </v-menu>
+      </v-layout>
+      <v-btn v-else flat block color="grey darken-2" class="mt-0" justify-start @click="$router.push(designLink)">{{ element.title }}</v-btn>
+      <v-layout column>
+        <div ref="elementWrapper" v-if="queryResult.schema">
+          <div v-if="element.chartType === 6">
+            <div v-html="customHtml"></div>
           </div>
+          <div class="full-height" v-else-if="element.chartType === 0">
+            <table class="table table-scrollable" v-if="queryResult"  v-on:click="tableSeen = !tableSeen">
+              <thead>
+                <th v-for="field in queryResult.schema.fields">{{field.name}}</th>
+                <th style="text-align: right; position: relative; padding-right: 20px;">
+                  <i class="icon-query-hide"></i>
+                </th>
+              </thead>
+              <tbody>
+              <tr v-for="row in queryResult.data">
+                <td v-for="value in row">{{value}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <vue-highcharts
+            v-else-if="!loading"
+            :options="chartOptions"
+            ref="chart">
+          </vue-highcharts>
         </div>
       </div>
-      <div class="full-height" ref="elementWrapper" v-if="queryResult.schema">
-        <div class="full-height" v-if="element.chartType === 6">
-          <div v-html="customHtml"></div>
-        </div>
-        <div class="full-height" v-else-if="element.chartType === 0">
-          <table class="table table-scrollable" v-if="queryResult"  v-on:click="tableSeen = !tableSeen">
-            <thead>
-              <th v-for="field in queryResult.schema.fields">{{field.name}}</th>
-              <th style="text-align: right; position: relative; padding-right: 20px;">
-                <i class="icon-query-hide"></i>
-              </th>
-            </thead>
-            <tbody>
-            <tr v-for="row in queryResult.data">
-              <td v-for="value in row">{{value}}</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-        <vue-highcharts
-          v-else-if="!loading"
-          :options="chartOptions"
-          ref="chart">
-        </vue-highcharts>
-      </div>
-    </div>
-  </div>
+      </v-layout>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>
@@ -99,7 +81,6 @@
   import { Util } from '@/helpers/helpers.js'
   import VueHighcharts from 'vue2-highcharts'
   import Mustache from 'mustache'
-  import ClickOutside from 'vue-click-outside'
   import JsonExcel from 'vue-json-excel'
   import html2canvas from 'html2canvas'
 
@@ -340,9 +321,6 @@
             }
           })
       }
-    },
-    directives: {
-      ClickOutside
     },
     created() {
       if (this.$socket && this.$socket.readyState === this.$socket.OPEN) {

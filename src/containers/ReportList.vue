@@ -1,24 +1,24 @@
 <template>
-  <div class="global-filters">
-    <div class="col-sm-12">
-      <h2>Reports</h2>
-      <ul class="global-filters">
-        <li
-          v-for="reportElement in reportElements"
-          :key="reportElement.id">
-          <span>
-            <label class="label label-default">{{ reportElement.id }}</label>
-            <span class="name">{{ reportElement.title }}</span>
-          </span>
-          <span class="flex-spacer"></span>
-          <span>
-            <span @click="deleteElement(reportElement.id)" class="label label-danger" >Delete</span>
-            <span @click="openDesign(reportElement.id)" class="label label-primary" >Design</span>
-          </span>
-        </li>
-      </ul>
-    </div>
-  </div>
+  <v-flex class="mt-5 mb-5" xs12 offset-lg3 lg6>
+    <h2 class="mb-3 display-1">Reports</h2>
+    <v-expansion-panel popout>
+      <v-expansion-panel-content v-for="reportElement in reportElements" :key="reportElement.id">
+        <div slot="header">{{ reportElement.title }}</div>
+        <v-card>
+          <v-card-text class="grey lighten-4" @click="deleteElement(reportElement.id)"> 
+            <v-btn color="red" dark>
+              <v-icon small>delete</v-icon>
+              DELETE
+            </v-btn>
+            <v-btn color="info" dark @click="viewDesign(reportElement.id)">
+              <v-icon small>subdirectory_arrow_right</v-icon>
+              VIEW DESIGN
+            </v-btn>
+          </v-card-text>
+        </v-card>
+      </v-expansion-panel-content>
+    </v-expansion-panel>
+  </v-flex>
 </template>
 
 <script>
@@ -32,7 +32,7 @@ export default {
     }
   },
   methods: {
-    openDesign: function (id) {
+    viewDesign: function (id) {
       this.$router.push('/report-design/' + id)
     },
     deleteElement: function (id) {

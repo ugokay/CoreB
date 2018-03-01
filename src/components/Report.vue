@@ -25,10 +25,10 @@
     <!-- #outer elements end -->
     <!-- report header -->
     <div class="report-header">
-      <div class="title-area">
+      <!-- <div class="title-area">
         <input v-if="isEditing" v-model="reportData.title">
         <p v-else v-html="reportData.title" />
-      </div>
+      </div> -->
       <div class="filterValues">
         <div
           class="filterValue"

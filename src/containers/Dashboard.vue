@@ -1,39 +1,51 @@
 <template>
   <div class="dashboard">
-    <div class="dash-actions-wrapper is-in-tab-area ">
-      <ul class="dash-actions hidden-xs">
-        <li @click="addReport">
-          <span class="icon"><icon name="plus"></icon></span>
-          <span class="text">Add Report</span>
-        </li>
-        <li @click="toggleEditable">
-          <span class="icon">
-            <icon name="pencil-square-o" v-if="!editable"></icon>
-            <icon name="eye" v-else></icon>
-          </span>
-          <span class="text"> {{editable ? 'View' : 'Edit'}} Mode</span>
-        </li>
-        <li @click="toggleFullscreen">
-          <span class="icon"><icon name="expand"></icon></span>
-          <span class="text">Fullscreen</span>
-        </li>
-        <li @click="toggleSlide">
-          <span class="icon">
-            <icon name="play" v-if="!isSliding"></icon>
-            <icon name="pause" v-else></icon>
-          </span>
-          <span class="text"> {{ isSliding ? 'Stop' : 'Start' }} Slide</span>
-        </li>
-        <li @click="exportReportAsPng">
-          <span class="icon"><icon name="upload"></icon></span>
-          <span class="text"><i class="icon-export"></i><span>Export</span></span>
-        </li>
-        <li @click="saveReport">
-          <span class="icon"><icon name="floppy-o"></icon></span>
-          <span class="text"><i class="icon-export"></i><span>Save</span></span>
-        </li>
-      </ul>
-    </div>
+    <v-toolbar flat="flat" color="white">
+      <v-menu transition="slide-y-transition" bottom="bottom" class="report-title-dropdown">
+        <v-btn icon="icon" slot="activator">
+          <v-icon>menu</v-icon>
+        </v-btn>
+        <v-list>
+          <v-list-tile v-for="(report, idx) in reports" :key="report.id" @click="viewReport(idx)">
+            <v-list-tile-title>{{ report.title }}</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
+      <v-toolbar-title>Order Report</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-tooltip bottom="bottom">
+        <v-btn icon="icon" slot="activator" @click="addReport">
+          <v-icon color="blue-grey darken-3">playlist_add</v-icon>
+        </v-btn><span>Add Report</span>
+      </v-tooltip>
+      <v-tooltip bottom="bottom">
+        <v-btn icon="icon" slot="activator" @click="toggleEditable">
+          <v-icon color="blue-grey darken-3" v-if="!editable">code</v-icon>
+          <v-icon color="blue-grey darken-3" v-else>remove_red_eye</v-icon>
+        </v-btn><span>{{editable ? 'View' : 'Edit'}}</span>
+      </v-tooltip>
+      <v-tooltip bottom="bottom">
+        <v-btn icon="icon" slot="activator" @click="toggleFullscreen">
+          <v-icon color="blue-grey darken-3">fullscreen</v-icon>
+        </v-btn><span>Fullscreen</span>
+      </v-tooltip>
+      <v-tooltip bottom="bottom">
+        <v-btn icon="icon" slot="activator" @click="toggleSlide">
+          <v-icon color="blue-grey darken-3" v-if="!isSliding">play_arrow</v-icon>
+          <v-icon color="blue-grey darken-3" v-else>pause</v-icon>
+        </v-btn><span>{{ isSliding ? 'Stop' : 'Start' }} Slide</span>
+      </v-tooltip>
+      <v-tooltip bottom="bottom">
+        <v-btn icon="icon" slot="activator" @click="exportReportAsPng">
+          <v-icon color="blue-grey darken-3">file_upload</v-icon>
+        </v-btn><span>Export</span>
+      </v-tooltip>
+      <v-tooltip bottom="bottom">
+        <v-btn icon="icon" slot="activator" @click="saveReport">
+          <v-icon color="blue-grey darken-3">save</v-icon>
+        </v-btn><span>Save Report</span>
+      </v-tooltip>
+    </v-toolbar>
      <fullscreen ref="fullscreen" :fullscreen.sync="fullscreen">
         <vue-tabs @tab-change="tabChange" id="tabs" ref="tabs">
           <v-tab
@@ -92,6 +104,9 @@
       }
     },
     methods: {
+      viewReport(id) {
+        this.$router.push('/#' + id)
+      },
       exportReportAsPng: function() {
         this.$refs.reports[this.selectedReportIdx].exportReportAsPng()
       },

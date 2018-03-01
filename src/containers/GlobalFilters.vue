@@ -1,34 +1,24 @@
 <template>
-  <div class="global-filters">
+  <v-flex class="mt-5 mb-5" xs12 offset-lg2 lg8>
     <filter-popup @addFilter="addFilter" ref="filterPopup" @updateFilter="updateFilter"/>
-    <a class="btn--add is-fixed" @click="openFilter">
-      <i class="icon-plus" />
-      Add
-    </a>
-    <div class="col-sm-12">
-      <h2>Global Filters</h2>
-      <ul class="global-filters is-table-view">
-        <li
-          v-for="(filterDefinition, index) in reportElements"
-          :key="filterDefinition.name">
-          <span class="name">{{ filterDefinition.name }}</span>
-          <span class="_label">{{ filterDefinition.label }}</span>
-          <span>
-            <label class="label label-default">{{ filterDefinition.type }}</label>
-          </span>
-          <div class="slider">
-            <router-link></router-link>
-          </div>
-          <span>
-            <label class="label label-default">{{ filterDefinition.defaultValue }}</label>
-          </span>
-          <span class="justify-content-end">
-            <label @click="openEditFilterPopup(index)" class="label label-primary">Edit</label>
-          </span>
-        </li>
-      </ul>
-    </div>
-  </div>
+    <h2 class="mb-3 display-1">Global Filters</h2>
+    <v-data-table
+      :headers="headers"
+      :items="reportElements"
+      hide-actions
+      class="elevation-1"
+    >
+      <template slot="items" slot-scope="props">
+        <td>{{ props.item.name }}</td>
+        <td class="text-xs-left">{{ props.item.label }}</td>
+        <td class="text-xs-left">{{ props.item.type }}</td>
+        <td class="text-xs-left">{{ props.item.defaultValue }}</td>
+        <td class="text-xs-center">
+          <v-btn @click="openEditFilterPopup(index)" class="mr-0" color="primary" small flat>Edit</v-btn>
+        </td>
+      </template>
+    </v-data-table>
+  </v-flex>
 </template>
 
 <script>
@@ -39,7 +29,14 @@ export default {
   name: 'GlobalFilters',
   data () {
     return {
-      reportElements: []
+      reportElements: [],
+      headers: [
+        { text: 'Name', },
+        { text: 'Label', },
+        { text: 'Type', },
+        { text: 'Default Value', },
+        { text: 'Edit', align: 'center' },
+      ],
     }
   },
   components: {

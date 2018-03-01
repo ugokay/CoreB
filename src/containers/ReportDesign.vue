@@ -71,22 +71,21 @@
           </div>
         </div>
         <div class="clearfix"></div>
-
+        
         <report-element
-          v-if="filtersLoaded"
+          v-if="filtersLoaded && queryResult"
           ref="reportElement"
           :element="element"
           :filters="filters"
           :isDesignMode="true"
           @executed="executed"
           @editChart="editChart"
-          @getCanvas="getCanvas">
-        </report-element>
+          @getCanvas="getCanvas" />
 
         <table class="table" v-if="queryResult"  v-on:click="tableSeen = !tableSeen">
           <thead>
             <th v-for="field in queryResult.schema.fields">{{field.name}}</th>
-            <th style="text-align: right;    position: relative;    padding-right: 20px;">
+            <th style="text-align: right; position: relative; padding-right: 20px;">
               <i class="icon-query-hide"></i>
             </th>
           </thead>
@@ -160,7 +159,7 @@
         const { elementId } = updates
         this.$refs.reportElements.forEach(reportElement => {
           if (reportElement.elementData.id === elementId) {
-            reportElement.setUpdates(updates)
+            return reportElement.setUpdates(updates)
           } else {
             return false
           }
@@ -232,10 +231,10 @@
           }
           window.localStorage.setItem('UI_Options', JSON.stringify(uiOptions))
         }
-
       }
     },
     created: function () {
+      console.log(this.queryResult)
       HTTP.get('bi/report/element/' + this.$route.params.id)
         .then((res) => {
           this.element = res.data

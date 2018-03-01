@@ -77,10 +77,6 @@ ICOMOON SET */
    box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.12) */
 }
 
-.flex {
-  display: flex
-}
-
 .report--design .filterDefinitionLabel {
   margin-top: 25px;
 }
@@ -613,10 +609,6 @@ ol {
   padding: 0;
 }
 
-.flex {
-  display: flex;
-}
-
 .flex-left {
   justify-content: flex-start;
 }
@@ -629,12 +621,20 @@ ol {
   justify-content: flex-end;
 }
 
+.input-group {
+  z-index: 999
+}
+
 .flex-space-between {
   justify-content: space-between;
 }
 
 .flex-top {
   align-items: flex-start;
+}
+
+.btn {
+  z-index: 999
 }
 
 .flex-middle {
@@ -1018,10 +1018,11 @@ li.nav-item {
 .barStatus.first-item {
   top: 30px;
 }
-
+.nav-tabs-navigation {
+  display: none!important
+}
 .content {
-  background: #f1f1f1;
-  padding-right: 0;
+  padding: 0 0 0 21px!important
 }
 
 .nav-tabs {
@@ -1030,6 +1031,9 @@ li.nav-item {
   background: #fff
 }
 
+.logo-small {
+  padding: 13px!important
+}
 
 
 .spinner {
@@ -1783,6 +1787,10 @@ span._title {
   justify-content: right
 }
 
+.report-title-dropdown {
+  z-index: 9999
+}
+
 .mx-datepicker-top span:first-child::after {
   display: none
 }
@@ -1796,6 +1804,10 @@ span._title {
   flex: 1;
 }
 
+.expansion-panel__container:first-child {
+  border: 1px solid rgba(0,0,0,.12)!important;
+}
+
 ::-webkit-scrollbar {
   display: none;
 }
@@ -1804,11 +1816,18 @@ span._title {
   display: flex;
   align-items: center;
 }
+.expansion-panel__container {
+  border: 1px solid rgba(0,0,0,.12);
+  margin-top: -1px
+}
 
 .sidebarLinks.admin-settings a {
   margin-top: 0
 }
-
+.container {
+  padding: 0;
+  max-width: auto!important
+}
 .nav-settings {
   position: absolute;
   bottom: 0;
@@ -1828,8 +1847,10 @@ span._title {
   transition: background 300ms
 }
 
-.nav-settings a:hover {
-  background: #272830
+.report-element-dropdown .list__tile {
+  height: 35px!important;
+  font-size: 13px!important;
+  cursor: pointer
 }
 
 .navbar.is-scaled .nav-settings {
@@ -2402,6 +2423,9 @@ span._title {
   align-items: center
 }
 
+.logo {
+  padding: 25px
+}
 .line-color-set {
   display: flex;
   align-items: flex-start;
@@ -2473,4 +2497,7 @@ span._title {
   100% {
     transform: scale(1) rotate(360deg)
   }
+}
+.navigation-drawer {
+  z-index: 9999
 }

@@ -1,20 +1,21 @@
 <template>
-  <div id="app">
-    <div class="App-container" v-if="isLogged">
+  <v-app id="app">
+    <v-container v-if="isLogged">
+      <div class="rest-loading" v-if="isLoadingRest"></div>
       <navigation />
-      <mobile-navigation />
-      <div class="main-content scrollable">
-        <div class="rest-loading" v-if="isLoadingRest"></div>
-        <transition name="fade">
-          <router-view />
-        </transition>
-      </div>
-    </div>
+      <v-content>
+        <v-container>
+          <transition name="fade">
+            <router-view></router-view>
+          </transition>
+        </v-container>
+      </v-content>
+    </v-container>
     <login
       v-else
       @success="onLoginSuccess"
       @error="onLoginError" />
-  </div>
+  </v-app>
 </template>
 
 <script>
