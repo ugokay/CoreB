@@ -25,19 +25,35 @@
     <!-- #outer elements end -->
     <!-- report header -->
     <div class="report-header">
-      <!-- <div class="title-area">
-        <input v-if="isEditing" v-model="reportData.title">
-        <p v-else v-html="reportData.title" />
-      </div> -->
-      <div class="filterValues">
-        <div
-          class="filterValue"
-          v-for="filterValue in filterValues">
-          <label class="label label-default">{{ filterValue.label }}</label>
-          <span>{{ filterValue.value }}</span>
-        </div>
-      </div>
+
+      <v-layout>
+        <v-flex xs11 sm2 v-for="filterValue in filterValues">
+          <v-menu
+            ref="menu"
+            lazy
+            :close-on-content-click="false"
+            transition="scale-transition"
+            offset-y
+            full-width
+            :nudge-right="40"
+            min-width="290px"
+            :return-value.sync="filterValue.value">
+            <v-text-field
+              slot="activator"
+              :label="filterValue.label"
+              v-model="filterValue.value"
+              prepend-icon="event"
+              readonly />
+            <v-date-picker v-model="filterValue.value" no-title scrollable>
+              <v-spacer></v-spacer>
+              <v-btn flat color="primary">Cancel</v-btn>
+              <v-btn flat color="primary">OK</v-btn>
+            </v-date-picker>
+          </v-menu>
+        </v-flex>
+      </v-layout>
     </div>
+    
     <grid-layout
       ref="gridLayout"
       id="grid"

@@ -11,7 +11,7 @@
           </v-list-tile>
         </v-list>
       </v-menu>
-      <v-toolbar-title>Order Report</v-toolbar-title>
+      <v-toolbar-title>{{ reportTitle }}</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-tooltip bottom="bottom">
         <v-btn icon="icon" slot="activator" @click="addReport">
@@ -20,7 +20,7 @@
       </v-tooltip>
       <v-tooltip bottom="bottom">
         <v-btn icon="icon" slot="activator" @click="toggleEditable">
-          <v-icon color="blue-grey darken-3" v-if="!editable">code</v-icon>
+          <v-icon color="blue-grey darken-3" v-if="!editable">format_shapes</v-icon>
           <v-icon color="blue-grey darken-3" v-else>remove_red_eye</v-icon>
         </v-btn><span>{{editable ? 'View' : 'Edit'}}</span>
       </v-tooltip>
@@ -172,6 +172,11 @@
         }
       }
     },
+    computed: {
+      reportTitle() {
+        return this.reports[this.selectedReportIdx].title
+      }
+    },
     created() {
       HTTP.get('bi/report/filter/list')
         .then(res => {
@@ -183,6 +188,12 @@
       } else {
         this.getReports(0)
       }
-    }
+    },
+    watch: {
+      $route (to, from){
+        const id = to.hash.split('#')[1]
+        this.getReports(Number(id))
+      }
+    } 
   }
 </script>

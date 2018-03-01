@@ -1,8 +1,8 @@
 <template>
   <li class="is-list-item">
-    <h6>
+    <h6 class="subheading">
       <icon name="database"></icon>
-      <span class="title"> {{ field.name }} </span>
+      <span class="body-2"> {{ field.name }} </span>
     </h6>
     <span :class="saved">
       <icon name="check"></icon>
@@ -21,16 +21,14 @@
         <span class="text"><i></i></span>
       </label>
     </div>
-    <div class="details" v-click-outside="hideDropdown">
-      <span
-        class="openDropdownArea"
-        @click="openDropdown">
-        <icon name="ellipsis-v"></icon>
-      </span>
-      <ul :class="isVisible">
-        <li><a>Delete</a></li>
-      </ul>
-    </div>
+    <v-menu offset-y right>
+      <v-btn icon slot="activator" class="mr-1">
+        <v-icon class="color-grey">more_vert</v-icon>
+      </v-btn>
+      <v-list class="report-element-dropdown">
+        <v-list-tile @click=""><v-list-tile-title>DELETE</v-list-tile-title></v-list-tile>
+      </v-list>  
+    </v-menu>
   </li>
 </template>
 

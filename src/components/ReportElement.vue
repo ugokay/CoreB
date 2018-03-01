@@ -1,5 +1,6 @@
 <template>
-  <!-- <div v-if="loading" class="progress-bar-area">
+  <v-layout wrap>
+    <div v-if="loading" class="progress-bar-area">
       <div class="loading-nice">
         <span></span>
       </div>
@@ -9,8 +10,7 @@
         v-bind:style="{ width: progress + '%' }">
         <span>{{progress}}%</span>
       </div>
-    </div> -->
-  <v-layout wrap>
+    </div> 
     <v-flex xs12 md12 lg12 wrap>
       <v-layout class="pl-3 pt-2" v-if="isEditing">
         <v-text-field type="input" class="pt-0" v-model="element.title"/>

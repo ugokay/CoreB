@@ -6,11 +6,11 @@
         <div slot="header">{{ reportElement.title }}</div>
         <v-card>
           <v-card-text class="grey lighten-4" @click="deleteElement(reportElement.id)"> 
-            <v-btn color="red" dark>
+            <v-btn small color="red" dark>
               <v-icon small>delete</v-icon>
               DELETE
             </v-btn>
-            <v-btn color="info" dark @click="viewDesign(reportElement.id)">
+            <v-btn small color="info" dark @click="viewDesign(reportElement.id)">
               <v-icon small>subdirectory_arrow_right</v-icon>
               VIEW DESIGN
             </v-btn>

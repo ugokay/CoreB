@@ -1,41 +1,43 @@
 <template>
-  <div class="global-filters">
-    <filter-popup ref="filterPopup" />
-    <a class="btn--add is-fixed" >
-      <i class="icon-plus" />
-      Add
-    </a>
-    <div class="col-sm-12">
-      <h2>Mappers</h2>
-      <ul class="global-filters is-pointer">
-        <span class="title">Enabled Mappers</span>
-        <router-link
-          v-for="mapper in mappers"
-          :to="/mapper/ + mapper.id"
-          :key="mapper.name"
-          :class="isDisabled"
-          v-if="!mapper.isEnabled"
-          tag="li">
-          <span class="name">{{ mapper.name }}</span>
-          <span class="flex-spacer"></span>
-          <label class="label label-default">Edit</label>
-        </router-link>
-        <span class="title">Disabled Mappers</span>
-        <router-link
-          v-for="mapper in mappers"
-          :to="/mapper/ + mapper.id"
-          :key="mapper.name"
-          :class="isDisabled"
-          v-if="!mapper.isEnabled"
-          class="is-passive"
-          tag="li">
-          <span class="name">{{ mapper.name }}</span>
-          <span class="flex-spacer"></span>
-          <label class="label label-default">Edit</label>
-        </router-link>
-      </ul>
+  <v-flex class="mt-5 mb-5" xs12 offset-lg2 lg8>
+    <div class="global-filters">
+      <filter-popup ref="filterPopup" />
+      <a class="btn--add is-fixed" >
+        <i class="icon-plus" />
+        Add
+      </a>
+      <div class="col-sm-12">
+        <h2>Mappers</h2>
+        <ul class="global-filters is-pointer">
+          <span class="title">Enabled Mappers</span>
+          <router-link
+            v-for="mapper in mappers"
+            :to="/mapper/ + mapper.id"
+            :key="mapper.name"
+            :class="isDisabled"
+            v-if="!mapper.isEnabled"
+            tag="li">
+            <span class="name">{{ mapper.name }}</span>
+            <span class="flex-spacer"></span>
+            <v-btn color="primary" small>Edit</v-btn>
+          </router-link>
+          <span class="title">Disabled Mappers</span>
+          <router-link
+            v-for="mapper in mappers"
+            :to="/mapper/ + mapper.id"
+            :key="mapper.name"
+            :class="isDisabled"
+            v-if="!mapper.isEnabled"
+            class="is-passive"
+            tag="li">
+            <span class="name">{{ mapper.name }}</span>
+            <span class="flex-spacer"></span>
+            <v-btn color="primary" small>Edit</v-btn>
+          </router-link>
+        </ul>
+      </div>
     </div>
-  </div>
+  </v-flex>
 </template>
 
 <script>

@@ -58,6 +58,7 @@ export default {
         { icon: 'list', text: 'Report List', link: '/report-list'},
         { icon: 'filter_list', text: 'Global Filters', link: '/global-filters'},
         { icon: 'layers', text: 'Mappers', link: '/mappers'},
+        { icon: 'people', text: 'Users', link: '/users'},
         { icon: 'business', text: 'Schemas', link: '/schemas'},
       ]
     }

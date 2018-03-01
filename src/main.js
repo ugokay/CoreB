@@ -4,7 +4,6 @@ import App from './App'
 import router from './router'
 import VueSweetalert2 from 'vue-sweetalert2'
 
-// import 'bootstrap/dist/css/bootstrap.min.css'
 import 'vuetify/dist/vuetify.min.css'
 import '../style.css'
 import VueHotkey from 'v-hotkey'

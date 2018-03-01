@@ -1,5 +1,5 @@
 <template>
-  <div class="col-md-12">
+  <v-flex class="mt-4 mr-4 ml-4 mb-4" xs12>
     <schema-popup
       ref="schemaPopup"
       @newScheme="newScheme"
@@ -7,47 +7,47 @@
     <a class="btn--add is-fixed" @click="openPopup">
       <i class="icon-plus mr-5" /> Add
     </a>
-    <div class="row">
-      <div class="nav-tabs-navigation">
-        <div class="nav-tabs-wrapper">
-          <ul class="nav nav-tabs">
-            <router-link tag="li" to="/">
-              <span class="button-holder title title_center">
-                <a class="headToBack">
-                  <icon name="chevron-left"></icon>
-                  Back to Dashboard
-                </a>
-              </span>
-            </router-link>
-          </ul>
-        </div>
-      </div>
-      <div
-        v-for="scheme in schemas"
-        :key="scheme.name.table"
-        class="col-md-6 col-xs-12 mb-3">
-        <span class="_title capitalizeFirstLetter"> {{ scheme.name.table }} </span>
-        <ul class="global-filters has-after-bg">
-          <li class="is-list-item item-header">
-            <h6>
-              <span class="title"> Name </span>
-            </h6>
-            <div class="labels">
-                <span class="text">Dope</span>
-                <span class="text">Pope</span>
-                <span class="text">Xope</span>
-            </div>
-          </li>
-          <div class="scrollable-item-box">
-          <schema-item
-            v-for="field in scheme.fields"
-            :key="field.name"
-            :field="field" />
+      <div class="row">
+        <div class="nav-tabs-navigation">
+          <div class="nav-tabs-wrapper">
+            <ul class="nav nav-tabs">
+              <router-link tag="li" to="/">
+                <span class="button-holder title title_center">
+                  <a class="headToBack">
+                    <icon name="chevron-left"></icon>
+                    Back to Dashboard
+                  </a>
+                </span>
+              </router-link>
+            </ul>
           </div>
-        </ul>
+        </div>
+        <v-layout wrap>
+          <v-flex v-for="scheme in schemas" :key="scheme.name.table" xs12 lg4 md6>
+            <span class="_title capitalizeFirstLetter"> {{ scheme.name.table }} </span>
+            <ul class="global-filters has-after-bg">
+              <li class="is-list-item item-header">
+                <h6 >
+                  <span class="title"> Name </span>
+                </h6>
+                <div class="labels">
+                    <span class="text">Dope</span>
+                    <span class="text">Pope</span>
+                    <span class="text">Xope</span>
+                </div>
+              </li>
+              <div class="scrollable-item-box">
+              <schema-item
+                v-for="field in scheme.fields"
+                :key="field.name"
+                :field="field" />
+              </div>
+            </ul>
+          </v-flex>
+        </v-layout>
       </div>
     </div>
-  </div>
+  </v-flex>
 </template>
 
 <script>

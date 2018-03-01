@@ -926,23 +926,6 @@ li.nav-item {
   flex: 1;
 }
 
-.report-header p,
-.report-header input {
-  background: transparent;
-  border: 0;
-  color: #060606;
-  font-size: 24px;
-  font-style: normal;
-  width: 100%;
-  border: 1px dashed transparent;
-  margin: 0;
-  padding: 10px
-}
-
-.report-header input {
-  border: 1px dashed #e7c1c1;
-}
-
 .report-header .title-area {
   width: 25%;
   margin-right: 30px;
@@ -1281,7 +1264,6 @@ li.tab.active a,
 
 .global-filters li {
   padding: 1em;
-  height: 50px;
   background-color: #ffffff;
   box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.12);
   margin-bottom: 1px;
@@ -1329,7 +1311,7 @@ li.tab.active a,
 
 span._title {
   display: block;
-  padding: .6em 0;
+  padding: 20px 0 0 20px;
   font-size: 18px;
 }
 
@@ -1349,7 +1331,9 @@ span._title {
 .mapperNav a {
   color: #000000!important
 }
-
+.global-filters.has-after-bg {
+  margin: 15px;
+}
 .checkbox-item .text {
   color: #000;
   font-size: 14px;
@@ -1611,11 +1595,16 @@ span._title {
 }
 
 .global-filters li {
-  padding: 1em;
-  height: 50px;
+  padding: .5em;
+  padding-left: 1em;
+  align-items: center;
   background-color: #ffffff;
   box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.12);
-  margin-bottom: 1px
+  margin-bottom: 1px;
+}
+
+.global-filters li > span {
+  width: 25%;
 }
 
 .global-filters li .name {

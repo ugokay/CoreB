@@ -1,49 +1,45 @@
 <template>
-  <div class="global-filters">
-    <user-popup ref="userPopup" @addNewUser="addNewUser" />
-    <group-popup ref="groupPopup" @addNewGroup="addNewGroup"/>
-    <div class="btn--add has-multiple is-fixed">
-      <a @click.prevent="addUser"><i class="icon-plus" /> Add User</a>
-      <a @click.prevent="addGroup">Add Group</a>
-    </div>
-    <div class="col-sm-12">
-      <!-- <h2>Users Group</h2> -->
-      <ul class="global-filters">
-        <span class="title">User Groups</span>
-        <li
-          v-for="(user_group, index) in user_groups"
-          :key="user_group.id">
-          <span class="name">
-            {{ user_group.name }} ({{ userCounts(user_group.id) }})
-          </span>
-          <span class="flex-spacer"></span>
-          <span>
-            <span class="label label-danger">Delete</span>
-            <span 
-              class="label label-primary is-pointer"
-              @click="editGroup(index)">
-              Edit
+  <v-flex class="mt-5 mb-5" xs12 offset-lg2 lg8>
+    <div class="global-filters">
+      <user-popup ref="userPopup" @addNewUser="addNewUser" />
+      <group-popup ref="groupPopup" @addNewGroup="addNewGroup"/>
+      <div class="btn--add has-multiple is-fixed">
+        <a @click.prevent="addUser"><i class="icon-plus" /> Add User</a>
+        <a @click.prevent="addGroup">Add Group</a>
+      </div>
+      <div class="col-sm-12">
+        <!-- <h2>Users Group</h2> -->
+        <ul class="global-filters">
+          <span class="title">User Groups</span>
+          <li
+            v-for="(user_group, index) in user_groups"
+            :key="user_group.id">
+            <span class="name">
+              {{ user_group.name }} ({{ userCounts(user_group.id) }})
             </span>
-          </span>
-        </li>
-      </ul>
-      <ul class="global-filters">
-        <span class="title">Users</span>
-        <li
-          class="row no-margin is-pointer"
-          v-for="(user, index) in users"
-          tag="li"
-          @click="editUser(index)"
-          :key="user.id">
-          <span class="col-md-2 col-xs-6 name no-padding">{{ user.full_name.split(' ')[0] }}</span>
-          <span class="col-md-2 col-xs-6 name">{{ user.full_name.split(' ')[1] }}</span>
-          <span class="col-md-4 col-xs-6 text-muted">{{ user.email }}</span>
-          <span class="col-md-1 col-xs-6 name">{{ user.id }}</span>
-          <span class="col-md-3 col-xs-6 text-right no-padding">{{ calculateUserRoles(user.roles) }}</span>
-        </li>
-      </ul>
+            <v-spacer></v-spacer>
+            <v-btn class="red" dark small>Delete</v-btn>
+            <v-btn class="info" @click="editGroup(index)" dark small>Edit</v-btn>
+          </li>
+        </ul>
+        <ul class="global-filters mt-3">
+          <span class="title">Users</span>
+          <li
+            class="row no-margin is-pointer"
+            v-for="(user, index) in users"
+            tag="li"
+            @click="editUser(index)"
+            :key="user.id">
+            <span class="name no-padding">{{ user.full_name.split(' ')[0] }}</span>
+            <span class="name">{{ user.full_name.split(' ')[1] }}</span>
+            <span class="text-muted">{{ user.email }}</span>
+            <span class="name">{{ user.id }}</span>
+            <v-btn small flat>{{ calculateUserRoles(user.roles) }}</v-btn>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
+  </v-flex>
 </template>
 
 <script>
