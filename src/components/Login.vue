@@ -1,29 +1,20 @@
 <template>
-  <div class="row">
-    <div class="col-md-4 col-sm-offset-4">
-      <img src="/static/logo_invert.png" alt="" style="margin: auto;      display: block;      padding: 50px;">
-      <div class="panel panel-primary" style="border-color: #24262c">
-        <div class="panel-heading" style="background:#24262c">
-          <h3 class="panel-title">Login</h3>
-        </div>
-        <div class="panel-body">
-          <form class="form-horizontal">
-            <div class="form-group col-md-12">
-              <label for="username">Username</label>
-              <input name="username" v-model="userName"  class="form-control" />
-            </div>
-            <div class="form-group col-md-12">
-              <label for="password">Password</label>
-              <input name="password" v-model="password"  class="form-control"  type="password"/>
-            </div>
-            <div class="col-md-12">
-              <button @click.prevent="login" style="background:#24262c" class="btn btn-primary">Login</button>
-            </div>
-          </form>
-        </div>
+  <v-layout justify-center class="grey lighten-3 pt-5">
+    <v-flex xs12 lg3 class="pt-5">
+      <div class="mb-5 text-center">
+        <img src="static/logo_invert.png" />
       </div>
-    </div>
-  </div>
+      <v-card>
+        <v-card-text>
+          <v-text-field label="Username" v-model="userName" />
+          <v-text-field label="Password" type="password" requied v-model="password" />
+          <v-btn :loading="loading"
+      @click.native="loader = 'loading'"
+      :disabled="loading" large color="primary" block @click="login">LOGIN</v-btn>
+        </v-card-text>
+      </v-card>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>
@@ -33,16 +24,19 @@
     data: function () {
       return {
         userName: '',
-        password: ''
+        password: '',
+        loading: false
       }
     },
     methods: {
       login: function () {
+        this.loading = true
         AUTH.login(this.userName, this.password).then((res) => {
           this.$emit('success', res.data)
           AUTH.setToken(res.data.token)
         }).catch((error) => {
           this.$emit('error', error.response)
+          this.loading = false
         })
       }
     }
