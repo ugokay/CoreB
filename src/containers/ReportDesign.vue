@@ -1,35 +1,39 @@
 <template>
   <div v-hotkey="keymap" class="report--design">
-    <image-popup
-      ref="imagePopup" />
-    <filter-popup
-      @updateFilter="updateFilter"
-      ref="filterPopup" />
-    <chart-helper-popup
-      ref="chartPopup"
-      @chartEditingFinished="chartEditingFinished" />
-    <div class="nav-tabs-navigation">
+    <!-- outer elements -->
+    <image-popup ref="imagePopup" />
+    <filter-popup  @updateFilter="updateFilter" ref="filterPopup" />
+    <chart-helper-popup ref="chartPopup"  @chartEditingFinished="chartEditingFinished" />
+    <!-- content -->
       <div class="nav-tabs-wrapper is-design-nav-wrapper">
-        <ul class="nav nav-tabs">
-            <li @click="goBack">
-              <span class="button-holder title title_center">
-                <a class="headToBack">
-                  <icon name="chevron-left"></icon>
-                  Back
-                </a>
-              </span>
-            </li>
-          </ul>
-          <span class="flex-spacer"></span>
-          <ul class="top-related-actions">
-            <li @click="handleTabs('html')" :class="isActiveHtml"> <i class="icon-query"></i> HTML</li>
-            <li @click="handleTabs('query')" :class="isActiveQuery"> <i class="icon-query"></i> Query</li>
-            <li> <i class="icon-refresh"></i> Refresh</li>
-            <li> <i class="icon-export"></i> Export</li>
-            <li @click.prevent="save"><i class="icon-export"></i> Save</a></li>
-          </ul>
-        </div>
-    </div>
+        <v-toolbar flat="flat" color="white">
+          <v-btn @click="goBack" flat>
+            <v-icon>keyboard_arrow_left</v-icon>
+            BACK
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn medium @click="handleTabs('html')" class="mr-0" color="blue-grey darken-1" dark :flat="!showHtml ? true : false">
+            <v-icon class="mr-2">code</v-icon>
+            HTML
+          </v-btn>
+          <v-btn medium @click="handleTabs('query')" class="mr-0" color="blue-grey darken-1" dark :flat="!seenQuery ? true : false">
+            <v-icon class="mr-2">whatshot</v-icon>
+            Query
+          </v-btn>
+          <v-btn medium class="mr-0" color="blue-grey darken-1" dark flat>
+            <v-icon class="mr-2">refresh</v-icon>
+            Refresh
+          </v-btn>
+          <v-btn medium class="mr-0" color="blue-grey darken-1" dark flat>
+            <v-icon class="mr-2">import_export</v-icon>
+            Export
+          </v-btn>
+          <v-btn medium @click.prevent="save" class="mr-0" color="blue-grey darken-1" dark flat>
+            <v-icon class="mr-2">save</v-icon>
+            Save
+          </v-btn>
+        </v-toolbar>
+      </div>
     <div v-if="element">
       <div v-show="showHtml">
         <editor
@@ -54,11 +58,12 @@
          </div>
       </div>
       <div class="report-element-details-wrapper">
-        <div class="form-group selected-report-options row mb-0">
-          <div
+        <v-layout class="form-group selected-report-options row mb-0">
+          <v-flex
+            xs12 lg2 md3 sm3
             v-for="filterDefinition in filterDefinitions"
             v-if="!filterDefinition.static"
-            class="form-group col-sm-3 col-lg-2">
+            class="form-group">
             <label class="filterDefinitionLabel">
               {{filterDefinition.label}}
               <span
@@ -68,10 +73,10 @@
               </span>
             </label>
             <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
-          </div>
-        </div>
+          </v-flex>
+        </v-layout>
         <div class="clearfix"></div>
-        
+        <!-- report element -->
         <report-element
           v-if="filtersLoaded && queryResult"
           ref="reportElement"
@@ -81,7 +86,6 @@
           @executed="executed"
           @editChart="editChart"
           @getCanvas="getCanvas" />
-
         <table class="table" v-if="queryResult"  v-on:click="tableSeen = !tableSeen">
           <thead>
             <th v-for="field in queryResult.schema.fields">{{field.name}}</th>
@@ -120,7 +124,7 @@
   export default {
     components: { ReportElement, Editor, Report, ReportFilter, FilterPopup, Icon, ImagePopup, ChartHelperPopup  },
     name: 'report-design',
-    data: function () {
+    data() {
       return {
         element: null,
         globalFilterDefinitions: [],
@@ -143,12 +147,6 @@
         return {
           'ctrl+shift+s': this.save
         }
-      },
-      isActiveHtml() {
-        return this.showHtml ? 'active' : ''
-      },
-      isActiveQuery() {
-        return this.seenQuery ? 'active' : ''
       }
     },
     methods: {
@@ -183,7 +181,7 @@
       openFilterPopup: function (filterDefinition) {
         this.$refs.filterPopup.open(filterDefinition)
       },
-      calculateFilterDefinitions: function () {
+      calculateFilterDefinitions() {
         let filterTokens = Util.getUnifiedMustacheTokens([this.element.query])
         if (filterTokens.length > 0) {
           this.filterDefinitions = Util.calculateFilterDefinitions(filterTokens, this.globalFilterDefinitions)
@@ -194,13 +192,11 @@
           }) */
         }
       },
-      save: function () {
-        HTTP.post('/bi/report/element', this.element)
-          .then(res => {
-            console.log('Element Saved ' + this.element.id)
-          })
+      async save() {
+        const response = await HTTP.post('/bi/report/element', this.element)
+        console.log('Element Saved ' + this.element.id)
       },
-      run: function () {
+      run() {
         this.$refs.reportElement.executeQuery()
       },
       queryChange: function (newVal) {
@@ -233,7 +229,7 @@
         }
       }
     },
-    created: function () {
+    created() {
       console.log(this.queryResult)
       HTTP.get('bi/report/element/' + this.$route.params.id)
         .then((res) => {

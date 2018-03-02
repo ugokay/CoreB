@@ -3,8 +3,9 @@
     <fullscreen ref="fullscreen" :fullscreen.sync="fullscreen">
       <v-toolbar flat="flat" color="white">
         <v-menu transition="slide-y-transition" bottom="bottom" class="report-title-dropdown">
-          <v-btn icon="icon" slot="activator">
+          <v-btn icon="icon" slot="activator" style="position: relative">
             <v-icon>menu</v-icon>
+            <span class="blinking" v-if="isBlinking"></span>
           </v-btn>
           <v-list>
             <v-list-tile v-for="(report, idx) in reports" :key="report.id" @click="viewReport(idx)">
@@ -100,7 +101,8 @@
         reports: [],
         fullscreen: false,
         isSliding: false,
-        editable: false
+        editable: false,
+        isBlinking: false
       }
     },
     methods: {
@@ -133,6 +135,10 @@
           })
       },
       addReport() {
+        this.isBlinking = true 
+        setTimeout(() => {
+          this.isBlinking = false
+        }, 2000)
         this.reports.push({
           title: 'Untitled',
           elements: []

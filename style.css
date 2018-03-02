@@ -1747,10 +1747,33 @@ span._title {
 }
 
 .elementList li {
-  padding: 1em;
+  padding: .3em;
   border-bottom: 1px solid #ddd;
   display: flex;
   align-items: center
+}
+
+.blinking {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  background: #F4511E;
+  border-radius: 50%;
+  animation: blinking 500ms
+}
+
+@keyframes blinking {
+  0% {
+    transform: scale(0)
+  }
+  50% {
+    transform: scale(1.5)
+  }
+  100% {
+    transform: scale(1)
+  }
 }
 
 .elementList li .btn {
@@ -2020,6 +2043,9 @@ span._title {
   }
 }
 
+.report--design .nav-tabs-navigation {
+  display: block!important
+}
 
 
 @media screen and (min-width: 1440px) {
