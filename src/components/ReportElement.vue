@@ -34,8 +34,8 @@
             <v-list-tile class="divider"></v-list-tile>
             <v-list-tile @click.prevent="editChart"><v-list-tile-title>Edit Chart</v-list-tile-title></v-list-tile>
             <v-list-tile @click.prevent="saveAsPng"><v-list-tile-title>Save as Png</v-list-tile-title></v-list-tile>
-            <v-list-tile>
-              <v-list-title-title><excel-button data="excelData" :fields="excelFields" name="filename.xls">Download Excel</excel-button></v-list-title-title>
+            <v-list-tile @click="">
+              <excel-button data="excelData" :fields="excelFields" name="filename.xls">Download Excel</excel-button>
             </v-list-tile>
             <v-list-tile v-if="!isDesignMode" class="divider"></v-list-tile>
             <v-list-tile v-if="!isDesignMode" @click.prevent="remove"><v-list-tile-title>Remove</v-list-tile-title></v-list-tile>
@@ -89,7 +89,6 @@
     components: { VueHighcharts, 'excel-button': JsonExcel },
     data() {
       return {
-        clickedDropDown: false,
         queryResult: {},
         loading: false,
         progress: 0,
@@ -237,14 +236,6 @@
       },
       setChartType(value) {
         this.elementData.chartType = Util.chartType(value)
-      },
-      hideDropdown() {
-        this.clickedDropDown = false
-      },
-      openDropdown() {
-        this.clickedDropDown = true
-        document.querySelectorAll('.vue-grid-item').forEach(item => { item.style.zIndex = '1' })
-        this.$el.parentNode.style.zIndex = '10'
       },
       redrawChart() {
         if (this.elementData.chartType !== 6) {

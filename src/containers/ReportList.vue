@@ -5,8 +5,8 @@
       <v-expansion-panel-content v-for="reportElement in reportElements" :key="reportElement.id">
         <div slot="header">{{ reportElement.title }}</div>
         <v-card>
-          <v-card-text class="grey lighten-4" @click="deleteElement(reportElement.id)"> 
-            <v-btn small color="red" dark>
+          <v-card-text class="grey lighten-4"> 
+            <v-btn small color="red" dark @click="deleteElement(reportElement.id)">
               <v-icon small>delete</v-icon>
               DELETE
             </v-btn>

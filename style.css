@@ -1749,6 +1749,8 @@ span._title {
 .elementList li {
   padding: 1em;
   border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center
 }
 
 .elementList li .btn {

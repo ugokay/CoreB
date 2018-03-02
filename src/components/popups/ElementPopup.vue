@@ -15,11 +15,14 @@
         <li
           v-for="element in filteredElements">
           {{element.title}} - {{chartTypeText(element)}}
-          <span
+          <v-spacer />
+          <v-btn
+            color="primary"
+            small
             @click="addElement(element)"
             class="btn btn-xs btn-primary pull-right">
             Add
-          </span>
+          </v-btn>
         </li>
       </ul>
     </div>
