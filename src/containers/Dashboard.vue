@@ -125,6 +125,7 @@
         this.$refs.reports.forEach(report => report.toggleEditMode())
       },
       getReports(initialTabIdx) {
+
         HTTP.get('bi/report/list')
           .then((res) => {
             this.reports = res.data

@@ -26,32 +26,42 @@
     <!-- report header -->
     <div class="report-header">
 
-      <v-layout>
-        <v-flex xs11 sm2 v-for="filterValue in filterValues">
-          <v-menu
-            ref="menu"
-            lazy
-            :close-on-content-click="false"
-            transition="scale-transition"
-            offset-y
-            full-width
-            :nudge-right="40"
-            min-width="290px"
-            :return-value.sync="filterValue.value">
-            <v-text-field
-              slot="activator"
-              :label="filterValue.label"
-              v-model="filterValue.value"
-              prepend-icon="event"
-              readonly />
-            <v-date-picker v-model="filterValue.value" no-title scrollable>
-              <v-spacer></v-spacer>
-              <v-btn flat color="primary">Cancel</v-btn>
-              <v-btn flat color="primary">OK</v-btn>
-            </v-date-picker>
-          </v-menu>
-        </v-flex>
-      </v-layout>
+      <v-expansion-panel popout>
+        <v-expansion-panel-content>
+          <div slot="header">
+            <v-layout>
+              <v-flex xs11 sm2 v-for="filterValue in filterValues">
+                <v-menu
+                  ref="menu"
+                  lazy
+                  :close-on-content-click="false"
+                  transition="scale-transition"
+                  offset-y
+                  full-width
+                  :nudge-right="40"
+                  min-width="290px"
+                  :return-value.sync="filterValue.value">
+                  <v-text-field
+                    slot="activator"
+                    :label="filterValue.label"
+                    v-model="filterValue.value"
+                    prepend-icon="event"
+                    readonly />
+                  <v-date-picker v-model="filterValue.value" no-title scrollable>
+                    <v-spacer></v-spacer>
+                    <v-btn flat color="primary">Cancel</v-btn>
+                    <v-btn flat color="primary">OK</v-btn>
+                  </v-date-picker>
+                </v-menu>
+              </v-flex>
+            </v-layout>
+          </div>
+          <v-card>
+            
+          </v-card>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+
     </div>
     
     <grid-layout
