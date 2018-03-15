@@ -81,6 +81,7 @@
       }
       this.value = this.initialValue
       this.filters[this.definition.name] = Util.calculateFilterValue(this.initialValue, this.definition.type)
+      console.log('Report Filter loaded ' + this.definition.name)
       this.$emit('loaded')
     },
     watch: {
