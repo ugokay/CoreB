@@ -35,7 +35,7 @@
             <v-list-tile @click.prevent="editChart"><v-list-tile-title>Edit Chart</v-list-tile-title></v-list-tile>
             <v-list-tile @click.prevent="saveAsPng"><v-list-tile-title>Save as Png</v-list-tile-title></v-list-tile>
             <v-list-tile @click="">
-              <excel-button data="excelData" :fields="excelFields" name="filename.xls">Download Excel</excel-button>
+              <excel-button v-if="queryResult" :data="excelData" :fields="excelFields" name="filename.xls">Download Excel</excel-button>
             </v-list-tile>
             <v-list-tile v-if="!isDesignMode" class="divider"></v-list-tile>
             <v-list-tile v-if="!isDesignMode" @click.prevent="remove"><v-list-tile-title>Remove</v-list-tile-title></v-list-tile>
@@ -123,7 +123,7 @@
         this.queryResult.schema.fields.forEach(field => {
           _headers.push({ text: field.name, value: field.name })
         })
-      
+
         return _headers
       },
       tableItems() {
@@ -140,22 +140,25 @@
       },
       excelFields() {
         const excelFields = {}
-        this.queryResult.schema.fields.forEach(field => {
-          excelFields[field.name] = 'String'
-        })
+        if (this.queryResult.schema && this.queryResult.schema.fields) {
+          this.queryResult.schema.fields.forEach(field => {
+            excelFields[field.name] = field.name
+          })
+        }
         // console.log(excelFields)
         return excelFields
       },
       excelData() {
         const excelData = []
-        this.queryResult.data.forEach(row => {
-          const rowData = {}
-          this.queryResult.schema.fields.forEach((field, idx) => {
-            rowData[field.name] = row[idx]
+        if (this.queryResult && this.queryResult.data) {
+          this.queryResult.data.forEach(row => {
+            const rowData = {}
+            this.queryResult.schema.fields.forEach((field, idx) => {
+              rowData[field.name] = row[idx]
+            })
+            excelData.push(rowData)
           })
-          excelData.push(rowData)
-        })
-        // console.log(excelData)
+        }
         return excelData
       },
       isEditing() {
@@ -259,7 +262,7 @@
         this.elementData.chartType = Util.chartType(value)
       },
       redrawChart() {
-        if (this.elementData.chartType !== 6) {
+        if (this.elementData.chartType !== 6 && this.elementData.chartType !== 0) {
           this.$refs.chart.getChart().reflow()
         }
       },
