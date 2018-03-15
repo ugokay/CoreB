@@ -13,51 +13,15 @@
       <a @click.prevent="addElement"><i class="icon-plus" /> Add</a>
       <a @click.prevent="selectElement">Select</a>
     </div>
-    <div v-if="filterDefinitions.length > 0">
-      <filter-sidebar
-        ref="filterSidebar"
-        v-if="isFiltersLoaded"
-        :filterDefinitions="filterDefinitions"
-        :filters="filters"
-        @apply="refresh"
-        @change="filtersChange" />
-    </div>
-    <!-- #outer elements end -->
-    <!-- report header -->
     <div class="report-header">
-
-      <v-layout>
-        <v-flex xs11 sm2 v-for="filterValue in filterValues">
-          <v-menu
-            ref="menu"
-            lazy
-            :close-on-content-click="false"
-            transition="scale-transition"
-            offset-y
-            full-width
-            :nudge-right="40"
-            min-width="290px"
-            :return-value.sync="filterValue.value">
-            <v-text-field
-              slot="activator"
-              :label="filterValue.label"
-              v-model="filterValue.value"
-              prepend-icon="event"
-              readonly />
-            <v-date-picker v-model="filterValue.value" no-title scrollable>
-              <v-spacer></v-spacer>
-              <v-btn flat color="primary">Cancel</v-btn>
-              <v-btn flat color="primary">OK</v-btn>
-            </v-date-picker>
-          </v-menu>
-        </v-flex>
-      </v-layout>
+      <report-filter-list :filters="filters" :report="reportData" :global-filter-definitions="globalFilterDefinitions" @loaded="filtersLoaded"></report-filter-list>
+      <v-btn @click="refresh">Go</v-btn>
     </div>
-    
+
     <grid-layout
       ref="gridLayout"
       id="grid"
-      v-if="isSelected && isFiltersLoaded"
+      v-if="isFiltersLoaded"
       :layout="layout"
       :col-num="12"
       :row-height="30"
@@ -81,7 +45,7 @@
           ref="reportElements"
           :element="getElement(item.id)"
           :filters="filters"
-          :isEditingMode="isEditing"
+          :isEditingMode="editable"
           @remove="removeElement"
           @getCanvas="getCanvas"
           @editChart="editChart" />
@@ -100,6 +64,7 @@
   import { refresh } from 'vue-awesome/icons'
   import html2canvas from 'html2canvas'
   import ReportFilter from '@/components/ReportFilter'
+  import ReportFilterList from '@/components/ReportFilterList'
   import ElementPopup from '@/components/popups/ElementPopup'
   import ImagePopup from '@/components/popups/ImagePopup'
   import ChartHelperPopup from '@/components/popups/ChartHelperPopup'
@@ -108,6 +73,7 @@
   export default {
     name: 'report',
     components: {
+      ReportFilterList,
       ReportFilter,
       ReportElement,
       AddButton,
@@ -122,16 +88,14 @@
     data () {
       return {
         reportData: this.report,
-        reportIdx: this.index,
         layout: [],
         popupSeen: false,
         npm : {},
-        isFiltersLoaded: false,
         allFilters: false,
         filters: {},
-        filterDefinitions: [],
         isEditing: false,
-        filterValues: []
+        filterValues: [],
+        isFiltersLoaded: false
       }
     },
     props: {
@@ -143,10 +107,6 @@
         type: Object,
         required: true
       },
-      index: {
-        type: Number,
-        required: false
-      },
       isSelected: {
         type: Boolean,
         default: true
@@ -156,7 +116,12 @@
         default: false
       }
     },
+    computed: {
+    },
     methods: {
+      filtersLoaded: function () {
+        this.isFiltersLoaded = true
+      },
       exportReportAsPng(){
         html2canvas(this.$refs.report)
           .then(canvas => {
@@ -189,23 +154,8 @@
       refresh() {
         this.$refs.reportElements.forEach(reportElement => reportElement.executeQuery())
       },
-      calculateFilterDefinitions() {
-        let queries = []
-        let filterDefinitions = []
-        this.reportData.elements.forEach(element => {
-          queries.push(element.query)
-        })
-        let filterTokens = Util.getUnifiedMustacheTokens(queries)
-        if (filterTokens.length > 0) {
-          filterDefinitions = Util.calculateFilterDefinitions(filterTokens, this.globalFilterDefinitions)
-        }
-        filterDefinitions.forEach(filterDefinition => {
-          if (filterDefinition.static) {
-            this.filters[filterDefinition.name] = filterDefinition.defaultValue
-          }
-        })
-        this.filterDefinitions = filterDefinitions
-        this.isFiltersLoaded = true
+      filterLoaded: function () {
+        this.filterLoadCounter--;
       },
       removeElement(id) {
         for (let i = 0; i < this.reportData.elements.length; i++) {
@@ -232,7 +182,6 @@
           id: newElement.id, x: 0, y: maxY, w: 2, h: 6, i: (maxI + 1).toString()
         })
         this.reportData.elements.push(newElement)
-        this.calculateFilterDefinitions()
       },
       selectElement() {
         this.$refs.elementPopup.open()
@@ -285,7 +234,13 @@
     },
     created() {
       this.layout = JSON.parse(this.reportData.layout)
-      this.calculateFilterDefinitions()
+    },
+    watch: {
+      report : function (report) {
+        this.isFiltersLoaded = false
+        this.reportData = report
+        this.layout = JSON.parse(report.layout)
+      }
     }
   }
 </script>

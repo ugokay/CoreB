@@ -8,12 +8,12 @@
             <span class="blinking" v-if="isBlinking"></span>
           </v-btn>
           <v-list>
-            <v-list-tile v-for="(report, idx) in reports" :key="report.id" @click="viewReport(idx)">
+            <v-list-tile v-for="report in reports" :key="report.id" @click="loadReport(report.id)">
               <v-list-tile-title>{{ report.title }}</v-list-tile-title>
             </v-list-tile>
           </v-list>
         </v-menu>
-        <v-toolbar-title>{{ reportTitle }}</v-toolbar-title>
+        <v-toolbar-title> {{report ? report.title : ""}} </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-tooltip bottom="bottom">
           <v-btn icon="icon" slot="activator" @click="addReport">
@@ -48,24 +48,36 @@
           </v-btn><span>Save Report</span>
         </v-tooltip>
       </v-toolbar>
-      <vue-tabs @tab-change="tabChange" id="tabs" ref="tabs">
-        <v-tab
-          v-for="(report, reportIdx) in reports"
-          :key="report.id"
-          :title="report.title"
-          style="position: relative;"
-          :style="{zIndex:report.id}">
-            <report
-              ref="reports"
-              :editable="editable"
-              :report="report"
-              :globalFilterDefinitions="globalFilterDefinitions"
-              :index="reportIdx"
-              :isSelected="selectedReportIdx === reportIdx">
-            </report>
-          </v-tab>
-        </vue-tabs>
+      <report
+        v-if="report"
+        ref="report"
+        :editable="editable"
+        :report="report"
+        :globalFilterDefinitions="globalFilterDefinitions">
+      </report>
+      <div v-else>
+        No Report
+      </div>
     </fullscreen>
+
+    <v-dialog v-model="isAddReportDialogOpen" max-width="500px">
+      <v-card>
+        <v-card-title>
+          Add Report
+        </v-card-title>
+        <v-card-text>
+          <v-text-field
+            v-model="newReportName"
+            label="Report Name"
+            value="Untitled"
+          ></v-text-field>
+          <v-btn color="primary" dark @click.stop="createReport">Create</v-btn>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn color="primary" flat @click.stop="newReportName=false">Close</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -97,12 +109,17 @@
     data() {
       return {
         globalFilterDefinitions: [],
-        selectedReportIdx: 0,
+        selectedReportId: null,
         reports: [],
+        reportIds: [],
+        report: null,
+        routeReportId: 0,
         fullscreen: false,
         isSliding: false,
         editable: false,
-        isBlinking: false
+        isBlinking: false,
+        isAddReportDialogOpen: false,
+        newReportName: null,
       }
     },
     methods: {
@@ -116,36 +133,59 @@
         this.$refs.reports[this.selectedReportIdx].refresh()
       },
       tabChange(tabIdx) {
-        this.selectedReportIdx = tabIdx
-        this.$refs.tabs.$el.childNodes[0].classList.remove('is-open')
-        setTimeout(() => window.location.hash = '#/#' + tabIdx, 200)
+        console.log(tabIdx)
+        //this.selectedReportId = tabIdx
+        //this.$refs.tabs.$el.childNodes[0].classList.remove('is-open')
+        //setTimeout(() => window.location.hash = '#/#' + tabIdx, 200)
       },
       toggleEditable() {
         this.editable = !this.editable
-        this.$refs.reports.forEach(report => report.toggleEditMode())
       },
       getReports(initialTabIdx) {
         HTTP.get('bi/report/list')
           .then((res) => {
             this.reports = res.data
-            setTimeout(() => this.$refs.tabs.navigateToTab(initialTabIdx), 0)
+            // setTimeout(() => this.$refs.tabs.navigateToTab(initialTabIdx), 0)
           })
           .catch((error) => {
             console.log(error)
           })
       },
-      addReport() {
-        this.isBlinking = true 
-        setTimeout(() => {
-          this.isBlinking = false
-        }, 2000)
-        this.reports.push({
-          title: 'Untitled',
-          elements: []
+      loadReportIds() {
+        HTTP.get('bi/report/list')
+          .then((res) => {
+            this.reports = res.data
+            this.reports.forEach(report => this.reportIds.push({id: report.id, title: report.title}))
+            if (this.reportIds.includes(reportId => reportId.id === this.routeReportId)) {
+              this.loadReport(this.routeReportId)
+            } else if (this.reportIds.length > 0){
+              this.loadReport(this.reportIds[0].id)
+            }
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      },
+      gotoReport: function (reportId) {
+        this.$router.push('/' + reportId)
+      },
+      loadReport: function (reportId) {
+        HTTP.get('bi/report/'+reportId).then(res => {
+          this.report = res.data
         })
       },
+      addReport() {
+        this.isAddReportDialogOpen = true
+      },
+      createReport: function () {
+        HTTP.post('bi/report', {id: null, title: this.newReportName, elements: [], layout: '[]'})
+          .then((res) => {
+            console.log(res.data.id)
+          })
+          .then(() => this.$swal('Success!', 'Changes has been saved!', 'success'))
+      },
       saveReport() {
-        this.$refs.reports[this.selectedReportIdx].save()
+        this.$refs.report.save()
       },
       removeTab (index) {
         this.tabs.splice(index, 1)
@@ -179,27 +219,33 @@
       }
     },
     computed: {
+      selectedReportIdx: function () {
+        console.log(this.selectedReportId)
+        console.log(this.reports.findIndex(report => report.id === this.selectedReportId))
+        return this.reports.findIndex(report => report.id === this.selectedReportId)
+      },
       reportTitle() {
-        return this.reports[this.selectedReportIdx].title
+        if (this.reports) {
+          return this.reports[this.selectedReportIdx].title
+        }
+        return 'Loading...'
       }
     },
     created() {
       HTTP.get('bi/report/filter/list')
         .then(res => {
           this.globalFilterDefinitions = res.data
+          if (this.$route.params.reportId) {
+            this.routeReportId = this.$route.params.reportId
+          }
+          this.loadReportIds()
         })
-      if (this.$route.hash) {
-        const hashIdx = this.$route.hash.split('#')[1]
-        this.getReports(Number(hashIdx))
-      } else {
-        this.getReports(0)
-      }
     },
     watch: {
       $route (to, from){
         const id = to.hash.split('#')[1]
         this.getReports(Number(id))
       }
-    } 
+    }
   }
 </script>

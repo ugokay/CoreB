@@ -5,24 +5,18 @@
       lang="en" :confirm="true"
       v-model="value">
     </date-picker>
-    <date-picker
-      v-else-if="definition.type === 'daterangepicker'"
-      range lang="en" :confirm="true" @confirm="confirm"
-      v-model="value">
-    </date-picker>
+    <template v-else-if="definition.type === 'daterangepicker'">
+      <v-date-picker v-model="value[0]" :landscape="false" :reactive="false"></v-date-picker>
+      <v-date-picker v-model="value[1]" :landscape="false" :reactive="false"></v-date-picker>
+    </template>
     <input
       v-else-if="definition.type === 'text'"
       v-model="value"
       class="main--input" />
-    <template v-else-if="definition.type === 'query'">
-      <select v-model="value" class="form-control">
-        <option
-          v-for="row in initialValue"
-          :value="row.value">
-          {{row.label ? row.label : row.value}}
-        </option>
-      </select>
-    </template>
+    <v-select v-else-if="definition.type === 'query' && initialValue"
+              v-model="value"
+              :items="initialValue">
+    </v-select>
     <span
       v-else="definition.type === 'text'"
       v-model="value">
@@ -31,14 +25,12 @@
   </div>
 </template>
 <script>
-  import Datepicker from 'vuejs-datepicker'
   import DatePicker from 'vue2-datepicker'
   import {Util} from '@/helpers/helpers.js'
   import {HTTP} from '@/helpers/http-helper.js'
 
   export default{
     components: {
-      Datepicker,
       DatePicker
     },
     name: 'report-filter',
@@ -62,7 +54,6 @@
       confirm: function (value) {}
     },
     created: function () {
-      console.log(this.definition.type)
       if (this.definition.type === 'query'){
         HTTP.post('bi/analyze/execute', {query: this.definition.defaultValue}, {
           params: {
@@ -70,7 +61,6 @@
             block: true
           }
         }).then((res) => {
-          console.log(res)
           const options = []
           res.data.data.forEach(row => {
             const value = row[0]
@@ -78,7 +68,7 @@
             if (value) {
               options.push({
                 value: value,
-                label : label
+                text : label ? label : value
               })
             }
           })
@@ -91,6 +81,7 @@
       }
       this.value = this.initialValue
       this.filters[this.definition.name] = Util.calculateFilterValue(this.initialValue, this.definition.type)
+      this.$emit('loaded')
     },
     watch: {
       value: function (newVal) {

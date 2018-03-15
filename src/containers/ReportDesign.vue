@@ -58,27 +58,17 @@
          </div>
       </div>
       <div class="report-element-details-wrapper">
-        <v-layout class="form-group selected-report-options row mb-0">
-          <v-flex
-            xs12 lg2 md3 sm3
-            v-for="filterDefinition in filterDefinitions"
-            v-if="!filterDefinition.static"
-            class="form-group">
-            <label class="filterDefinitionLabel">
-              {{filterDefinition.label}}
-              <span
-                class="label label-default"
-                @click="openFilterPopup(filterDefinition)">
-                Edit
-              </span>
-            </label>
-            <report-filter :definition="filterDefinition" :filters="filters"></report-filter>
-          </v-flex>
-        </v-layout>
+        <report-filter-list
+          v-if="globalFilterDefinitions && element"
+          :filters="filters"
+          :report="{elements: [element]}"
+          :global-filter-definitions="globalFilterDefinitions"
+          @loaded="filtersLoaded"></report-filter-list>
+
         <div class="clearfix"></div>
         <!-- report element -->
         <report-element
-          v-if="filtersLoaded && queryResult"
+          v-if="isFiltersLoaded"
           ref="reportElement"
           :element="element"
           :filters="filters"
@@ -110,6 +100,7 @@
   import Report from '@/components/Report'
   import ReportElement from '@/components/ReportElement'
   import ReportFilter from '@/components/ReportFilter'
+  import ReportFilterList from '@/components/ReportFilterList'
   import ChartHelperPopup from '@/components/popups/ChartHelperPopup'
   import ImagePopup from '@/components/popups/ImagePopup'
   import {Util} from '@/helpers/helpers'
@@ -122,15 +113,15 @@
   import 'brace/theme/monokai'
 
   export default {
-    components: { ReportElement, Editor, Report, ReportFilter, FilterPopup, Icon, ImagePopup, ChartHelperPopup  },
+    components: { ReportFilterList, ReportElement, Editor, Report, ReportFilter, FilterPopup, Icon, ImagePopup, ChartHelperPopup  },
     name: 'report-design',
     data() {
       return {
         element: null,
-        globalFilterDefinitions: [],
+        globalFilterDefinitions: null,
         filterDefinitions: [],
         filters: {},
-        filtersLoaded: false,
+        isFiltersLoaded: false,
         showHtml: JSON.parse(window.localStorage.getItem('UI_Options')).showHTML,
         seenQuery: JSON.parse(window.localStorage.getItem('UI_Options')).showQUERY,
         tableSeen: false,
@@ -150,6 +141,9 @@
       }
     },
     methods: {
+      filtersLoaded: function () {
+        this.isFiltersLoaded = true
+      },
       goBack() {
         this.$router.back()
       },
@@ -180,17 +174,6 @@
       },
       openFilterPopup: function (filterDefinition) {
         this.$refs.filterPopup.open(filterDefinition)
-      },
-      calculateFilterDefinitions() {
-        let filterTokens = Util.getUnifiedMustacheTokens([this.element.query])
-        if (filterTokens.length > 0) {
-          this.filterDefinitions = Util.calculateFilterDefinitions(filterTokens, this.globalFilterDefinitions)
-          /* this.filterDefinitions.forEach(filterDefinition => {
-            if (!this.filters[filterDefinition.name]) {
-              this.filters.push(filterDefinition.defaultValue)
-            }
-          }) */
-        }
       },
       async save() {
         const response = await HTTP.post('/bi/report/element', this.element)
@@ -230,19 +213,11 @@
       }
     },
     created() {
-      console.log(this.queryResult)
       HTTP.get('bi/report/element/' + this.$route.params.id)
         .then((res) => {
           this.element = res.data
-          HTTP.get('bi/report/filter/list').then(res => {
-            this.globalFilterDefinitions = res.data
-            this.globalFilterDefinitions.forEach(filterDef => {
-              if (filterDef.static) {
-                this.filters[filterDef.name] = filterDef.defaultValue
-              }
-            })
-            this.calculateFilterDefinitions()
-            this.filtersLoaded = true
+          HTTP.get('bi/report/filter/list').then(fres => {
+            this.globalFilterDefinitions = fres.data
           })
         })
     }

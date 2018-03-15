@@ -32,7 +32,7 @@ export const Util = {
   calculateFilterDefaultValue: function (definition) {
     let initialValue
     if (definition.type === 'datepicker') {
-      const fixedDates = this.calculateFixedDates()
+      const fixedDates = this.calculateFixedDateStrings()
       switch (definition.defaultValue) {
         case 'today':
           initialValue = fixedDates.today
@@ -47,7 +47,7 @@ export const Util = {
           initialValue = fixedDates.today
       }
     } else if (definition.type === 'daterangepicker') {
-      const fixedDates = this.calculateFixedDates()
+      const fixedDates = this.calculateFixedDateStrings()
       switch (definition.defaultValue) {
         case 'today':
           initialValue = [fixedDates.today, fixedDates.tomorrow]
@@ -66,13 +66,13 @@ export const Util = {
   calculateFilterValue: function (value, type) {
     if (type === 'daterangepicker') {
       return {
-        start: value[0],
-        end: value[1]
+        start: value[0] + "T00:00:00.000Z",
+        end: value[1] + "T00:00:00.000Z"
       }
     }
     return value
   },
-  calculateFixedDates: function () {
+  calculateFixedDateStrings: function () {
     const today = new Date()
     today.setHours(0)
     today.setMinutes(0)
@@ -81,9 +81,9 @@ export const Util = {
     const yesterday = new Date(today.getTime() - this.dayInMillis)
     const tomorrow = new Date(today.getTime() + this.dayInMillis)
     return {
-      today,
-      yesterday,
-      tomorrow
+      today : moment(today).format('YYYY-MM-DD'),
+      yesterday : moment(yesterday).format('YYYY-MM-DD'),
+      tomorrow : moment(tomorrow).format('YYYY-MM-DD')
     }
   },
   calculateFilterDefinitions: function (filterTokens, globalFilterDefinitions) {
