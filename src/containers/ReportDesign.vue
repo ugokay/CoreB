@@ -61,7 +61,7 @@
         <report-filter-list
           v-if="globalFilterDefinitions && element"
           :filters="filters"
-          :report="{elements: [element]}"
+          :report="report"
           :global-filter-definitions="globalFilterDefinitions"
           @loaded="filtersLoaded"></report-filter-list>
 
@@ -76,7 +76,7 @@
           @executed="executed"
           @editChart="editChart"
           @getCanvas="getCanvas" />
-        <table class="table" v-if="queryResult"  v-on:click="tableSeen = !tableSeen">
+        <table class="table" v-if="queryResult && element.chartType !== 0"  v-on:click="tableSeen = !tableSeen">
           <thead>
             <th v-for="field in queryResult.schema.fields">{{field.name}}</th>
             <th style="text-align: right; position: relative; padding-right: 20px;">
@@ -118,6 +118,7 @@
     data() {
       return {
         element: null,
+        mockReport: null,
         globalFilterDefinitions: null,
         filterDefinitions: [],
         filters: {},
@@ -134,6 +135,9 @@
       }
     },
     computed: {
+      report: function () {
+        return {elements:[this.element]}
+      },
       keymap () {
         return {
           'ctrl+shift+s': this.save

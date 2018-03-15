@@ -54,9 +54,12 @@
     },
     methods: {
       filterLoaded: function () {
+        console.log('Before filterLoad ' + this.filterLoadCounter)
         this.filterLoadCounter--;
+        console.log('After filterLoad ' + this.filterLoadCounter)
       },
       calculateFilterDefinitions() {
+        console.log("Calc FD")
         let queries = []
         let filterDefinitions = []
         this.report.elements.forEach(element => {
@@ -73,27 +76,35 @@
             this.filters[filterDefinition.name] = filterDefinition.defaultValue
           } else {
             if (this.filterLoadCounter === -1) {
+              console.log("=1")
               this.filterLoadCounter = 1
             } else {
+              console.log("+1")
               this.filterLoadCounter++
             }
           }
         })
         this.filterDefinitions = filterDefinitions
+        console.log("Calc FD END")
       }
     },
     created: function () {
+      console.log(this.report)
       this.calculateFilterDefinitions()
     },
     watch: {
       report: function () {
+        console.log("Report change")
+      console.log(this.report)
         this.filterLoadCounter = -1
         Vue.nextTick().then(() => {
           this.calculateFilterDefinitions()
         })
       },
       filterLoadCounter: function (filterLoadCounter) {
+        console.log('Changed:' + filterLoadCounter)
         if (filterLoadCounter === 0) {
+          console.log('Filters Loaded')
           this.$emit('loaded')
         }
       }
