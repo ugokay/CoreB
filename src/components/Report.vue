@@ -13,9 +13,12 @@
       <a @click.prevent="addElement"><i class="icon-plus" /> Add</a>
       <a @click.prevent="selectElement">Select</a>
     </div>
-    <div class="report-header">
-      <report-filter-list :filters="filters" :report="reportData" :global-filter-definitions="globalFilterDefinitions" @loaded="filtersLoaded"></report-filter-list>
-      <v-btn @click="refresh">Go</v-btn>
+
+    <div class="report-header pr-0">
+      <report-filter-list :filters="filters" :report="reportData" :global-filter-definitions="globalFilterDefinitions" @loaded="filtersLoaded" />
+      <v-btn @click="refresh" color="primary" depressed icon>
+        <v-icon small>send</v-icon>
+      </v-btn>
     </div>
 
     <grid-layout
@@ -115,8 +118,6 @@
         type: Boolean,
         default: false
       }
-    },
-    computed: {
     },
     methods: {
       filtersLoaded: function () {

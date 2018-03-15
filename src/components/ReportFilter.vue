@@ -1,22 +1,37 @@
 <template>
   <div>
-    <date-picker
-      v-if="definition.type === 'datepicker'"
-      lang="en" :confirm="true"
-      v-model="value">
-    </date-picker>
-    <template v-else-if="definition.type === 'daterangepicker'">
-      <v-date-picker v-model="value[0]" :landscape="false" :reactive="false"></v-date-picker>
-      <v-date-picker v-model="value[1]" :landscape="false" :reactive="false"></v-date-picker>
-    </template>
-    <input
-      v-else-if="definition.type === 'text'"
-      v-model="value"
-      class="main--input" />
-    <v-select v-else-if="definition.type === 'query' && initialValue"
-              v-model="value"
-              :items="initialValue">
-    </v-select>
+    <v-menu
+      v-if="definition.type !== 'query' && initialValue"
+      ref="menu"
+      :close-on-content-click="false"
+      transition="scale-transition"
+      offset-y
+      full-width
+      :nudge-right="40"
+      min-width="290px">
+      <v-text-field
+        slot="activator"
+        :label="definition.label"
+        prepend-icon="event"
+        readonly />
+      <date-picker
+        v-if="definition.type === 'datepicker'"
+        lang="en" :confirm="true"
+        v-model="value">
+      </date-picker>
+      <template v-else-if="definition.type === 'daterangepicker'">
+        <v-date-picker v-model="value[0]" :landscape="false" :reactive="false"></v-date-picker>
+        <v-date-picker v-model="value[1]" :landscape="false" :reactive="false"></v-date-picker>
+      </template>
+      <input
+        v-else-if="definition.type === 'text'"
+        v-model="value"
+        class="main--input" />
+    </v-menu>
+    <template v-else-if="definition.type === 'query' && initialValue">
+      <span class="capitalizeFirstLetter">{{ definition.name }}</span>
+      <v-select v-model="value" :items="initialValue" />
+    </template> 
     <span
       v-else="definition.type === 'text'"
       v-model="value">
@@ -24,6 +39,7 @@
     </span>
   </div>
 </template>
+
 <script>
   import DatePicker from 'vue2-datepicker'
   import {Util} from '@/helpers/helpers.js'

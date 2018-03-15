@@ -1,20 +1,19 @@
 <template>
   <v-flex class="mt-5 mb-5" xs12 offset-lg2 lg8>
-    <filter-popup @addFilter="addFilter" ref="filterPopup" @updateFilter="updateFilter"/>
+    <filter-popup @addFilter="addFilter" ref="filterPopup" @updateFilter="updateFilter" />
     <h2 class="mb-3 display-1">Global Filters</h2>
     <v-data-table
       :headers="headers"
-      :items="reportElements"
+      :items="reportFilters"
       hide-actions
-      class="elevation-1"
-    >
+      class="elevation-1">
       <template slot="items" slot-scope="props">
         <td>{{ props.item.name }}</td>
         <td class="text-xs-left">{{ props.item.label }}</td>
         <td class="text-xs-left">{{ props.item.type }}</td>
         <td class="text-xs-left">{{ props.item.defaultValue }}</td>
         <td class="text-xs-center">
-          <v-btn @click="openEditFilterPopup(index)" class="mr-0" color="primary" small flat>Edit</v-btn>
+          <v-btn @click="openEditFilterPopup(props.item.id)" class="mr-0" color="primary" small flat>Edit</v-btn>
         </td>
       </template>
     </v-data-table>
@@ -29,7 +28,7 @@ export default {
   name: 'GlobalFilters',
   data () {
     return {
-      reportElements: [],
+      reportFilters: [],
       headers: [
         { text: 'Name', },
         { text: 'Label', },
@@ -58,7 +57,7 @@ export default {
       HTTP.post('bi/report/filter', filter)
         .then(res => {
           console.log(res.data)
-          this.reportElements.push(res.data)
+          this.reportFilters.push(res.data)
         })
         .then(() => this.$swal(
             'Success!',
@@ -67,13 +66,13 @@ export default {
           )
         )
     },
-    openEditFilterPopup: function (index) {
-      this.$refs.filterPopup.open(this.reportElements[index])
+    openEditFilterPopup: function (idx) {
+      this.$refs.filterPopup.open(this.reportFilters[idx])
     }
   },
   created () {
     HTTP.get('bi/report/filter/list').then(res => {
-      this.reportElements = res.data
+      this.reportFilters = res.data
     })
   }
 }

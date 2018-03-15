@@ -1,27 +1,15 @@
 <template>
   <v-layout v-if="filterDefinitions && filterDefinitions.length > 0">
-    <v-flex xs11 sm2
-            v-for="definition in filterDefinitions"
-            v-if="!definition.static"
-            :key="definition.name">
-      <v-menu
-        ref="menu"
-        :close-on-content-click="false"
-        transition="scale-transition"
-        offset-y
-        full-width
-        :nudge-right="40"
-        min-width="290px">
-        <v-text-field
-          slot="activator"
-          :label="definition.label"
-          prepend-icon="event"
-          readonly />
-        <report-filter :definition="definition" :filters="filters" @loaded="filterLoaded"></report-filter>
-      </v-menu>
+    <v-flex 
+      xs11 sm2
+      v-for="definition in filterDefinitions"
+      v-if="!definition.static"
+      :key="definition.name">
+      <report-filter :definition="definition" :filters="filters" @loaded="filterLoaded"></report-filter>
     </v-flex>
   </v-layout>
 </template>
+
 <script>
   import Vue from 'vue'
   import { Util } from '@/helpers/helpers.js'
@@ -46,14 +34,14 @@
         default: {}
       }
     },
-    data: function () {
+    data () {
       return {
         filterDefinitions: [],
         filterLoadCounter: -1,
       }
     },
     methods: {
-      filterLoaded: function () {
+      filterLoaded () {
         console.log('Before filterLoad ' + this.filterLoadCounter)
         this.filterLoadCounter--;
         console.log('After filterLoad ' + this.filterLoadCounter)
@@ -88,20 +76,18 @@
         console.log("Calc FD END")
       }
     },
-    created: function () {
+    created () {
       console.log(this.report)
       this.calculateFilterDefinitions()
     },
     watch: {
-      report: function () {
-        console.log("Report change")
-      console.log(this.report)
+      report () {
         this.filterLoadCounter = -1
         Vue.nextTick().then(() => {
           this.calculateFilterDefinitions()
         })
       },
-      filterLoadCounter: function (filterLoadCounter) {
+      filterLoadCounter (filterLoadCounter) {
         console.log('Changed:' + filterLoadCounter)
         if (filterLoadCounter === 0) {
           console.log('Filters Loaded')
