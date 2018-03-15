@@ -22,6 +22,11 @@ export default new Router({
       component: Dashboard
     },
     {
+      path: '/:reportId',
+      name: 'DashboardWithReportId',
+      component: Dashboard
+    },
+    {
       path: '/report-design/:id',
       name: 'ReportDesign',
       component: ReportDesign

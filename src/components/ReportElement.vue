@@ -10,9 +10,9 @@
         v-bind:style="{ width: progress + '%' }">
         <span>{{progress}}%</span>
       </div>
-    </div> 
+    </div>
     <v-flex xs12 md12 lg12 wrap>
-      <v-layout class="pl-3 pt-2" v-if="isEditing">
+      <v-layout class="pl-3 pt-2" v-if="isEditingMode">
         <v-text-field type="input" class="pt-0" v-model="element.title"/>
         <v-menu offset-y>
           <v-btn icon slot="activator" class="mr-1">
@@ -69,7 +69,6 @@
             ref="chart">
           </vue-highcharts>
         </div>
-      </div>
       </v-layout>
     </v-flex>
   </v-layout>
@@ -315,7 +314,7 @@
     },
     created() {
       if (this.$socket && this.$socket.readyState === this.$socket.OPEN) {
-        this.isWSEnabled = true
+        //this.isWSEnabled = true
         this.$options.sockets.onmessage = res => {
           // console.log(res)
           const msg = JSON.parse(res.data)

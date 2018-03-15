@@ -4,7 +4,7 @@
       <v-list class="logo" v-show="!mini"><img src="static/logo.svg"/></v-list>
       <v-list class="logo-small" v-show="mini"><img src="static/logo-small.png"/></v-list>
       <v-list dark="dark" dense class="blue-grey darken-4">
-        <router-link v-for="(item, i) in items" :to="item.link">
+        <router-link v-for="(item, i) in items" :to="item.link" :key="item.link">
           <v-layout row v-if="item.heading" align-center :key="i">
             <v-flex xs6>
               <v-subheader v-if="item.heading">{{ item.heading }}</v-subheader>
