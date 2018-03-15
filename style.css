@@ -1126,12 +1126,21 @@ li.nav-item {
   overflow: unset !important
 }
 
+.table__overflow {
+  height: 100%;
+  overflow-y: scroll
+}
+
 .dropdown-toggle .icon-more {
   width: 40px;
   height: 20px;
   display: inline-block;
   text-align: center;
   box-shadow: none !important
+}
+
+.fhv2 {
+  height: calc(100% - 42px)
 }
 
 .sidebarLinks i {

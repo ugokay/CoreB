@@ -22,7 +22,7 @@ export default new Router({
       component: Dashboard
     },
     {
-      path: '/:reportId',
+      path: 'report/:reportId',
       name: 'DashboardWithReportId',
       component: Dashboard
     },

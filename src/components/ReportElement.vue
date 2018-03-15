@@ -1,5 +1,5 @@
 <template>
-  <v-layout wrap>
+  <v-layout wrap class="full-height">
     <div v-if="loading" class="progress-bar-area">
       <div class="loading-nice">
         <span></span>
@@ -11,7 +11,7 @@
         <span>{{progress}}%</span>
       </div>
     </div>
-    <v-flex xs12 md12 lg12 wrap>
+    <v-flex xs12 md12 lg12 wrap class="full-height">
       <v-layout class="pl-3 pt-2" v-if="isEditingMode">
         <v-text-field type="input" class="pt-0" v-model="element.title"/>
         <v-menu offset-y>
@@ -43,13 +43,13 @@
         </v-menu>
       </v-layout>
       <v-btn v-else flat block color="grey darken-2" class="mt-0" justify-start @click="$router.push(designLink)">{{ element.title }}</v-btn>
-      <v-layout column>
-        <div ref="elementWrapper" v-if="queryResult.schema">
+      <v-layout column class="full-height">
+        <div ref="elementWrapper" v-if="queryResult.schema" class="fhv2">
           <div v-if="element.chartType === 6">
             <div v-html="customHtml"></div>
           </div>
           <div class="full-height" v-else-if="element.chartType === 0">
-            <table class="table table-scrollable" v-if="queryResult"  v-on:click="tableSeen = !tableSeen">
+            <!-- <table class="table table-scrollable"  v-on:click="tableSeen = !tableSeen">
               <thead>
                 <th v-for="field in queryResult.schema.fields">{{field.name}}</th>
                 <th style="text-align: right; position: relative; padding-right: 20px;">
@@ -57,11 +57,13 @@
                 </th>
               </thead>
               <tbody>
-              <tr v-for="row in queryResult.data">
-                <td v-for="value in row">{{value}}</td>
-              </tr>
               </tbody>
-            </table>
+            </table> -->
+            <v-data-table :headers="tableHeaders" :items="tableItems" hide-actions class="elevation-1 full-height">
+              <template slot="items" slot-scope="props">
+                <td v-for="(value, key) in props.item" :key="key">{{ value}}</td>
+              </template>
+            </v-data-table>
           </div>
           <vue-highcharts
             v-else-if="!loading"
@@ -116,6 +118,26 @@
       }
     },
     computed: {
+      tableHeaders() {
+        const _headers = []
+        this.queryResult.schema.fields.forEach(field => {
+          _headers.push({ text: field.name, value: field.name })
+        })
+      
+        return _headers
+      },
+      tableItems() {
+        const _items = []
+        this.queryResult.data.forEach(row => {
+          const _item = {}
+          this.queryResult.schema.fields.forEach((field, idx) => {
+            _item[field.name] = row[idx]
+          })
+          _items.push(_item)
+        })
+
+        return _items
+      },
       excelFields() {
         const excelFields = {}
         this.queryResult.schema.fields.forEach(field => {
