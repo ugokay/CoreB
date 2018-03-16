@@ -592,7 +592,18 @@ span.button-holder,
 body {
   /* height: 100vh; */
   overflow: hidden;
-  background: #f1f1f1
+}
+
+.toolbar {
+  box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.12)!important;
+}
+
+.application--wrap .container {
+  padding-left: 29px;
+  max-width: 100%!important;
+}
+.application--wrap {
+  background: #f0f0f0!important
 }
 
 a,
@@ -1149,6 +1160,7 @@ li.nav-item {
 .iseditingmode input {
   margin: 5px 10px
 }
+
 
 .report-element-top {
   height: 50px;
