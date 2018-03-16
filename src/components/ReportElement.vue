@@ -1,5 +1,5 @@
 <template>
-  <v-layout wrap class="full-height">
+  <div class="full-height">
     <div v-if="loading" class="progress-bar-area">
       <div class="loading-nice">
         <span></span>
@@ -11,61 +11,56 @@
         <span>{{progress}}%</span>
       </div>
     </div>
-    <v-flex xs12 md12 lg12 wrap class="full-height">
-      <div class="report-element-top">
-        <v-layout v-if="isEditingMode" class="iseditingmode">
-          <v-text-field type="input" class="pt-0" v-model="element.title"/>
-          <v-menu offset-y>
-            <v-btn icon slot="activator" class="mr-1">
-              <v-icon class="color-grey">more_vert</v-icon>
-            </v-btn>
-            <v-list class="report-element-dropdown">
-              <v-list-tile v-if="!isDesignMode" @click=""><v-list-tile-title>Save</v-list-tile-title></v-list-tile>
-              <v-list-tile v-if="!isDesignMode" @click.prevent="executeQuery"><v-list-tile-title>Execute</v-list-tile-title></v-list-tile>
-              <v-list-tile v-if="!isDesignMode" @click='$router.push(designLink)'>
-                <v-list-tile-title>Design</v-list-tile-title>
-              </v-list-tile>
-              <v-list-tile v-if="!isDesignMode" class="divider"></v-list-tile>
-              <v-list-tile @click.prevent="setChartType('table')"><v-list-tile-title>Table</v-list-tile-title></v-list-tile>
-              <v-list-tile @click.prevent="setChartType('line')"><v-list-tile-title>Line Chart</v-list-tile-title></v-list-tile>
-              <v-list-tile @click.prevent="setChartType('column')"><v-list-tile-title>Bar Chart</v-list-tile-title></v-list-tile>
-              <v-list-tile @click.prevent="setChartType('bar')"><v-list-tile-title>Bar Chart (Horizontal)</v-list-tile-title></v-list-tile>
-              <v-list-tile @click.prevent="setChartType('pie')"><v-list-tile-title>Pie Chart</v-list-tile-title></v-list-tile>
-              <v-list-tile @click.prevent="setChartType('custom')"><v-list-tile-title>Custom Html</v-list-tile-title></v-list-tile>
-              <v-list-tile class="divider"></v-list-tile>
-              <v-list-tile @click.prevent="editChart"><v-list-tile-title>Edit Chart</v-list-tile-title></v-list-tile>
-              <v-list-tile @click.prevent="saveAsPng"><v-list-tile-title>Save as Png</v-list-tile-title></v-list-tile>
-              <v-list-tile @click="">
-                <excel-button v-if="queryResult" :data="excelData" :fields="excelFields" name="filename.xls">Download Excel</excel-button>
-              </v-list-tile>
-              <v-list-tile v-if="!isDesignMode" class="divider"></v-list-tile>
-              <v-list-tile v-if="!isDesignMode" @click.prevent="remove"><v-list-tile-title>Remove</v-list-tile-title></v-list-tile>
-            </v-list>
-          </v-menu>
-        </v-layout>
-        <v-btn v-else flat block color="grey darken-2" class="mt-0" justify-start @click="$router.push(designLink)">{{ element.title }}</v-btn>
+    <div class="full-height" v-else>
+      <div class="editing-mode-tools">
+        <a v-if="!isEditingMode" flat block class="mt-0" @click="$router.push(designLink)">{{ element.title }}</a>
+        <input v-else type="input" v-model="element.title"/>
+        <v-menu offset-y>
+          <v-btn icon slot="activator" class="mr-1">
+            <v-icon class="color-grey">more_vert</v-icon>
+          </v-btn>
+          <v-list class="report-element-dropdown">
+            <v-list-tile v-if="!isDesignMode" @click=""><v-list-tile-title>Save</v-list-tile-title></v-list-tile>
+            <v-list-tile v-if="!isDesignMode" @click.prevent="executeQuery"><v-list-tile-title>Execute</v-list-tile-title></v-list-tile>
+            <v-list-tile v-if="!isDesignMode" @click='$router.push(designLink)'>
+              <v-list-tile-title>Design</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile v-if="!isDesignMode" class="divider"></v-list-tile>
+            <v-list-tile @click.prevent="setChartType('table')"><v-list-tile-title>Table</v-list-tile-title></v-list-tile>
+            <v-list-tile @click.prevent="setChartType('line')"><v-list-tile-title>Line Chart</v-list-tile-title></v-list-tile>
+            <v-list-tile @click.prevent="setChartType('column')"><v-list-tile-title>Bar Chart</v-list-tile-title></v-list-tile>
+            <v-list-tile @click.prevent="setChartType('bar')"><v-list-tile-title>Bar Chart (Horizontal)</v-list-tile-title></v-list-tile>
+            <v-list-tile @click.prevent="setChartType('pie')"><v-list-tile-title>Pie Chart</v-list-tile-title></v-list-tile>
+            <v-list-tile @click.prevent="setChartType('custom')"><v-list-tile-title>Custom Html</v-list-tile-title></v-list-tile>
+            <v-list-tile class="divider"></v-list-tile>
+            <v-list-tile @click.prevent="editChart"><v-list-tile-title>Edit Chart</v-list-tile-title></v-list-tile>
+            <v-list-tile @click.prevent="saveAsPng"><v-list-tile-title>Save as Png</v-list-tile-title></v-list-tile>
+            <v-list-tile @click="">
+              <excel-button v-if="queryResult" :data="excelData" :fields="excelFields" name="filename.xls">Download Excel</excel-button>
+            </v-list-tile>
+            <v-list-tile v-if="!isDesignMode" class="divider"></v-list-tile>
+            <v-list-tile v-if="!isDesignMode" @click.prevent="remove"><v-list-tile-title>Remove</v-list-tile-title></v-list-tile>
+          </v-list>
+        </v-menu>
       </div>
-      <v-layout column class="full-height">
-        <div ref="elementWrapper" v-if="queryResult.schema" class="fhv2">
-          <div v-if="element.chartType === 6">
-            <div v-html="customHtml"></div>
-          </div>
-          <div class="full-height" v-else-if="element.chartType === 0">
-            <v-data-table :headers="tableHeaders" :items="tableItems" hide-actions class="elevation-1 full-height">
-              <template slot="items" slot-scope="props">
-                <td v-for="(value, key) in props.item" :key="key">{{ value}}</td>
-              </template>
-            </v-data-table>
-          </div>
-          <vue-highcharts
-            v-else-if="!loading"
-            :options="chartOptions"
-            ref="chart">
-          </vue-highcharts>
+      <div class="report-element-wrapper-outer" ref="elementWrapper" v-if="queryResult.schema">
+        <template v-if="element.chartType === 6">
+          <div v-html="customHtml"></div>
+        </template>
+        <div class="full-height" v-else-if="element.chartType === 0">
+          <v-data-table :headers="tableHeaders" :items="tableItems" hide-actions>
+            <template slot="items" slot-scope="props">
+              <td v-for="(value, key) in props.item" :key="key">{{ value }}</td>
+            </template>
+          </v-data-table>
         </div>
-      </v-layout>
-    </v-flex>
-  </v-layout>
+        <vue-highcharts
+          v-else-if="!loading"
+          :options="chartOptions"
+          ref="chart" />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>

@@ -342,6 +342,29 @@ span.button-holder,
   }
 }
 
+.table__overflow thead th i {
+  color:#5b64fc!important;
+}
+.table__overflow thead th {
+  background: #fff!important;
+  border: 0!important;
+  font-size: 15px!important;
+  color:#000!important
+}
+
+.table__overflow {
+  position: relative;
+}
+
+table.table {
+  border-radius: 0!important;
+  border-collapse: unset!important
+}
+
+.application .theme--light.table tbody tr:nth-child(odd), .theme--light .table tbody tr:nth-child(odd) {
+  background: #f9f9f9
+}
+
 .report--design .highcharts {
   position: inherit!important;
   width: calc(100% - 60px) !important;
@@ -352,11 +375,18 @@ span.button-holder,
   margin-bottom: 60px;
 }
 
+.report-element-wrapper-outer .full-height > div {
+  height: 100%;
+}
+
+.report-element-wrapper-outer {
+  height: calc(100% - 54px)
+}
+
 .highcharts {
   position: absolute;
-  width: 100%;
-  height: 85%;
-  top: 15%;
+  width: calc(100% - 20px);
+  height: calc(100% - 60px);
 }
 
 .vue-grid-layout>div {
@@ -2562,4 +2592,60 @@ span._title {
 }
 .navigation-drawer {
   z-index: 9999
+}
+
+.vue-grid-item {
+  padding:  10px
+}
+
+.editing-mode-tools input, .editing-mode-tools a {
+  font-size: 15px;
+  color: #000;
+  flex: 1;
+  height: 40px;
+  padding-left: 10px;
+  line-height: 40px;
+  font-weight: 400
+}
+
+.report-title:hover {
+  border: dashed 1px #bec1ff;
+}
+.report-title:focus {
+  box-shadow: inset 1px 1px 2px 0 rgba(0, 0, 0, 0.1);
+  background-color: #f0f0f0;
+  border: dashed 1px #bec1ff;
+}
+
+.report-title {
+  background: transparent;
+  width: 100%;
+  padding: 7px 10px;
+  border: dashed 1px transparent;
+  transition: all 300ms
+}
+
+.editing-mode-tools a {
+  background-color: #f0f0f0;
+  box-shadow: inset 1px 1px 2px 0 rgba(0, 0, 0, 0.1);
+  transition: all 300ms
+}
+.editing-mode-tools a:hover {
+  background: #d7d7d7
+}
+.editing-mode-tools input {
+  box-shadow: inset 1px 1px 2px 0 rgba(0, 0, 0, 0.1);
+  background-color: #f0f0f0;
+  border: dashed 1px #bec1ff;
+  font-style: italic
+}
+
+.editing-mode-tools {
+  width: 100%;
+  height: 40px;
+  background-color: #f0f0f0;
+  box-shadow: inset 1px 1px 2px 0 rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
 }
