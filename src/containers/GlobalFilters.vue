@@ -67,7 +67,7 @@ export default {
         )
     },
     openEditFilterPopup: function (idx) {
-      this.$refs.filterPopup.open(this.reportFilters[idx])
+      this.$refs.filterPopup.open(this.reportFilters[idx-1])
     }
   },
   created () {

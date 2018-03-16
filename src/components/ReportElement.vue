@@ -219,6 +219,11 @@
         },
         set(colors) {
           this._chartColors = colors
+          if (this.element.settings) {
+            this.elementData.settings.colors = colors
+          } else {
+            this.elementData.settings = { colors }
+          }
         }
       }
     },
