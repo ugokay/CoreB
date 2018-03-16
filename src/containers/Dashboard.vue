@@ -13,7 +13,7 @@
             </v-list-tile>
           </v-list>
         </v-menu>
-        <v-toolbar-title> {{report ? report.title : ""}} </v-toolbar-title>
+        <v-toolbar-title><input class="report-title" type="text" v-model="report.title"></v-toolbar-title>
         <v-spacer></v-spacer>
         <v-tooltip bottom="bottom">
           <v-btn icon="icon" slot="activator" @click="addReport">
@@ -74,7 +74,7 @@
           <v-btn color="primary" dark @click.stop="createReport">Create</v-btn>
         </v-card-text>
         <v-card-actions>
-          <v-btn color="primary" flat @click.stop="newReportName=false">Close</v-btn>
+          <v-btn color="primary" flat @click.stop="isAddReportDialogOpen=false">Close</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -142,7 +142,6 @@
         this.editable = !this.editable
       },
       getReports(initialTabIdx) {
-
         HTTP.get('bi/report/list')
           .then((res) => {
             this.reports = res.data
@@ -181,9 +180,12 @@
       createReport: function () {
         HTTP.post('bi/report', {id: null, title: this.newReportName, elements: [], layout: '[]'})
           .then((res) => {
-            console.log(res.data.id)
+            this.reports.push(res.data)
           })
-          .then(() => this.$swal('Success!', 'Changes has been saved!', 'success'))
+          .then(() => {
+            this.$swal('Success!', 'Changes has been saved!', 'success')
+            this.isAddReportDialogOpen = false
+          })
       },
       saveReport() {
         this.$refs.report.save()

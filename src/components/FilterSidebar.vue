@@ -15,8 +15,8 @@
       <label class="filterDefinitionLabel">{{filterDefinition.label}}</label>
       <report-filter @change="filterChange" :definition="filterDefinition" :filters="filters"></report-filter>
     </div>
-    <v-btn block large color="primary" class="mt-4" @click="apply">APPLY CHANGES</v-btn>
-    <v-btn block large color="white" class="mt-1" @click="toggleSidebar">CANCEL</v-btn>
+    <button class="btn btn-primary btn-block mt-30" @click="apply">APPLY CHANGES</button>
+    <button class="btn btn-default btn-block" @click="toggleSidebar">CANCEL</button>
   </div>
 </template>
 
