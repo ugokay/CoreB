@@ -9,7 +9,7 @@
     <chart-helper-popup
       ref="chartPopup"
       @done="chartEditingFinished" />
-      
+
     <div class="btn--add has-multiple is-fixed">
       <a @click.prevent="addElement"><i class="icon-plus" /> Add</a>
       <a @click.prevent="selectElement">Select</a>

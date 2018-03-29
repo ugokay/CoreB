@@ -1,42 +1,57 @@
 <template>
   <div>
-    <v-menu
-      v-if="definition.type !== 'query' && initialValue"
-      ref="menu"
-      :close-on-content-click="false"
-      transition="scale-transition"
-      offset-y
-      full-width
-      :nudge-right="40"
-      min-width="290px">
-      <v-text-field
-        slot="activator"
-        :label="definition.label"
-        prepend-icon="event"
-        readonly />
-      <date-picker
-        v-if="definition.type === 'datepicker'"
-        lang="en" :confirm="true"
-        v-model="value">
-      </date-picker>
-      <template v-else-if="definition.type === 'daterangepicker'">
-        <v-date-picker v-model="value[0]" :landscape="false" :reactive="false"></v-date-picker>
-        <v-date-picker v-model="value[1]" :landscape="false" :reactive="false"></v-date-picker>
-      </template>
-      <input
-        v-else-if="definition.type === 'text'"
-        v-model="value"
-        class="main--input" />
-    </v-menu>
-    <template v-else-if="definition.type === 'query' && initialValue">
-      <span class="capitalizeFirstLetter">{{ definition.name }}</span>
-      <v-select v-model="value" :items="initialValue" />
-    </template> 
-    <span
-      v-else="definition.type === 'text'"
-      v-model="value">
-      Set Filter Options
-    </span>
+    <v-flex md-2>
+      <v-menu offset-y>
+        <!--<v-btn small color="primary" dark slot="activator">{{definition.label}}</v-btn>-->
+        <div slot="activator">
+          <v-chip  slot="activator">{{definition.label}} : {{value}}</v-chip>
+        </div>
+
+        <template v-if="definition.type === 'daterangepicker'">
+          <v-date-picker v-model="value[0]" :landscape="false" :reactive="false"></v-date-picker>
+          <v-date-picker v-model="value[1]" :landscape="false" :reactive="false"></v-date-picker>
+        </template>
+
+        <v-select v-else-if="definition.type === 'query' && initialValue" v-model="value" :items="initialValue" />
+      </v-menu>
+    </v-flex>
+    <!--<v-menu-->
+      <!--v-if="definition.type !== 'query' && initialValue"-->
+      <!--ref="menu"-->
+      <!--:close-on-content-click="false"-->
+      <!--transition="scale-transition"-->
+      <!--offset-y-->
+      <!--full-width-->
+      <!--:nudge-right="40"-->
+      <!--min-width="290px">-->
+      <!--<v-text-field-->
+        <!--slot="activator"-->
+        <!--:label="definition.label"-->
+        <!--prepend-icon="event"-->
+        <!--readonly />-->
+      <!--<date-picker-->
+        <!--v-if="definition.type === 'datepicker'"-->
+        <!--lang="en" :confirm="true"-->
+        <!--v-model="value">-->
+      <!--</date-picker>-->
+      <!--<template v-else-if="definition.type === 'daterangepicker'">-->
+        <!--<v-date-picker v-model="value[0]" :landscape="false" :reactive="false"></v-date-picker>-->
+        <!--<v-date-picker v-model="value[1]" :landscape="false" :reactive="false"></v-date-picker>-->
+      <!--</template>-->
+      <!--<input-->
+        <!--v-else-if="definition.type === 'text'"-->
+        <!--v-model="value"-->
+        <!--class="main&#45;&#45;input" />-->
+    <!--</v-menu>-->
+    <!--<template v-else-if="definition.type === 'query' && initialValue">-->
+      <!--<span class="capitalizeFirstLetter">{{ definition.name }}</span>-->
+      <!--<v-select v-model="value" :items="initialValue" />-->
+    <!--</template> -->
+    <!--<span-->
+      <!--v-else="definition.type === 'text'"-->
+      <!--v-model="value">-->
+      <!--Set Filter Options-->
+    <!--</span>-->
   </div>
 </template>
 
@@ -67,40 +82,48 @@
       }
     },
     methods: {
-      confirm: function (value) {}
+      confirm: function (value) {},
+      load: function () {
+        if (this.definition.type === 'query'){
+          HTTP.post('bi/analyze/execute', {query: this.definition.defaultValue}, {
+            params: {
+              filterParamsJson: JSON.stringify(this.filters),
+              block: true
+            }
+          }).then((res) => {
+            const options = []
+            res.data.data.forEach(row => {
+              const value = row[0]
+              const label = row[1]
+              if (value) {
+                options.push({
+                  value: value,
+                  text : label ? label : value
+                })
+              }
+            })
+            this.initialValue = options
+          }).catch((error) => {
+            console.log(error)
+          })
+        } else {
+          this.initialValue = Util.calculateFilterDefaultValue(this.definition)
+        }
+        this.value = this.initialValue
+        this.filters[this.definition.name] = Util.calculateFilterValue(this.initialValue, this.definition.type)
+        console.log('Report Filter loaded ' + this.definition.name)
+        this.$emit('loaded')
+      }
     },
     created: function () {
-      if (this.definition.type === 'query'){
-        HTTP.post('bi/analyze/execute', {query: this.definition.defaultValue}, {
-          params: {
-            filterParamsJson: JSON.stringify(this.filters),
-            block: true
-          }
-        }).then((res) => {
-          const options = []
-          res.data.data.forEach(row => {
-            const value = row[0]
-            const label = row[1]
-            if (value) {
-              options.push({
-                value: value,
-                text : label ? label : value
-              })
-            }
-          })
-          this.initialValue = options
-        }).catch((error) => {
-          console.log(error)
-        })
-      } else {
-        this.initialValue = Util.calculateFilterDefaultValue(this.definition)
-      }
-      this.value = this.initialValue
-      this.filters[this.definition.name] = Util.calculateFilterValue(this.initialValue, this.definition.type)
-      console.log('Report Filter loaded ' + this.definition.name)
-      this.$emit('loaded')
+      console.log("REPORT FILTER CRETAED")
+      this.load()
     },
     watch: {
+      definition: function (newDef) {
+        console.log("FILTER CHANGED")
+        this.load()
+      },
       value: function (newVal) {
         this.$set(this.filters, this.definition.name, Util.calculateFilterValue(newVal, this.definition.type))
         this.$emit('change',

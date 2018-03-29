@@ -13,7 +13,7 @@
             </v-list-tile>
           </v-list>
         </v-menu>
-        <v-toolbar-title><input class="report-title" type="text" v-model="report.title"></v-toolbar-title>
+        <v-toolbar-title v-if="report"><input class="report-title" type="text" v-model="report.title"></v-toolbar-title>
         <v-spacer></v-spacer>
         <v-tooltip bottom="bottom">
           <v-btn icon="icon" slot="activator" @click="addReport">
@@ -38,9 +38,9 @@
           </v-btn><span>{{ isSliding ? 'Stop' : 'Start' }} Slide</span>
         </v-tooltip>
         <v-tooltip bottom="bottom">
-          <v-btn icon="icon" slot="activator" @click="exportReportAsPng">
-            <v-icon color="blue-grey darken-3">file_upload</v-icon>
-          </v-btn><span>Export</span>
+          <v-btn icon="icon" slot="activator" @click="refresh">
+            <v-icon color="blue-grey darken-3">refresh</v-icon>
+          </v-btn><span>Refresh</span>
         </v-tooltip>
         <v-tooltip bottom="bottom">
           <v-btn icon="icon" slot="activator" @click="saveReport">
@@ -127,10 +127,10 @@
         this.$router.push('/#' + id)
       },
       exportReportAsPng: function() {
-        this.$refs.reports[this.selectedReportIdx].exportReportAsPng()
+        this.$refs.report.exportReportAsPng()
       },
       refresh() {
-        this.$refs.reports[this.selectedReportIdx].refresh()
+        this.$refs.report.refresh()
       },
       tabChange(tabIdx) {
         console.log(tabIdx)

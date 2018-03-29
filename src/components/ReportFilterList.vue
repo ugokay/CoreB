@@ -1,10 +1,10 @@
 <template>
   <v-layout v-if="filterDefinitions && filterDefinitions.length > 0">
-    <v-flex 
+    <v-flex
       xs11 sm2
       v-for="definition in filterDefinitions"
       v-if="!definition.static"
-      :key="definition.name">
+      :key="definition.name + report.id">
       <report-filter :definition="definition" :filters="filters" @loaded="filterLoaded"></report-filter>
     </v-flex>
   </v-layout>
@@ -37,7 +37,7 @@
     data () {
       return {
         filterDefinitions: [],
-        filterLoadCounter: -1,
+        filterLoadCounter: null,
       }
     },
     methods: {
@@ -63,7 +63,7 @@
           if (filterDefinition.static) {
             this.filters[filterDefinition.name] = filterDefinition.defaultValue
           } else {
-            if (this.filterLoadCounter === -1) {
+            if (this.filterLoadCounter === null) {
               console.log("=1")
               this.filterLoadCounter = 1
             } else {
@@ -81,11 +81,14 @@
       this.calculateFilterDefinitions()
     },
     watch: {
-      report () {
-        this.filterLoadCounter = -1
+      report (newVal) {
+        this.filterLoadCounter = null
         Vue.nextTick().then(() => {
           this.calculateFilterDefinitions()
         })
+      },
+      filterDefinitions (newVal) {
+        console.log("FIDEF CHANGED")
       },
       filterLoadCounter (filterLoadCounter) {
         console.log('Changed:' + filterLoadCounter)
