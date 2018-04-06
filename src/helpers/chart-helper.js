@@ -19,7 +19,7 @@ export const CHART = {
       let legend = legendData[i]
       for (let j = 0; j < xAxisData.length; j++) {
         let xAxis = xAxisData[j]
-        let value = 0
+        let value
         for (let k = 0; k < queryResult.data.length; k++) {
           let row = queryResult.data[k]
           let l = row[legendIdx]
@@ -72,7 +72,7 @@ export const CHART = {
           name: chartData.xAxis[idx]
         })
         idx++
-      })  
+      })
       return {
         title: '',
         reflow: true,
