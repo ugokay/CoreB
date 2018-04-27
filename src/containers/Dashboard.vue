@@ -24,7 +24,7 @@
           <v-btn icon="icon" slot="activator" @click="toggleEditable">
             <v-icon color="blue-grey darken-3" v-if="!editable">format_shapes</v-icon>
             <v-icon color="blue-grey darken-3" v-else>remove_red_eye</v-icon>
-          </v-btn><span>{{editable ? 'View' : 'Edit'}}</span>
+          </v-btn><span>{{ editable ? 'View' : 'Edit' }}</span>
         </v-tooltip>
         <v-tooltip bottom="bottom">
           <v-btn icon="icon" slot="activator" @click="toggleFullscreen">
@@ -56,7 +56,9 @@
         :globalFilterDefinitions="globalFilterDefinitions">
       </report>
       <div v-else>
-        No Report
+        <v-alert class="mt-4 ml-4 mr-4 mb-4" type="error" :value="true">
+          No report found!
+        </v-alert>
       </div>
     </fullscreen>
 
@@ -133,7 +135,6 @@
         this.$refs.report.refresh()
       },
       tabChange(tabIdx) {
-        console.log(tabIdx)
         //this.selectedReportId = tabIdx
         //this.$refs.tabs.$el.childNodes[0].classList.remove('is-open')
         //setTimeout(() => window.location.hash = '#/#' + tabIdx, 200)
@@ -166,10 +167,10 @@
             console.log(error)
           })
       },
-      gotoReport: function (reportId) {
+      gotoReport(reportId) {
         this.$router.push('/' + reportId)
       },
-      loadReport: function (reportId) {
+      loadReport(reportId) {
         HTTP.get('bi/report/'+reportId).then(res => {
           this.report = res.data
         })
@@ -177,15 +178,19 @@
       addReport() {
         this.isAddReportDialogOpen = true
       },
-      createReport: function () {
-        HTTP.post('bi/report', {id: null, title: this.newReportName, elements: [], layout: '[]'})
-          .then((res) => {
-            this.reports.push(res.data)
-          })
-          .then(() => {
-            this.$swal('Success!', 'Changes has been saved!', 'success')
-            this.isAddReportDialogOpen = false
-          })
+      createReport() {
+        if (this.newReportName == "") {
+          this.$swal('Error!', 'Please enter a title at least!', 'error')
+        } else {
+          HTTP.post('bi/report', {id: null, title: this.newReportName, elements: [], layout: '[]'})
+            .then((res) => {
+              this.reports.push(res.data)
+            })
+            .then(() => {
+              this.$swal('Success!', 'Changes has been saved!', 'success')
+              this.isAddReportDialogOpen = false
+            })
+        }
       },
       saveReport() {
         this.$refs.report.save()
@@ -200,31 +205,11 @@
         this.$refs['fullscreen'].toggle()
       },
       toggleSlide() {
-        if (!this.isSliding) {
-          this.isSliding = true
-          const self = this
-          const changeTab = function (tabIdx) {
-            if (self.isSliding) {
-              self.$refs.tabs.navigateToTab(tabIdx)
-              let nextTabIdx = tabIdx + 1
-              if (nextTabIdx >= self.reports.length) {
-                nextTabIdx = 0
-              }
-              setTimeout(function () {
-                changeTab(nextTabIdx)
-              }, 10000)
-            }
-          }
-          changeTab(0)
-        } else {
-          this.isSliding = false
-        }
+        this.isSliding = !this.isSliding
       }
     },
     computed: {
-      selectedReportIdx: function () {
-        console.log(this.selectedReportId)
-        console.log(this.reports.findIndex(report => report.id === this.selectedReportId))
+      selectedReportIdx() {
         return this.reports.findIndex(report => report.id === this.selectedReportId)
       },
       reportTitle() {
@@ -243,12 +228,27 @@
           }
           this.loadReportIds()
         })
+        .then(() => {
+          console.log(this.report)
+        })
     },
     watch: {
+      isSliding() {
+        if (this.isSliding && this.reports.length > 1) {
+          let idx = 0
+          setInterval(() => {
+            idx++
+            if (idx == this.reports.length) {
+              idx = 0
+            }
+            this.loadReport(this.reports[idx].id)
+          }, 10000)
+        }
+      },
       $route (to, from){
         const id = to.hash.split('#')[1]
-        this.getReports(Number(id))
-      }
+        this.getReports(parseInt(id))
+      },
     }
   }
 </script>
